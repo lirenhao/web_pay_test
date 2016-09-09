@@ -1,5 +1,9 @@
 /**
- * Created by ALIENWARE17 on 2016/9/7.
+ * Author：Yky
+ * Create Date：2016/9/7
+ * Modified By：Yky
+ * Why & What is modified  <修改原因描述>
+ * <文件描述>
  */
 var path = require(`path`);
 var webpack = require(`webpack`);
