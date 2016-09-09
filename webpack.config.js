@@ -3,6 +3,8 @@
  * Create Date：2016/9/7
  * Modified By：liRenhao
  * Why & What is modified 添加hmr插件
+ * Modified By：liRenhao
+ * Why & What is modified react-hot-loader版本从3.0.0-beta.3回退到1.3.0
  * webpack的配置文件,搭建webpack的环境
  */
 var path = require("path");
@@ -20,7 +22,7 @@ module.exports = {
     },
     module: {
         loaders: [
-            {test: /\.js?$/, loader: "babel", include: path.resolve(__dirname, "./src")},
+            {test: /\.js?$/, loader: "react-hot!babel", include: path.resolve(__dirname, "./src")},
             {test: /\.css$/, loader: "style!css"},
             {test: /\.s[a,c]ss$/, loader: "style!css!sass"},
             {
@@ -49,7 +51,6 @@ module.exports = {
             $: "jquery",
             jQuery: "jquery",
             "window.jQuery": "jquery"
-        }),
-        new webpack.HotModuleReplacementPlugin()
+        })
     ]
 };
