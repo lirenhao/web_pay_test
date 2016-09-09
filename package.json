@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "test": "mocha test/.setup.js test/**/*-test.js --recursive -R doc > ./test/report.html"
+    "test": "mocha test/.setup.js test/**/*-test.js  -R doc > ./test/report.html"
   },
   "dependencies": {
     "bootstrap-sass": "^3.3.7",
