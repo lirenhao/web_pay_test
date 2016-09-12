@@ -58,21 +58,19 @@ const validate = (values) => {
 }
 
 const GoodsForm = (props) => {
-    const {handleSubmit, onSubmit, initialItems} = props
+    const {handleSubmit, onSubmit} = props
     return (
         <Form inline onSubmit={handleSubmit(onSubmit)}>
-            <FieldArray name="goods" initialItems={initialItems} component={GoodsField}/>
+            <FieldArray name="goods" component={GoodsField}/>
         </Form>
     )
 }
 
 /**
- * onSubmit 提交表单后的处理事件
- * initialValues 商品列表初始化的数据
+ * @type {{onSubmit: *}} 提交表单后的处理事件
  */
 GoodsForm.propTypes = {
     onSubmit: React.PropTypes.func.isRequired,
-    initialItems: React.PropTypes.arrayOf(React.PropTypes.object)
 }
 
 export default reduxForm({
