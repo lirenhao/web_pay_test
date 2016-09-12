@@ -5,6 +5,8 @@
  * Why & What is modified 添加hmr插件
  * Modified By：liRenhao
  * Why & What is modified react-hot-loader版本从3.0.0-beta.3回退到1.3.0
+ * Modified By：liRenhao
+ * Why & What is modified react-hot-loader1.3.0不支持redux-form v6.0重新换回到3.0.0-beta.3版
  * webpack的配置文件,搭建webpack的环境
  */
 var path = require("path");
@@ -12,9 +14,17 @@ var webpack = require("webpack");
 var OpenBrowserPlugin = require("webpack");
 var HtmlWebpackPlugin = require("html-webpack-plugin");
 
+const HOST = process.env.HOST || "127.0.0.1";
+const PORT = process.env.PORT || "8080";
+
 module.exports = {
     entry: {
-        bundle: ["bootstrap-loader", "./src/client.js"]
+        bundle: [
+            `webpack-dev-server/client?http://${HOST}:${PORT}`,
+            "webpack/hot/only-dev-server",
+            "react-hot-loader/patch",
+            "bootstrap-loader",
+            "./src/client.js"]
     },
     output: {
         path: path.resolve(__dirname, "build"),
@@ -22,7 +32,7 @@ module.exports = {
     },
     module: {
         loaders: [
-            {test: /\.js?$/, loader: "react-hot!babel", include: path.resolve(__dirname, "./src")},
+            {test: /\.js?$/, loader: "babel", include: path.resolve(__dirname, "./src")},
             {test: /\.css$/, loader: "style!css"},
             {test: /\.s[a,c]ss$/, loader: "style!css!sass"},
             {
@@ -52,5 +62,16 @@ module.exports = {
             jQuery: "jquery",
             "window.jQuery": "jquery"
         })
-    ]
+    ],
+    devServer: {
+        // enable HMR
+        hot: true,
+        // embed the webpack-dev-server runtime into the bundle
+        inline: true,
+        // serve index.html in place of 404 responses to allow HTML5 history
+        historyApiFallback: true,
+        port: PORT,
+        host: HOST
+    },
+
 };
