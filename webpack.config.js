@@ -14,14 +14,9 @@ var webpack = require("webpack");
 var OpenBrowserPlugin = require("webpack");
 var HtmlWebpackPlugin = require("html-webpack-plugin");
 
-const HOST = process.env.HOST || "127.0.0.1";
-const PORT = process.env.PORT || "8080";
-
 module.exports = {
     entry: {
         bundle: [
-            `webpack-dev-server/client?http://${HOST}:${PORT}`,
-            "webpack/hot/only-dev-server",
             "react-hot-loader/patch",
             "bootstrap-loader",
             "./src/client.js"]
@@ -62,16 +57,6 @@ module.exports = {
             jQuery: "jquery",
             "window.jQuery": "jquery"
         })
-    ],
-    devServer: {
-        // enable HMR
-        hot: true,
-        // embed the webpack-dev-server runtime into the bundle
-        inline: true,
-        // serve index.html in place of 404 responses to allow HTML5 history
-        historyApiFallback: true,
-        port: PORT,
-        host: HOST
-    },
+    ]
 
 };
