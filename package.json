@@ -2,11 +2,12 @@
   "private": true,
   "scripts": {
     "start": "webpack && webpack-dev-server --inline --hot",
-    "test": "mocha test/.setup.js test/**/*-test.js  -R doc > ./test/report.html"
+    "test": "mocha test/.setup.js  test/**/*-test.js --reporter mochawesome --no-exit --reporter-options reportDir=customReportDir,reportName=customReportName"
   },
   "dependencies": {
     "bootstrap-sass": "^3.3.7",
     "jquery": "^2.2.4",
+    "mochawesome": "^1.5.2",
     "react": "^15.3.1",
     "react-bootstrap": "^0.30.3",
     "react-dom": "^15.3.1",
@@ -35,6 +36,7 @@
     "html-webpack-plugin": "^2.22.0",
     "jsdom": "^9.5.0",
     "mocha": "^3.0.2",
+    "mochawesome": "^1.5.2",
     "node-sass": "^3.9.3",
     "open-browser-webpack-plugin": "0.0.2",
     "react-addons-test-utils": "^15.3.1",
