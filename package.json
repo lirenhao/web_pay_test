@@ -1,6 +1,7 @@
 {
   "private": true,
   "scripts": {
+    "start": "webpack && webpack-dev-server --inline --hot",
     "test": "mocha test/.setup.js test/**/*-test.js  -R doc > ./test/report.html"
   },
   "dependencies": {

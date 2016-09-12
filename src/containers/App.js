@@ -7,11 +7,12 @@
  */
 import React from "react"
 import {connect} from "react-redux"
+import {Router, browserHistory} from 'react-router'
+import routes from '../routes'
 
 const App = (props) => (
-    <div>
-        <h1>Hello</h1>
-    </div>
-)
+	<Router routes={routes} history={browserHistory}>
+	</Router>
+);
 
 export default connect()(App)

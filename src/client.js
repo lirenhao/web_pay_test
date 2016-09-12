@@ -16,38 +16,36 @@ import App from "./containers/App"
 import DevTools from "./containers/DevTools"
 import {AppContainer} from "react-hot-loader"
 
-const reducer = combineReducers({form: formReducer})
-const store = createStore(reducer, DevTools.instrument())
+const reducer = combineReducers({form: formReducer});
+const store = createStore(reducer, DevTools.instrument());
 
 const container = document.createElement("div");
 container.setAttribute("class", "container");
 document.body.appendChild(container);
 
 render(
-    <AppContainer>
-        <Provider store={store}>
-            <div>
-                <App/>
-                <DevTools/>
-            </div>
-        </Provider>
-    </AppContainer>,
-    container
+	<AppContainer>
+		<Provider store={store}>
+			<div>
+				<App/>
+			</div>
+		</Provider>
+	</AppContainer>,
+	container
 );
 
 if (module.hot) {
-    module.hot.accept('./containers/App', () => {
-        const NextApp = require('./containers/App').default;
-        render(
-            <AppContainer>
-                <Provider store={store}>
-                    <div>
-                        <NextApp/>
-                        <DevTools/>
-                    </div>
-                </Provider>
-            </AppContainer>,
-            container
-        );
-    });
+	module.hot.accept('./containers/App', () => {
+		const NextApp = require('./containers/App').default;
+		render(
+			<AppContainer>
+				<Provider store={store}>
+					<div>
+						<NextApp/>
+					</div>
+				</Provider>
+			</AppContainer>,
+			container
+		);
+	});
 }
