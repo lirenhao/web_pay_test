@@ -170,7 +170,7 @@ var state = {
         userId: "1",
         userType: "MERCHANT"
     },
-    orderId: [1, 2],
+    orderIds: [1, 2],
     order: {
         1: {
             orderId: "1",
