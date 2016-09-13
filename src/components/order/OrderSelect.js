@@ -13,7 +13,7 @@ import {Nav} from 'react-bootstrap';
 
 class OrderSelect extends React.Component {
     render() {
-        var idInfo = this.props.orderId.map(id =>
+        var idInfo = this.props.orderIds.map(id =>
             <li role="presentation" key={id}>
                 <a href="javascript:void(0)" onClick={this.props.handleClick(id)}>
                     {id}</a>

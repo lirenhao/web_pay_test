@@ -7,7 +7,7 @@
  */
 
 import React from 'react'
-import ProductItems from './ProductItems'
+import GoodsItems from './GoodsItems'
 import {Panel} from 'react-bootstrap'
 
 class OrderInfo extends React.Component {
@@ -22,7 +22,7 @@ class OrderInfo extends React.Component {
                             {this.props.orderId}</span>
                     </h4>
                     <Panel header="订单信息">
-                        <ProductItems items={this.props.items || []}/>
+                        <GoodsItems items={this.props.items || []}/>
                     </Panel>
                 </div>
             )

@@ -6,11 +6,11 @@
  * 定义商品信息展示列表组件
  */
 import React from 'react';
-import Product from './ProductItem';
+import Product from './GoodsItem';
 import {Table} from 'react-bootstrap';
 
 
-class ProductItems extends React.Component {
+class GoodsItems extends React.Component {
     render() {
         return (
             <Table>
@@ -28,4 +28,4 @@ class ProductItems extends React.Component {
         )
     }
 }
-export default ProductItems
+export default GoodsItems
