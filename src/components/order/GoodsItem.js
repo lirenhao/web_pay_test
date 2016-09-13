@@ -7,14 +7,12 @@
  */
 import React from 'react'
 
-const goodsItem = ({name,prise,quantity})=>(
-    <div>
+const goodsItem = ({name,price,quantity})=>(
         <tr>
             <td>{name}</td>
-            <td>{prise}</td>
+            <td>{price}</td>
             <td>{quantity}</td>
         </tr>
-    </div>
 )
 
 export default goodsItem
