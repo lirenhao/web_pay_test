@@ -15,7 +15,12 @@
     - [扫描订单界面](#扫描订单界面)
     - [支付界面](#支付界面)
     - [对话框通知界面](#对话框通知界面)
-- [Action](#action)
+- [Action(向服务器发送和请求的数据)](#action向服务器发送和请求的数据)
+    - [登陆页面](#登陆页面)
+    - [创建订单页面](#创建订单页面)
+    - [扫描页面](#扫描页面)
+    - [订单列表页面](#订单列表页面)
+    - [支付页面](#支付页面)
 - [state数据结构](#state数据结构)
 
 
@@ -159,8 +164,54 @@
 
 ### 对话框通知界面
 
-## Action
-TODO
+## Action(向服务器发送和请求的数据)
+### 登陆页面
+- 向服务器传入参数：userId,userType
+- 服务器返回数据：商品信息
+  - eg:`send:{"eventType":"ORDER_ITEMS","orderId":"11","items":[{"name":"ONLY修身撞色拼接女针织裙","price":34950,"quantity":2},{"name":"ONLY圆点荷叶边女修身裙","price":19950,"quantity":1},{"name":"ONLY棉宽松字母牛仔女外套","price":27450,"quantity":1}]}  
+        send:{"eventType":"MARKETING","orderId":"11","amt":58650,"msg":"测试优惠, 一律5折"}`
+- 将商品信息存入state中
+
+### 创建订单页面
+- 向服务器传入参数：商品信息(Order[orderId].items)
+- 服务器返回数据：订单信息
+  - eg:`send:{"eventType":"ORDER_ITEMS","orderId":"12","items":[{"name":"ONLY修身撞色拼接女针织裙","price":34950,"quantity":2},{"name":"ONLY圆点荷叶边女修身裙","price":19950,"quantity":1},{"name":"ONLY棉宽松字母牛仔女外套","price":27450,"quantity":1}]}`
+- 将订单信息存入state中
+
+### 扫描页面
+- 向服务器传入数据：orderId,userId,userType
+- 服务器返回数据：订单信息
+  - eg:`send:{"eventType":"ORDER_ITEMS","orderId":"14","items":[{"name":"ONLY修身撞色拼接女针织裙","price":34950,"quantity":2},{"name":"ONLY圆点荷叶边女修身裙","price":19950,"quantity":1},{"name":"ONLY棉宽松字母牛仔女外套","price":27450,"quantity":1}]}  
+  send:{"eventType":"MARKETING","orderId":"14","amt":58650,"msg":"测试优惠, 一律5折"}  
+  send:{"eventType":"MARKETING","orderId":"14","amt":58650,"msg":"测试优惠, 一律5折"}`
+- 将订单信息存入state中
+
+### 订单列表页面
+- 支付按钮
+  - 向服务器传入参数：orderId
+  - 服务器返回数据：
+    - eg:`send:{"eventType":"PAY_AUTH","orderId":"12"}`
+    - 当有用户已进入支付页面时，其他任何用户点击支付按钮，服务器都不会返回数据
+  - 将服务器返回信息存入state中（待定）
+- 取消按钮
+  - 向服务器传入参数：orderId
+  - 服务器返回数据：
+    - eg:`send:{"eventType":"PAY_COMPLETED","orderId":"13","result":false,"channel":"Client","msg":"取消"}
+       send:{"eventType":"PAY_COMPLETED","orderId":"13","result":false,"channel":"Client","msg":"取消"}`
+  - 更新state:删除当前订单
+
+### 支付页面
+- 确定按钮
+  - 向服务器传入数据：OrderId
+  - 服务器返回数据:
+    - eg:`send:{"eventType":"PAY_COMPLETED","orderId":"12","result":true,"channel":"测试渠道","msg":"成功"}
+       send:{"eventType":"PAY_COMPLETED","orderId":"12","result":true,"channel":"测试渠道","msg":"成功"}`
+  - 更新state:删除当前订单
+- 取消支付按钮
+  - 向服务器传入数据：OrderId
+  - 服务器返回数据:
+    - eg:`send:{"eventType":"PAY_AUTH","orderId":"12"}`
+
 
 ## state数据结构  
 store中state的数据结构 
