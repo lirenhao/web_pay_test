@@ -10,8 +10,8 @@ import {Table, Glyphicon} from 'react-bootstrap';
 
 class Billing extends React.Component {
     render() {
-        if (this.prop.items && this.prop.marketing) {
-            let totalAmt = this.prop.items.reduce((p, q)=>p + q.price * q.quantity, 0);
+        if (this.props.items && this.props.marketing) {
+            let totalAmt = this.props.items.reduce((p, q)=>p + q.price * q.quantity, 0);
             return (
                 <div>
                     <div>
@@ -26,11 +26,11 @@ class Billing extends React.Component {
                         </tr>
                         <tr>
                             <td>优惠</td>
-                            <td>{this.prop.marketing.amt}</td>
+                            <td>{this.props.marketing.amt}</td>
                         </tr>
                         <tr>
                             <td>结算</td>
-                            <td>{totalAmt - this.prop.marketing.amt}</td>
+                            <td>{totalAmt - this.props.marketing.amt}</td>
                         </tr>
                         </tbody>
                     </Table>
