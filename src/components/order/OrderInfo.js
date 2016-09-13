@@ -8,7 +8,7 @@
 
 import React from 'react'
 import ProductItems from './ProductItems'
-
+import {Panel} from 'react-bootstrap'
 
 class OrderInfo extends React.Component {
 
@@ -19,14 +19,11 @@ class OrderInfo extends React.Component {
                     <h4>
                         <span className="label label-info">
                     <span className="glyphicon glyphicon-pushpin"></span>
-                            {this.props.items.orderId}</span>
+                            {this.props.orderId}</span>
                     </h4>
-                    <div className="panel panel-info panel-sm">
-                        <div className="panel-heading">
-                            <label>订单信息</label>
-                        </div>
+                    <Panel header="订单信息">
                         <ProductItems items={this.props.items || []}/>
-                    </div>
+                    </Panel>
                 </div>
             )
         }
