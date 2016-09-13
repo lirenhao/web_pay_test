@@ -28,6 +28,7 @@ render(
 		<Provider store={store}>
 			<div>
 				<App/>
+                <DevTools/>
 			</div>
 		</Provider>
 	</AppContainer>,
@@ -42,6 +43,7 @@ if (module.hot) {
 				<Provider store={store}>
 					<div>
 						<NextApp/>
+                        <DevTools/>
 					</div>
 				</Provider>
 			</AppContainer>,

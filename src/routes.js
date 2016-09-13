@@ -1,13 +1,13 @@
 /**
  * Author：Yky
  * Create Date：2016/9/12
- * Modified By：Yky KL
- * Why & What is modified  <修改原因描述>
+ * Modified By：liRenhao
+ * Why & What is modified 登录界面跳转路由修改
  * 路由文件
  */
 import React from 'react'
 import {Route} from 'react-router'
-import Login from './components/login/Login'
+import Login from './containers/Login'
 import AcqOrderId from './components/acquisitionOrderId/AcqOrderId'
 import PayForm from './components/payForm/PayForm'
 
