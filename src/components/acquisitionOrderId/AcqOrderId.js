@@ -14,29 +14,49 @@
 import React from 'react'
 import {Form, FormGroup, InputGroup, FormControl, Button, Glyphicon} from 'react-bootstrap'
 
-
 class AcqOrderId extends React.Component {
 	render() {
 		return (
-			<Form inline>
-				<FormGroup controlId="orderId">
-					<InputGroup>
-						<InputGroup.Addon>
-							<Glyphicon glyph="qrcode"/>
-						</InputGroup.Addon>
-						<FormControl type="text" placeholder="订单ID"/>
-						<InputGroup.Button>
-							<Button>加入</Button>
-						</InputGroup.Button>
-					</InputGroup>
-				</FormGroup>
-				<p/>
-				<Button bsStyle="info">
-					<span className="badge">N</span>
-					&nbsp;个待支付</Button>
-			</Form>
+			<div style={{"marginTop": "10px"}}>
+				<Form inline>
+					<FormGroup controlId="orderId">
+						<InputGroup>
+							<InputGroup.Addon>
+								<Glyphicon glyph="qrcode"/>
+							</InputGroup.Addon>
+							<FormControl type="text" placeholder="订单ID"/>
+							<InputGroup.Button>
+								<Button style={{"height": "34px"}}>加入</Button>
+							</InputGroup.Button>
+						</InputGroup>
+					</FormGroup>
+					<p/>
+					<Button bsStyle="info">
+						<span className="badge">N</span>
+						&nbsp;个待支付</Button>
+				</Form>
+			</div>
 		)
 	}
 }
 
 export default AcqOrderId
+// <div style={{"marginTop": "10px"}}>
+// <Form inline>
+// <FormGroup controlId="orderId">
+// 	<InputGroup>
+// 	<InputGroup.Addon>
+// 	<Glyphicon glyph="qrcode"/>
+// 	</InputGroup.Addon>
+// 	<FormControl type="text" placeholder="订单ID"/>
+// 	<InputGroup.Button>
+// 	<Button>加入</Button>
+// 	</InputGroup.Button>
+// 	</InputGroup>
+// 	</FormGroup>
+// 	<p/>
+// 	<Button bsStyle="info">
+// 	<span className="badge">N</span>
+// 	&nbsp;个待支付</Button>
+// </Form>
+// </div>
