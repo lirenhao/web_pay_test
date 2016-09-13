@@ -64,20 +64,18 @@ class PayForm extends React.Component{
         return(
             <div>
                 {this.getOrderInfoComponent(this.props.orderInfo)}
-                <form>
-                    <Navbar fixedBottom>
-                        <ButtonGroup justified>
-                            <DropdownButton title="支付结果" id="bg-justified-dropdown">
-                                <MenuItem eventKey="1">成功</MenuItem>
-                                <MenuItem eventKey="2">失败</MenuItem>
-                            </DropdownButton>
-                            <Button bsStyle="danger" href="#" onClick={
-                                ()=>{if(state.user.userType=="USER")
-                                    browserHistory.push("/acqOrderId")}
-                            } >取消</Button>
-                        </ButtonGroup>
-                    </Navbar>
-                </form>
+                <Navbar fixedBottom>
+                    <ButtonGroup justified>
+                        <DropdownButton title="支付结果" id="bg-justified-dropdown">
+                            <MenuItem eventKey="1">成功</MenuItem>
+                            <MenuItem eventKey="2">失败</MenuItem>
+                        </DropdownButton>
+                        <Button bsStyle="danger" href="#" onClick={
+                            ()=>{if(state.user.userType=="USER")
+                                browserHistory.push("/acqOrderId")}
+                        } >取消</Button>
+                    </ButtonGroup>
+                </Navbar>
             </div>
         )
     }
