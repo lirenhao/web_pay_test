@@ -12,6 +12,7 @@ import {browserHistory} from 'react-router'
 import GoodsItems from '../order/GoodsItems'
 import Billing from '../order/Billing'
 import Marketing from '../order/Marketing'
+import './PayForm.scss'
 
 var state = {
     user: {
@@ -46,9 +47,9 @@ var state = {
 class PayForm extends React.Component{
     getOrderInfoComponent (orderInfo){
         return (
-            <div>
-                <div>
-                    <span><b>订单号：</b>{state.orderIds[0]}</span>
+            <div className={"mgtb"}>
+                <div className="mgb">
+                    <span className="mgr"><b>订单号：</b>{state.orderIds[0]}</span>
                     <span><b>流水号：</b></span>
                 </div>
                 <div>
@@ -66,7 +67,7 @@ class PayForm extends React.Component{
                 <form>
                     <Navbar fixedBottom>
                         <ButtonGroup justified>
-                            <DropdownButton title="支付结果" id="bg-justified-dropdown" ref={c=>selector=c}>
+                            <DropdownButton title="支付结果" id="bg-justified-dropdown">
                                 <MenuItem eventKey="1">成功</MenuItem>
                                 <MenuItem eventKey="2">失败</MenuItem>
                             </DropdownButton>
