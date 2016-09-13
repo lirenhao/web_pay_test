@@ -8,12 +8,14 @@
 import React from 'react'
 import {Route} from 'react-router'
 import Login from './containers/Login'
+import Goods from './containers/Goods'
 import AcqOrderId from './components/acquisitionOrderId/AcqOrderId'
 import PayForm from './components/payForm/PayForm'
 
 export default (
 	<Route>
 		<Route path="/" component={Login}/>
+        <Route path="/goods" component={Goods}/>
 		<Route path="/acqOrderId" component={AcqOrderId}/>
 		<Route path="/PayForm" component={PayForm}/>
 	</Route>
