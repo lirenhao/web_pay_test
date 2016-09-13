@@ -18,8 +18,7 @@ const GoodsField = ({fields}) => (
                        name={`${item}.name`}
                        component={InputField}
                        label="商品"
-                       placeholder="name">
-                </Field>
+                       placeholder="name" />
                 {" "}
                 <Field type="number"
                        name={`${item}.price`}
