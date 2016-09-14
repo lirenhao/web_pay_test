@@ -6,11 +6,11 @@
  * 使用redux-form的FieldArray实现动态添加商品录入框
  */
 import React from "react"
-import {ListGroup, ListGroupItem, InputGroup, Button} from "react-bootstrap"
+import {ListGroup, ListGroupItem, InputGroup, ButtonGroup, Button} from "react-bootstrap"
 import {Field} from "redux-form"
 import InputField from "./InputField"
 
-const GoodsField = ({fields}) => (
+const GoodsField = ({fields, orderNum}) => (
     <ListGroup>
         {fields.map((item, index) =>
             <ListGroupItem key={index}>
@@ -18,7 +18,7 @@ const GoodsField = ({fields}) => (
                        name={`${item}.name`}
                        component={InputField}
                        label="商品"
-                       placeholder="name" />
+                       placeholder="name"/>
                 {" "}
                 <Field type="number"
                        name={`${item}.price`}
@@ -37,15 +37,24 @@ const GoodsField = ({fields}) => (
                 </InputGroup>
             </ListGroupItem>
         )}
-        <div className="btn-group btn-group-justified" role="group">
-            <div className="btn-group" role="group">
+        <ButtonGroup justified>
+            <ButtonGroup>
                 <Button onClick={() => fields.push({})}>添加</Button>
-            </div>
-            <div className="btn-group" role="group">
-                <Button bsStyle="primary" type="submit">提交</Button>
-            </div>
-        </div>
+            </ButtonGroup>
+            <ButtonGroup>
+                <Button bsStyle="success" type="submit">提交</Button>
+            </ButtonGroup>
+            <ButtonGroup className={orderNum && orderNum > 0 ? "": "hidden"}>
+                <Button bsStyle="info">
+                    <span className="badge">{orderNum}</span>
+                    &nbsp;个待支付</Button>
+            </ButtonGroup>
+        </ButtonGroup>
     </ListGroup>
 )
+
+GoodsField.propTypes = {
+    orderNum: React.PropTypes.number.isRequired
+}
 
 export default GoodsField

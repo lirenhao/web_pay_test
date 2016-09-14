@@ -58,19 +58,22 @@ const validate = (values) => {
 }
 
 const GoodsForm = (props) => {
-    const {handleSubmit, onSubmit} = props
+    const {handleSubmit, onSubmit, orderNum} = props
     return (
         <Form inline onSubmit={handleSubmit(onSubmit)}>
-            <FieldArray name="goods" component={GoodsField}/>
+            <FieldArray name="goods" component={GoodsField} orderNum={orderNum}/>
         </Form>
     )
 }
 
 /**
  * @type {{onSubmit: *}} 提交表单后的处理事件
+ * @type {{orderNum: *}} 商户已有的订单数量
  */
+
 GoodsForm.propTypes = {
     onSubmit: React.PropTypes.func.isRequired,
+    orderNum: React.PropTypes.number.isRequired
 }
 
 export default reduxForm({

@@ -32,7 +32,7 @@ const items = [
 ]
 
 const Goods = (props) => (
-     <GoodsForm onSubmit={(values) => console.log(values)} initialValues={{goods: items}}/>
+     <GoodsForm onSubmit={(values) => console.log(values)} orderNum={1} initialValues={{goods: items}}/>
 );
 
 export default connect()(Goods)
