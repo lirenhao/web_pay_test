@@ -7,26 +7,35 @@
  */
 
 import React from 'react'
-import ReactDOM from 'react-dom'
 import OrderInfo from './OrderInfo'
 import OrderSelect from './OrderSelect'
 import Marketing from './Marketing'
 import Billing from './Billing'
-import {ButtonGroup, Button,} from 'react-bootstrap';
+import PayButton from './PayButton'
+import {Tabs, Tab} from 'react-bootstrap';
 
-var Order = ({data, orderSelectClick})=> {
+const Order = ({data,index})=> {
+
+    const tabs = data.orderIds.map(
+        (p, i)=>(
+            <Tab eventKey={i} title={p} key={i}>
+                <div>
+                    <OrderInfo items={data.order[p].items}/>
+                    <Marketing marketing={data.marketing[p]}/>
+                    <Billing items={data.order[p].items} marketing={data.marketing[p]}/>
+                    <PayButton canCancel={false} canPay={false} onCancel={()=>{alert("onCancel")}} onReqPay={()=>{alert("onReqPay")}}/>
+                    {
+                        //TODO 添加支付和取消按钮
+                    }
+                </div>
+            </Tab>
+        )
+    )
+
     return (
-        <div>
-            <div>
-                <OrderSelect orderIds={data.orderIds} handleClick={orderSelectClick}/>
-                <OrderInfo items={data.items} orderId={data.orderId}/>
-                <Marketing marketing={data.marketing}/>
-                <Billing items={data.items} marketing={data.marketing}/>
-            </div>
-            <div>
-                //TODO 添加支付和取消按钮
-            </div>
-        </div>
+        <Tabs defaultActiveKey={Number(index)||0} id="OrderSelect">
+            {tabs}
+        </Tabs>
     )
 }
 

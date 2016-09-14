@@ -22,7 +22,7 @@ class GoodsItems extends React.Component {
                 </tr>
                 </thead>
                 <tbody>
-                {this.props.items.map(p=>(<Product {...p}/>))}
+                {this.props.items.map(p=>(<Product key={p.name} {...p}/>))}
                 </tbody>
             </Table>
         )

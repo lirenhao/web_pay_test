@@ -16,13 +16,8 @@ class OrderInfo extends React.Component {
         if (this.props.items) {
             return (
                 <div>
-                    <h4>
-                        <span className="label label-info">
-                    <span className="glyphicon glyphicon-pushpin"></span>
-                            {this.props.orderId}</span>
-                    </h4>
                     <Panel header="订单信息">
-                        <GoodsItems items={this.props.items || []}/>
+                        <GoodsItems  items={this.props.items || []}/>
                     </Panel>
                 </div>
             )
