@@ -23,7 +23,7 @@ const Order = ({data,index})=> {
                     <OrderInfo items={data.order[p].items}/>
                     <Marketing marketing={data.marketing[p]}/>
                     <Billing items={data.order[p].items} marketing={data.marketing[p]}/>
-                    <PayButton canCancel={false} canPay={false} onCancel={()=>{alert("onCancel")}} onReqPay={()=>{alert("onReqPay")}}/>
+                    <PayButton canCancel={true} canPay={false} onCancel={()=>{alert("onCancel")}} onReqPay={()=>{alert("onReqPay")}}/>
                 </div>
             </Tab>
         )
