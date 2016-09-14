@@ -11,6 +11,8 @@ import Login from './containers/Login'
 import Goods from './containers/Goods'
 import AcqOrderId from './components/acquisitionOrderId/AcqOrderId'
 import PayForm from './components/payForm/PayForm'
+import Pay from './containers/Pay'
+import Dialog from './components/Dialog/Dialog'
 
 export default (
 	<Route>
@@ -18,5 +20,7 @@ export default (
         <Route path="/goods" component={Goods}/>
 		<Route path="/acqOrderId" component={AcqOrderId}/>
 		<Route path="/PayForm" component={PayForm}/>
+        <Route path="/Pay" component={Pay}/>
+		<Route path="/Dialog" component={Dialog}/>
 	</Route>
 )
