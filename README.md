@@ -229,7 +229,8 @@ var state = {
                 {"name": "ONLY修身撞色拼接女针织裙", "price": 34950, "quantity": 2},
                 {"name": "ONLY圆点荷叶边女修身裙", "price": 19950, "quantity": 1},
                 {"name": "ONLY棉宽松字母牛仔女外套", "price": 27450, "quantity": 1}
-            ]
+            ],
+            isPayAuth:false
         },
         2: {
             orderId: "2",
@@ -237,7 +238,8 @@ var state = {
                 {"name": "ONLY修身撞色拼接女针织裙", "price": 34950, "quantity": 2},
                 {"name": "ONLY圆点荷叶边女修身裙", "price": 19950, "quantity": 1},
                 {"name": "ONLY棉宽松字母牛仔女外套", "price": 27450, "quantity": 1}
-            ]
+            ],
+            isPayAuth:false
         }
     },
     marketing: {
