@@ -24,9 +24,6 @@ const Order = ({data,index})=> {
                     <Marketing marketing={data.marketing[p]}/>
                     <Billing items={data.order[p].items} marketing={data.marketing[p]}/>
                     <PayButton canCancel={false} canPay={false} onCancel={()=>{alert("onCancel")}} onReqPay={()=>{alert("onReqPay")}}/>
-                    {
-                        //TODO 添加支付和取消按钮
-                    }
                 </div>
             </Tab>
         )
