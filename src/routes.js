@@ -9,6 +9,7 @@ import React from 'react'
 import {Route} from 'react-router'
 import Login from './containers/Login'
 import Goods from './containers/Goods'
+import OrderId from './containers/OrderId'
 import AcqOrderId from './components/acquisitionOrderId/AcqOrderId'
 import PayForm from './components/payForm/PayForm'
 import Dialog from './components/Dialog/Dialog'
@@ -20,5 +21,6 @@ export default (
 		<Route path="/acqOrderId" component={AcqOrderId}/>
 		<Route path="/PayForm" component={PayForm}/>
 		<Route path="/Dialog" component={Dialog}/>
+		<Route path="/orderId" component={OrderId}/>
 	</Route>
 )
