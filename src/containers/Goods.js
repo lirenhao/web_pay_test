@@ -3,12 +3,15 @@
  * Create Date：2016/9/13
  * Modified By：liRenhao
  * Why & What is modified  <修改原因描述>
+ * Modified By：Pengfei
+ * Why & What is modified  提交按钮添加跳转到订单页面事件
  * 录入商品信息的容器，暂时用做测试后续再修改
  */
 
 import React from "react"
 import {connect} from "react-redux"
 import GoodsForm from "../components/goodsForm/GoodsForm"
+import { browserHistory} from 'react-router'
 
 /**
  * @type {*[]} 商品录入列表初始化的数据
@@ -31,8 +34,12 @@ const items = [
     }
 ]
 
+const ToOrder = ()=>{
+    browserHistory.push("order/1")
+}
+
 const Goods = (props) => (
-     <GoodsForm onSubmit={(values) => console.log(values)} orderNum={1} initialValues={{goods: items}}/>
+     <GoodsForm onSubmit={ToOrder} initialValues={{goods: items}} orderNum={2}/>
 );
 
 export default connect()(Goods)
