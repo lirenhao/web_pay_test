@@ -26,6 +26,9 @@ const PayForm = (props) => {
     return (
         <Form onSubmit={handleSubmit(onSubmit)}>
             <div className={"marginOutTopBottom"}>
+                <div className="marginRight">
+                    <span><b>订单号：</b></span>
+                </div>
                 <div className="marginBottom">
                     <span><b>流水号：</b></span>
                 </div>
