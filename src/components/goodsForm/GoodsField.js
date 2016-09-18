@@ -45,7 +45,7 @@ const GoodsField = ({fields, orderNum, onButton}) => (
                 <Button bsStyle="success" type="submit">提交</Button>
             </ButtonGroup>
             <ButtonGroup className={orderNum && orderNum > 0 ? "": "hidden"}>
-                <Button bsStyle="info" onButton={onButton}>
+                <Button bsStyle="info" onClick={onButton}>
                     <span className="badge">{orderNum}</span>
                     &nbsp;个待支付</Button>
             </ButtonGroup>
