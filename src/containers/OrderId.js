@@ -8,10 +8,34 @@
 
 import React from "react"
 import {connect} from "react-redux"
+import {browserHistory} from "react-router"
+import Payment from "../Payment"
 import OrderIdForm from "../components/orderIdForm/OrderIdForm"
 
-const OrderId = (props) => (
-    <OrderIdForm onSubmit={(values) => console.log(values)} orderNum={1} initialValues={{orderId: "111"}}/>
-);
+const OrderId = (props) => {
+    const {user, orderIds} = props
+    const onSubmit = (values) => {
+        // 判断state中是否有该订单
+        const index = orderIds.indexOf(values.orderId)
+        if (index < 0) {
+            // state中没有该订单向服务器请求
+            Payment.joinOrder(user, values.orderId)
+            browserHistory.push("order/" + orderIds.length)
+        } else {
+            browserHistory.push("order/" + index)
+        }
+    }
+    const onButton = () => {
+        browserHistory.push("order/0")
+    }
+    return (
+        <OrderIdForm onSubmit={onSubmit} onButton={onButton} orderNum={orderIds.length}/>
+    )
+}
 
-export default connect()(OrderId)
+const mapStateToProps = (state)=> ({
+    user: state.user,
+    orderIds: state.orderIds
+})
+
+export default connect(mapStateToProps)(OrderId)

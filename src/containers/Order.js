@@ -11,16 +11,17 @@ import Payment from "../Payment"
 import OrderShow from "../components/order/Order"
 
 const Order = (props) => {
+    const {user, orderIds, order, marketing, params: {index}} = props
     const onCancel = (orderId) => {
-        Payment.cancelOrder(props.user, orderId)
+        Payment.cancelOrder(user, orderId)
     }
     const onReqPay = (orderId) => {
-        Payment.reqPayAuth(props.user, orderId)
+        Payment.reqPayAuth(user, orderId)
     }
-    return <OrderShow activeKey={Number(props.params.index) || 0}
-                      orderIds={props.orderIds}
-                      order={props.order}
-                      marketing={props.marketing}
+    return <OrderShow activeKey={Number(index) || 0}
+                      orderIds={orderIds}
+                      order={order}
+                      marketing={marketing}
                       onCancel={onCancel}
                       onReqPay={onReqPay}/>
 }
