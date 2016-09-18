@@ -47,12 +47,12 @@ const index = 0;
 //提交支付订单表单事件
 var onSubmitHandle=(values) => {if(state.user.userType=="USER")
      browserHistory.push("/acqOrderId");
- else {browserHistory.push("/Goods") };
+ else browserHistory.push("/Goods") ;
      console.log(values) };
 //取消支付事件
 var onCancleHandle=(values) => {if(state.user.userType=="USER")
      browserHistory.push("/acqOrderId");
- else {browserHistory.push("/Goods") };
+ else browserHistory.push("/Goods") ;
      console.log(values) };
 
 const Pay=(props)=>(
