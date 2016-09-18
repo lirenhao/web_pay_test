@@ -57,26 +57,27 @@ if (module.hot) {
 // TODO 后续再移出
 const ClientCmd = Const.ClientCmd
 const ServerCmd = Const.ServerCmd
-const msgHandler = (msg) => {
-	const {eventType, data} = msg
+const msgHandler = (data) => {
+	const {eventType, ...msg} = data
 	switch(eventType) {
 		case ServerCmd.CLIENT_SIGN_IN:
-			store.dispatch(addUser({userId: data.id, userType: data.terminalType}))
+			store.dispatch(addUser({userId: msg.id, userType: msg.terminalType}))
 			break
 		case ClientCmd.ORDER_ITEMS:
-			store.dispatch(addOrder({...data}))
+			console.log(msg);
+			store.dispatch(addOrder({...msg}))
 			break
 		case ClientCmd.MARKETING:
-			store.dispatch(addMarketing({...data}))
+			store.dispatch(addMarketing({...msg}))
 			break
 		case ClientCmd.PAY_AUTH:
-			store.dispatch(payAuth(data.orderId))
+			store.dispatch(payAuth(msg.orderId))
 			break
 		case ClientCmd.PAY_COMPLETED:
-			store.dispatch(remove(data.orderId))
+			store.dispatch(remove(msg.orderId))
 			break
 		case ClientCmd.FAIL:
-			store.dispatch(remove(data.orderId))
+			store.dispatch(remove(msg.orderId))
 			break
 		case ClientCmd.MESSAGE:
 			console.log(msg)

@@ -9,8 +9,8 @@ import {createReducer} from "redux-act"
 import {addOrder, remove} from "../actions"
 
 export default createReducer({
-    [addOrder]: (state, orderId) => {
-        return [...state, orderId]
+    [addOrder]: (state, order) => {
+        return [...state, order.orderId]
     },
     [remove]: (state, orderId) => {
         return state.filter((value) => {
