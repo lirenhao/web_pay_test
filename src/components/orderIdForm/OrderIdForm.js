@@ -33,14 +33,23 @@ const OrderIdField = ({input}) => (
 )
 
 const OrderIdForm = (props) => {
-    const {handleSubmit, onSubmit, orderNum} = props;
+    const {handleSubmit, onSubmit, onButton, orderNum} = props
+    const button = (orderNum) => {
+        if(orderNum > 0)
+            return (
+                <Button bsStyle="info" onClick={onButton}>
+                    <span className="badge">{orderNum}</span>
+                    &nbsp;个待支付
+                </Button>
+            )
+        else
+            return (<p/>)
+    }
     return (
         <Form inline onSubmit={handleSubmit(onSubmit)}>
             <Field name="orderId" component={OrderIdField}/>
             <p/>
-            <Button bsStyle="info">
-                <span className="badge">{orderNum}</span>
-                &nbsp;个待支付</Button>
+            {button(orderNum)}
         </Form>
     )
 }
