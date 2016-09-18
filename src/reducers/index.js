@@ -8,7 +8,10 @@
 import {combineReducers} from 'redux'
 import {reducer as form} from 'redux-form'
 import user from "./userReducer"
+import order from "./orderReducer"
+import orderIds from "./orderIdsReducer"
+import marketing from "./marketingReducer"
 
 export default combineReducers({
-    form, user
+    form, user, orderIds, order, marketing
 })
