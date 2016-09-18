@@ -15,7 +15,7 @@ const TerminalType = Const.TerminalType
 
 const onLogin = (values) => {
     Payment.clientSignIn({...values})
-    if (values == TerminalType.MERCHANT)
+    if (values.userType == TerminalType.MERCHANT)
         browserHistory.push("goods")
     else
         browserHistory.push("orderId")
