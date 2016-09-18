@@ -5,6 +5,7 @@
     "test": "mocha test/.setup.js  test/**/*-test.js --reporter mochawesome --no-exit --reporter-options reportDir=customReportDir,reportName=customReportName"
   },
   "dependencies": {
+    "babel-preset-stage-0": "^6.5.0",
     "bootstrap-sass": "^3.3.7",
     "jquery": "^2.2.4",
     "keymirror": "^0.1.1",
