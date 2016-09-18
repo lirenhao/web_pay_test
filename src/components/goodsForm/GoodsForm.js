@@ -58,10 +58,10 @@ const validate = (values) => {
 }
 
 const GoodsForm = (props) => {
-    const {handleSubmit, onSubmit, orderNum} = props
+    const {handleSubmit, onSubmit, orderNum, onButton} = props
     return (
         <Form inline onSubmit={handleSubmit(onSubmit)}>
-            <FieldArray name="goods" component={GoodsField} orderNum={orderNum}/>
+            <FieldArray name="goods" component={GoodsField} orderNum={orderNum} onButton={onButton}/>
         </Form>
     )
 }
@@ -73,7 +73,8 @@ const GoodsForm = (props) => {
 
 GoodsForm.propTypes = {
     onSubmit: React.PropTypes.func.isRequired,
-    orderNum: React.PropTypes.number.isRequired
+    orderNum: React.PropTypes.number.isRequired,
+    onButton: React.PropTypes.func.isRequired
 }
 
 export default reduxForm({

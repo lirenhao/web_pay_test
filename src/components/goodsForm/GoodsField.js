@@ -10,7 +10,7 @@ import {ListGroup, ListGroupItem, InputGroup, ButtonGroup, Button} from "react-b
 import {Field} from "redux-form"
 import InputField from "./InputField"
 
-const GoodsField = ({fields, orderNum}) => (
+const GoodsField = ({fields, orderNum, onButton}) => (
     <ListGroup>
         {fields.map((item, index) =>
             <ListGroupItem key={index}>
@@ -45,7 +45,7 @@ const GoodsField = ({fields, orderNum}) => (
                 <Button bsStyle="success" type="submit">提交</Button>
             </ButtonGroup>
             <ButtonGroup className={orderNum && orderNum > 0 ? "": "hidden"}>
-                <Button bsStyle="info">
+                <Button bsStyle="info" onButton={onButton}>
                     <span className="badge">{orderNum}</span>
                     &nbsp;个待支付</Button>
             </ButtonGroup>
@@ -54,7 +54,8 @@ const GoodsField = ({fields, orderNum}) => (
 )
 
 GoodsField.propTypes = {
-    orderNum: React.PropTypes.number.isRequired
+    orderNum: React.PropTypes.number.isRequired,
+    onButton: React.PropTypes.func.isRequired
 }
 
 export default GoodsField
