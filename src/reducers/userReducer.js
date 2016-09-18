@@ -6,10 +6,10 @@
  * 处理用户信息的reducer，初始化数据为{}
  */
 import {createReducer} from "redux-act"
-import {userLogin} from "../actions"
+import {addUser} from "../actions"
 
 export default createReducer({
-    [userLogin]: (state, user) => {
+    [addUser]: (state, user) => {
         return user
     }
 }, {})

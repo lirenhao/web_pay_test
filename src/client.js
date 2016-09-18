@@ -17,7 +17,7 @@ import {AppContainer} from "react-hot-loader"
 import Payment from "./Payment"
 import Const from "./constants"
 import reducer from "./reducers"
-import {userLogin} from "./actions"
+import {addUser} from "./actions"
 
 const store = createStore(reducer, DevTools.instrument())
 
@@ -60,7 +60,7 @@ const ServerCmd = Const.ServerCmd
 const msgHandler = (msg) => {
 	switch(msg.eventType) {
 		case ServerCmd.CLIENT_SIGN_IN:
-			store.dispatch(userLogin({userId: msg.id, userType: msg.terminalType}))
+			store.dispatch(addUser({userId: msg.id, userType: msg.terminalType}))
 			break
 		case ClientCmd.ORDER_ITEMS:
 			console.log(msg);
