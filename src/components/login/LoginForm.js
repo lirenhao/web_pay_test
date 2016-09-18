@@ -37,14 +37,14 @@ const userTypeField = ({input}) => (
 )
 
 const LoginForm = (props) => {
-    const {handleSubmit, onLogin} = props
+    const {handleSubmit, onLogin, pristine, submitting} = props
     // TODO 暂时不知道如何给userType设置默认值，暂且设置在容器中
     return (
         <div id="login">
             <Form onSubmit={handleSubmit(onLogin)} id="form">
                 <Field name="userId" component={userIdField}/>
                 <Field name="userType" component={userTypeField}/>
-                <Button id="lBtn" bsStyle="info" block type="submit">登陆</Button>
+                <Button id="lBtn" bsStyle="info" block type="submit" disabled={pristine || submitting}>登陆</Button>
             </Form>
         </div>
     )
@@ -55,5 +55,5 @@ LoginForm.propTypes = {
 }
 
 export default reduxForm({
-    form: "loginForm",
+    form: "loginForm"
 })(LoginForm)
