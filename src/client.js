@@ -10,14 +10,16 @@
 import React from 'react'
 import {render} from 'react-dom'
 import {Provider} from "react-redux"
-import {createStore, combineReducers} from "redux"
-import {reducer as formReducer} from "redux-form"
+import {createStore} from "redux"
 import App from "./containers/App"
 import DevTools from "./containers/DevTools"
 import {AppContainer} from "react-hot-loader"
+import Payment from "./Payment"
+import Const from "./constants"
+import reducer from "./reducers"
+import {userLogin} from "./actions"
 
-const reducer = combineReducers({form: formReducer});
-const store = createStore(reducer, DevTools.instrument());
+const store = createStore(reducer, DevTools.instrument())
 
 const container = document.createElement("div");
 container.setAttribute("class", "container");
@@ -51,3 +53,36 @@ if (module.hot) {
 		);
 	});
 }
+
+// TODO 后续再移出
+const ClientCmd = Const.ClientCmd
+const ServerCmd = Const.ServerCmd
+const msgHandler = (msg) => {
+	switch(msg.eventType) {
+		case ServerCmd.CLIENT_SIGN_IN:
+			store.dispatch(userLogin({userId: msg.id, userType: msg.terminalType}))
+			break
+		case ClientCmd.ORDER_ITEMS:
+			console.log(msg);
+			break
+		case ClientCmd.MARKETING:
+			console.log(msg);
+			break
+		case ClientCmd.PAY_AUTH:
+			console.log(msg);
+			break
+		case ClientCmd.PAY_COMPLETED:
+			console.log(msg);
+			break
+		case ClientCmd.FAIL:
+			console.log(msg);
+			break
+		case ClientCmd.MESSAGE:
+			console.log(msg);
+			break
+	}
+}
+
+window.addEventListener("load", () => {
+	Payment.setMsgHandler(msgHandler);
+})
