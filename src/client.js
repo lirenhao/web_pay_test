@@ -64,7 +64,6 @@ const msgHandler = (data) => {
 			store.dispatch(addUser({userId: msg.id, userType: msg.terminalType}))
 			break
 		case ClientCmd.ORDER_ITEMS:
-			console.log(msg);
 			store.dispatch(addOrder({...msg}))
 			break
 		case ClientCmd.MARKETING:
