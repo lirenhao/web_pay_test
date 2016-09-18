@@ -10,7 +10,10 @@ import {addOrder, remove} from "../actions"
 
 export default createReducer({
     [addOrder]: (state, order) => {
-        return [...state, order.orderId]
+        if (state.indexOf(order.orderId) < 0)
+            return [...state, order.orderId]
+        else
+            return [...state]
     },
     [remove]: (state, orderId) => {
         return state.filter((value) => {
