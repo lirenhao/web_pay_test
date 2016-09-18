@@ -1,39 +1,51 @@
 /**
  * Author：pengfei
  * Create Date：2016/9/12
- * Modified By：pengfei
+ * Modified By：liRenhao
  * Why & What is modified  <修改原因描述>
  * 组合订单页面的所需的组件
  */
 
 import React from 'react'
 import OrderInfo from './OrderInfo'
-import OrderSelect from './OrderSelect'
 import Marketing from './Marketing'
 import Billing from './Billing'
 import PayButton from './PayButton'
 import {Tabs, Tab} from 'react-bootstrap';
 
-const Order = ({data,index})=> {
-
-    const tabs = data.orderIds.map(
-        (p, i)=>(
-            <Tab eventKey={i} title={p} key={i}>
+const Order = (props)=> {
+    const {orderIds, order, marketing, activeKey, onCancel, onReqPay} = props
+    const tabs = orderIds.map(
+        (orderId, index)=>(
+            <Tab eventKey={index} title={orderId} key={index}>
                 <div>
-                    <OrderInfo items={data.order[p].items}/>
-                    <Marketing marketing={data.marketing[p]}/>
-                    <Billing items={data.order[p].items} marketing={data.marketing[p]}/>
-                    <PayButton canCancel={true} canPay={false} onCancel={()=>{alert("onCancel")}} onReqPay={()=>{alert("onReqPay")}}/>
+                    <OrderInfo items={order[orderId].items}/>
+                    <Marketing marketing={marketing[orderId]}/>
+                    <Billing items={order[orderId].items} marketing={marketing[orderId]}/>
+                    <PayButton
+                        orderId={orderId}
+                        canCancel={true}
+                        canPay={false}
+                        onCancel={onCancel}
+                        onReqPay={onReqPay}/>
                 </div>
             </Tab>
         )
     )
-
     return (
-        <Tabs defaultActiveKey={Number(index)||0} id="OrderSelect">
+        <Tabs defaultActiveKey={activeKey} id="OrderSelect">
             {tabs}
         </Tabs>
     )
+}
+
+Order.propTypes = {
+    orderIds: React.PropTypes.array.isRequired,
+    order: React.PropTypes.object.isRequired,
+    marketing: React.PropTypes.object.isRequired,
+    activeKey: React.PropTypes.number.isRequired,
+    onCancel: React.PropTypes.func.isRequired,
+    onReqPay: React.PropTypes.func.isRequired
 }
 
 export default Order;

@@ -15,6 +15,7 @@ class PayButton extends React.Component {
     componentDidUpdate() {
         //browserHistory.push("/payFrom/"+this.props.orderId)
     }
+
     //todo 待完善按钮点击事件的处理
     render() {
         let payButton = "success";
@@ -33,18 +34,15 @@ class PayButton extends React.Component {
             <ButtonGroup justified>
                 <ButtonGroup className={payClass}>
                     <Button bsStyle={payButton}
-                            onClick={
-                                this.props.onReqPay
-                            }
-                            disabled={disabled}
-                    >支付
+                            onClick={() => this.props.onReqPay(this.props.orderId)}
+                            disabled={disabled}>
+                        支付
                     </Button>
                 </ButtonGroup>
                 <ButtonGroup className={cancelClass}>
                     <Button bsStyle="danger"
-                            onClick={
-                                this.props.onCancel
-                            }>取消
+                            onClick={() => this.props.onCancel(this.props.orderId)}>
+                        取消
                     </Button>
                 </ButtonGroup>
             </ButtonGroup>

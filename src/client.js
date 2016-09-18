@@ -18,6 +18,7 @@ import Payment from "./Payment"
 import Const from "./constants"
 import reducer from "./reducers"
 import {addUser, addOrder, addMarketing, payAuth, remove} from "./actions"
+import {browserHistory} from "react-router"
 
 const store = createStore(reducer, DevTools.instrument())
 
@@ -26,64 +27,75 @@ container.setAttribute("class", "container");
 document.body.appendChild(container);
 
 render(
-	<AppContainer>
-		<Provider store={store}>
-			<div>
-				<App/>
+    <AppContainer>
+        <Provider store={store}>
+            <div>
+                <App/>
                 <DevTools/>
-			</div>
-		</Provider>
-	</AppContainer>,
-	container
+            </div>
+        </Provider>
+    </AppContainer>,
+    container
 );
 
 if (module.hot) {
-	module.hot.accept('./containers/App', () => {
-		const NextApp = require('./containers/App').default;
-		render(
-			<AppContainer>
-				<Provider store={store}>
-					<div>
-						<NextApp/>
+    module.hot.accept('./containers/App', () => {
+        const NextApp = require('./containers/App').default;
+        render(
+            <AppContainer>
+                <Provider store={store}>
+                    <div>
+                        <NextApp/>
                         <DevTools/>
-					</div>
-				</Provider>
-			</AppContainer>,
-			container
-		);
-	});
+                    </div>
+                </Provider>
+            </AppContainer>,
+            container
+        );
+    });
 }
 
 // TODO 后续再移出
 const ClientCmd = Const.ClientCmd
 const ServerCmd = Const.ServerCmd
 const msgHandler = (data) => {
-	const {eventType, ...msg} = data
-	switch(eventType) {
-		case ServerCmd.CLIENT_SIGN_IN:
-			store.dispatch(addUser({userId: msg.id, userType: msg.terminalType}))
-			break
-		case ClientCmd.ORDER_ITEMS:
-			store.dispatch(addOrder({...msg}))
-			break
-		case ClientCmd.MARKETING:
-			store.dispatch(addMarketing({...msg}))
-			break
-		case ClientCmd.PAY_AUTH:
-			store.dispatch(payAuth(msg.orderId))
-			break
-		case ClientCmd.PAY_COMPLETED:
-			store.dispatch(remove(msg.orderId))
-			break
-		case ClientCmd.FAIL:
-			store.dispatch(remove(msg.orderId))
-			break
-		case ClientCmd.MESSAGE:
-			console.log(msg)
-			break
-	}
+    const {eventType, ...msg} = data
+    switch (eventType) {
+        case ServerCmd.CLIENT_SIGN_IN:
+            store.dispatch(addUser({userId: msg.id, userType: msg.terminalType}))
+            break
+        case ClientCmd.ORDER_ITEMS:
+            store.dispatch(addOrder({...msg}))
+            break
+        case ClientCmd.MARKETING:
+            store.dispatch(addMarketing({...msg}))
+            break
+        case ClientCmd.PAY_AUTH:
+            store.dispatch(payAuth(msg.orderId))
+            // 获取支付权限跳转到pay
+            browserHistory.push("pay")
+            break
+        case ClientCmd.PAY_COMPLETED:
+            store.dispatch(remove(msg.orderId))
+            // 当用户没有订单时，商户跳转到录入商品界面、客户跳转到输入订单界面
+            const orderIds = store.getState().orderIds
+            const user = store.getState().user
+            if (orderIds.length < 1) {
+                if (user.userType == Const.TerminalType.MERCHANT)
+                    browserHistory.push("goods")
+                else
+                    browserHistory.push("orderId")
+            }
+            break
+        case ClientCmd.FAIL:
+            store.dispatch(remove(msg.orderId))
+            break
+        case ClientCmd.MESSAGE:
+            console.log(msg)
+            break
+    }
 }
 
 window.addEventListener("load", () => {
-	Payment.setMsgHandler(msgHandler);
+    Payment.setMsgHandler(msgHandler);
 })
