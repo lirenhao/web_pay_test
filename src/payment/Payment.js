@@ -164,13 +164,18 @@ class Payment {
     /**
      * 发送支付结果操作
      * @param user 一个对象包括userId、userType两个属性
-     * @param result
+     * @param result {"eventType":"PAY_RESULT","orderId":"23","state":true,"channel":"测试渠道","msg":"成功","id":"1","terminalType":"USER"}
      */
     payResult(user, result) {
+        // TODO 根据result中的值判断成功还是失败
         this.send({
             eventType: ServerCmd.PAY_RESULT,
             id: user.userId,
             terminalType: user.userType,
+            orderId: result.orderId,
+            state: true,
+            channel: "测试渠道",
+            msg: "成功"
         })
     }
 }

@@ -19,7 +19,7 @@ const Billing = ({items, marketing}) => {
             const totalAmt = items.reduce((p, q)=>p + q.price * q.quantity, 0);
             return (
                 <Table>
-                    <tbody>
+                    <thead>
                     <tr>
                         <td>总价</td>
                         <td>{totalAmt}</td>
@@ -32,7 +32,7 @@ const Billing = ({items, marketing}) => {
                         <td>结算</td>
                         <td>{totalAmt - marketing.amt}</td>
                     </tr>
-                    </tbody>
+                    </thead>
                 </Table>
             )
         } else {

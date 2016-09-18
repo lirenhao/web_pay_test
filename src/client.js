@@ -73,18 +73,16 @@ const msgHandler = (data) => {
         case ClientCmd.PAY_AUTH:
             store.dispatch(payAuth(msg.orderId))
             // 获取支付权限跳转到pay
-            browserHistory.push("pay")
+            browserHistory.push("/pay/" + store.getState().orderIds.indexOf(msg.orderId))
             break
         case ClientCmd.PAY_COMPLETED:
             store.dispatch(remove(msg.orderId))
             // 当用户没有订单时，商户跳转到录入商品界面、客户跳转到输入订单界面
-            const orderIds = store.getState().orderIds
-            const user = store.getState().user
-            if (orderIds.length < 1) {
-                if (user.userType == Const.TerminalType.MERCHANT)
-                    browserHistory.push("goods")
+            if (store.getState().orderIds.length < 1) {
+                if (store.getState().user.userType == Const.TerminalType.MERCHANT)
+                    browserHistory.push("/goods")
                 else
-                    browserHistory.push("orderId")
+                    browserHistory.push("/orderId")
             }
             break
         case ClientCmd.FAIL:

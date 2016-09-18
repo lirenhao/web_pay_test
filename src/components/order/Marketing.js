@@ -19,7 +19,7 @@ const Marketing = ({marketing}) => {
         if (marketing) {
             return (
                 <Table>
-                    <tbody>
+                    <thead>
                     <tr>
                         <td>优惠金额</td>
                         <td>{marketing.amt}</td>
@@ -28,7 +28,7 @@ const Marketing = ({marketing}) => {
                         <td>优惠信息</td>
                         <td>{marketing.msg}</td>
                     </tr>
-                    </tbody>
+                    </thead>
                 </Table>
             )
         } else {
