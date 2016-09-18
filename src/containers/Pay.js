@@ -10,6 +10,7 @@
  */
 import React from "react"
 import PayForm from '../components/payForm/PayForm'
+import {connect} from "react-redux"
 import {browserHistory} from 'react-router'
 
 var state = {
@@ -66,4 +67,4 @@ const Pay=(props)=>(
     />
 )
 
-export default Pay
+export default connect()(Pay)
