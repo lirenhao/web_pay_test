@@ -10,19 +10,17 @@ import {Route} from 'react-router'
 import Login from './containers/Login'
 import Goods from './containers/Goods'
 import OrderId from './containers/OrderId'
-import AcqOrderId from './components/acquisitionOrderId/AcqOrderId'
-import Pay from './containers/Pay'
 import Order from './containers/Order'
+import Pay from './containers/Pay'
 import Dialog from './components/Dialog/Dialog'
 
 export default (
 	<Route>
 		<Route path="/" component={Login}/>
         <Route path="/goods" component={Goods}/>
-		<Route path="/acqOrderId" component={AcqOrderId}/>
-		<Route path="/pay" component={Pay}/>
-		<Route path="/order/:index" component={Order}/>
-		<Route path="/Dialog" component={Dialog}/>
 		<Route path="/orderId" component={OrderId}/>
+		<Route path="/order/:index" component={Order}/>
+		<Route path="/pay" component={Pay}/>
+		<Route path="/dialog" component={Dialog}/>
 	</Route>
 )
