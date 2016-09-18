@@ -51,7 +51,7 @@ var onSubmitHandle=(values) => {if(state.user.userType=="USER")
  else browserHistory.push("/Goods") ;
      console.log(values) };
 //取消支付事件
-var onCancleHandle=(values) => {if(state.user.userType=="USER")
+var onCancelHandle=(values) => {if(state.user.userType=="USER")
      browserHistory.push("/acqOrderId");
  else browserHistory.push("/Goods") ;
      console.log(values) };
@@ -59,7 +59,7 @@ var onCancleHandle=(values) => {if(state.user.userType=="USER")
 const Pay=(props)=>(
     <PayForm initialValues={{orderId: state.orderIds[index], result: "0"}}
              onSubmit={onSubmitHandle}
-             onCancel={onCancleHandle}
+             onCancel={onCancelHandle}
              orderIds={state.orderIds}
              order={state.order}
              marketing={state.marketing}
