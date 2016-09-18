@@ -18,7 +18,7 @@ export default createReducer({
     },
     [remove]: (state, orderId) => {
         const newState = {}
-        state.keys().filter((key) => {
+        Object.keys(state).filter((key) => {
             return key !== orderId
         }).forEach((key) => {
             newState[key] = state[key]
