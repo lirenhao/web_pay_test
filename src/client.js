@@ -17,7 +17,7 @@ import {AppContainer} from "react-hot-loader"
 import Payment from "./Payment"
 import Const from "./constants"
 import reducer from "./reducers"
-import {addUser} from "./actions"
+import {addUser, addOrder, addMarketing, payAuth, remove} from "./actions"
 
 const store = createStore(reducer, DevTools.instrument())
 
@@ -58,27 +58,28 @@ if (module.hot) {
 const ClientCmd = Const.ClientCmd
 const ServerCmd = Const.ServerCmd
 const msgHandler = (msg) => {
-	switch(msg.eventType) {
+	const {eventType, data} = msg
+	switch(eventType) {
 		case ServerCmd.CLIENT_SIGN_IN:
-			store.dispatch(addUser({userId: msg.id, userType: msg.terminalType}))
+			store.dispatch(addUser({userId: data.id, userType: data.terminalType}))
 			break
 		case ClientCmd.ORDER_ITEMS:
-			console.log(msg);
+			store.dispatch(addOrder({...data}))
 			break
 		case ClientCmd.MARKETING:
-			console.log(msg);
+			store.dispatch(addMarketing({...data}))
 			break
 		case ClientCmd.PAY_AUTH:
-			console.log(msg);
+			store.dispatch(payAuth(data.orderId))
 			break
 		case ClientCmd.PAY_COMPLETED:
-			console.log(msg);
+			store.dispatch(remove(data.orderId))
 			break
 		case ClientCmd.FAIL:
-			console.log(msg);
+			store.dispatch(remove(data.orderId))
 			break
 		case ClientCmd.MESSAGE:
-			console.log(msg);
+			console.log(msg)
 			break
 	}
 }
