@@ -9,7 +9,7 @@
  */
 import {createAction} from "redux-act"
 
-export const userLogin = createAction("user login");
+
 export const addUser = createAction("ADD_USER");
 export const addOrder = createAction("ADD_ORDER");
 export const addMarketing=createAction("ADD_MARKETING");
