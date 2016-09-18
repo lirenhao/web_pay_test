@@ -47,9 +47,13 @@ const index = 0;
 const Pay=(props)=>(
     <PayForm initialValues={{orderId: state.orderIds[index], result: "0"}}
              onSubmit={(values) => {if(state.user.userType=="USER")
-             {browserHistory.push("/acqOrderId") } else {browserHistory.push("/Goods") } ; console.log(values) }}
+             browserHistory.push("/acqOrderId");
+             else {browserHistory.push("/Goods") };
+             console.log(values) }}
              onCancel={(values) => {if(state.user.userType=="USER")
-             {browserHistory.push("/acqOrderId") } else {browserHistory.push("/Goods") } ; console.log(values) }}
+             browserHistory.push("/acqOrderId");
+             else {browserHistory.push("/Goods") };
+             console.log(values) }}
              orderIds={state.orderIds}
              order={state.order}
              marketing={state.marketing}
