@@ -3,6 +3,8 @@
  * Create Date：2016/9/12
  * Modified By：liRenhao
  * Why & What is modified 登录界面跳转路由修改
+ * Modified By：Pengfei
+ * Why & What is modified 支付界面路由修改
  * 路由文件
  */
 import React from 'react'
@@ -20,7 +22,7 @@ export default (
         <Route path="/goods" component={Goods}/>
 		<Route path="/orderId" component={OrderId}/>
 		<Route path="/order/:index" component={Order}/>
-		<Route path="/pay" component={Pay}/>
+		<Route path="/pay/:index" component={Pay}/>
 		<Route path="/dialog" component={Dialog}/>
 	</Route>
 )
