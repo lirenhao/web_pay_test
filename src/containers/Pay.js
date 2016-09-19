@@ -20,7 +20,7 @@ import Payment from "../Payment"
 const TerminalType = Const.TerminalType;
 
 const Pay = (props)=> {
-    const {user, orderIds, order, marketing, params: {index}} = props;
+    const {user, orderIds, order, marketing, params: {index}} = props
 
     var onSubmitHandle = (result) => {
         Payment.payResult(user, result);
@@ -36,7 +36,7 @@ const Pay = (props)=> {
         else browserHistory.push("/Goods");
     };
 
-    return <PayForm initialValues={{orderId: orderIds[index], result: "0"}}
+    return <PayForm initialValues={{orderId: orderIds[index], state: "0"}}
                     onSubmit={onSubmitHandle}
                     onCancel={()=>onCancelHandle(orderIds[index])}
                     orderIds={orderIds}
