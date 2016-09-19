@@ -4,9 +4,11 @@
  * Modified By：liRenhao
  * Why & What is modified 点击支付后不能再点击处理
  * <文件描述>
+ * Modified By：kongli
+ * Why & What is modified:添加底部导航<Navbar fixedBottom></Navbar>
  */
 import React from 'react'
-import {ButtonGroup, Button} from 'react-bootstrap'
+import {ButtonGroup, Button,Navbar} from 'react-bootstrap'
 
 class PayButton extends React.Component {
     constructor(props) {
@@ -26,22 +28,24 @@ class PayButton extends React.Component {
     render() {
         const {canCancel, onCancel, orderId} = this.props
         return (
-            <ButtonGroup justified>
-                <ButtonGroup>
-                    <Button bsStyle={this.state.canPay ? "success" : "warning"}
-                            disabled={!this.state.canPay}
-                            onClick={() => this.handleClick(orderId)}>
-                        支付
-                    </Button>
+            <Navbar fixedBottom>
+                <ButtonGroup justified>
+                    <ButtonGroup>
+                        <Button bsStyle={this.state.canPay ? "success" : "warning"}
+                                disabled={!this.state.canPay}
+                                onClick={() => this.handleClick(orderId)}>
+                            支付
+                        </Button>
+                    </ButtonGroup>
+                    <ButtonGroup bsClass={canCancel ? "btn-group" : "hidden"}>
+                        <Button bsStyle="danger"
+                                disabled={!canCancel}
+                                onClick={() => onCancel(orderId)}>
+                            取消
+                        </Button>
+                    </ButtonGroup>
                 </ButtonGroup>
-                <ButtonGroup bsClass={canCancel ? "btn-group" : "hidden"}>
-                    <Button bsStyle="danger"
-                            disabled={!canCancel}
-                            onClick={() => onCancel(orderId)}>
-                        取消
-                    </Button>
-                </ButtonGroup>
-            </ButtonGroup>
+            </Navbar>
         )
     }
 }
