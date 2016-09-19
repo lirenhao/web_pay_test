@@ -173,9 +173,9 @@ class Payment {
             id: user.userId,
             terminalType: user.userType,
             orderId: result.orderId,
-            state: true,
+            state: result.state==="0"?true:false,
             channel: "测试渠道",
-            msg: "成功"
+            msg: result.state==="0"?"成功":"失败"
         })
     }
 }
