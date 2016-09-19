@@ -25,15 +25,17 @@ const Pay = (props)=> {
     var onSubmitHandle = (result) => {
         Payment.payResult(user, result);
         if (user.userType == TerminalType.USER)
-            browserHistory.push("/acqOrderId");
-        else browserHistory.push("/Goods");
+            browserHistory.push("/orderId");
+        else
+            browserHistory.push("/goods");
     };
 
     var onCancelHandle = (orderId) => {
         Payment.giveUpPay(user, orderId)
         if (user.userType == TerminalType.USER)
-            browserHistory.push("/acqOrderId");
-        else browserHistory.push("/Goods");
+            browserHistory.push("/orderId");
+        else
+            browserHistory.push("/goods");
     };
 
     return <PayForm initialValues={{orderId: orderIds[index], state: "0"}}
@@ -42,7 +44,7 @@ const Pay = (props)=> {
                     orderIds={orderIds}
                     order={order}
                     marketing={marketing}
-                    index={index}
+                    index={Number(index)}
     />
 };
 

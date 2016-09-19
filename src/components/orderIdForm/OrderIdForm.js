@@ -7,16 +7,17 @@
  * Why & What is modified  添加如果订单号为空时的验证
  * 添加订单号的表单
  */
-
 import React from "react"
 import {Field, reduxForm} from "redux-form"
 import {Form, FormGroup, InputGroup, FormControl, Button, Glyphicon} from "react-bootstrap"
 
-const validate = values => {
+const validate = values  => {
 	const error = {}
 	if (!values.orderId) {
 		error.orderId = 'Required'
-	}
+	} else if (values.orderId.trim() == "") {
+        error.orderId = 'Required'
+    }
 	return error
 }
 
@@ -31,15 +32,13 @@ const OrderIdField = ({input, meta:{touched, error}}) => (
 				<Button type="submit" style={{"height": "34px"}} disabled={error ? true : false}>加入</Button>
 			</InputGroup.Button>
 		</InputGroup>
-		&nbsp;&nbsp;
-		{touched && error && <span style={{"color": "red", "fontSize": "130%"}}>{error}</span>}
 	</FormGroup>
 )
 
 const OrderIdForm = (props) => {
 	const {handleSubmit, onSubmit, onButton, orderNum} = props
 	const button = (orderNum) => {
-		if (orderNum > 0)
+		if(orderNum > 0)
 			return (
 				<Button bsStyle="info" onClick={onButton}>
 					<span className="badge">{orderNum}</span>
