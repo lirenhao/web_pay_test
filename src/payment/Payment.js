@@ -134,7 +134,7 @@ class Payment {
     }
 
     /**
-     * 支付完成操作
+     * 取消支付操作
      * @param user 一个对象包括userId、userType两个属性
      * @param orderId 订单号
      */
@@ -148,7 +148,7 @@ class Payment {
     }
 
     /**
-     * 取消支付操作
+     * 取消订单操作
      * @param user 一个对象包括userId、userType两个属性
      * @param orderId
      */

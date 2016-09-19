@@ -2,7 +2,7 @@
  * Author：pengfei
  * Create Date：2016/9/12
  * Modified By：liRenhao
- * Why & What is modified  <修改原因描述>
+ * Why & What is modified 删除订单时展示第一个tab
  * 组合订单页面的所需的组件
  */
 
@@ -13,30 +13,50 @@ import Billing from './Billing'
 import PayButton from './PayButton'
 import {Tabs, Tab} from 'react-bootstrap';
 
-const Order = (props)=> {
-    const {orderIds, order, marketing, activeKey, onCancel, onReqPay} = props
-    const tabs = orderIds.map(
-        (orderId, index)=>(
-            <Tab eventKey={index} title={orderId} key={index}>
-                <div>
-                    <OrderInfo items={order[orderId].items}/>
-                    <Marketing marketing={marketing[orderId]}/>
-                    <Billing items={order[orderId].items} marketing={marketing[orderId]}/>
-                    <PayButton
-                        orderId={orderId}
-                        canCancel={true}
-                        canPay={false}
-                        onCancel={onCancel}
-                        onReqPay={onReqPay}/>
-                </div>
-            </Tab>
+class Order extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {key: props.activeKey}
+    }
+
+    handleSelect(key) {
+        this.setState({key})
+    }
+
+    handleCancel(orderId) {
+        this.props.onCancel(orderId)
+        if (this.state.key > 0) {
+            this.setState({key: this.state.key - 1})
+        }
+    }
+
+    render() {
+        const {orderIds, order, marketing, onReqPay, canCancel} = this.props
+        const tabItems = orderIds.map(
+            (orderId, index) => (
+                <Tab eventKey={index} title={orderId} key={index}>
+                    <div>
+                        <OrderInfo items={order[orderId].items}/>
+                        <Marketing marketing={marketing[orderId]}/>
+                        <Billing items={order[orderId].items} marketing={marketing[orderId]}/>
+                        <PayButton
+                            orderId={orderId}
+                            canCancel={canCancel}
+                            onCancel={() => this.handleCancel(orderId)}
+                            canPay={marketing[orderId] ? true : false}
+                            onReqPay={onReqPay}/>
+                    </div>
+                </Tab>
+            )
         )
-    )
-    return (
-        <Tabs defaultActiveKey={activeKey} id="OrderSelect">
-            {tabs}
-        </Tabs>
-    )
+        return (
+            <Tabs id="OrderSelect"
+                  activeKey={this.state.key}
+                  onSelect={this.handleSelect}>
+                {tabItems}
+            </Tabs>
+        )
+    }
 }
 
 Order.propTypes = {
@@ -44,8 +64,9 @@ Order.propTypes = {
     order: React.PropTypes.object.isRequired,
     marketing: React.PropTypes.object.isRequired,
     activeKey: React.PropTypes.number.isRequired,
+    onReqPay: React.PropTypes.func.isRequired,
     onCancel: React.PropTypes.func.isRequired,
-    onReqPay: React.PropTypes.func.isRequired
+    canCancel: React.PropTypes.bool.isRequired
 }
 
 export default Order;

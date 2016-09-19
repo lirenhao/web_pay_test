@@ -12,7 +12,7 @@ import Goods from './containers/Goods'
 import OrderId from './containers/OrderId'
 import Order from './containers/Order'
 import Pay from './containers/Pay'
-import Dialog from './components/Dialog/Dialog'
+import Dialog from './components/dialog/Dialog'
 
 export default (
 	<Route>
