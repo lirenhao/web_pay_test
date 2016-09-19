@@ -54,7 +54,7 @@ const PayForm = (props) => {
             <Navbar fixedBottom>
                 <ButtonGroup justified>
                     <ButtonGroup>
-                        <Field name="result" component={PayField}/>
+                        <Field name="state" component={PayField}/>
                     </ButtonGroup>
                     <ButtonGroup>
                         <Button bsStyle="success" type="submit">确定</Button>
