@@ -8,6 +8,7 @@
 import React from "react"
 import {connect} from "react-redux"
 import Payment from "../Payment"
+import Const from "../constants"
 import OrderShow from "../components/order/Order"
 
 const Order = (props) => {
@@ -22,8 +23,9 @@ const Order = (props) => {
                       orderIds={orderIds}
                       order={order}
                       marketing={marketing}
+                      onReqPay={onReqPay}
                       onCancel={onCancel}
-                      onReqPay={onReqPay}/>
+                      canCancel={user.userType == Const.TerminalType.MERCHANT}/>
 }
 
 const mapStateToProps = (state)=> ({

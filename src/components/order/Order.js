@@ -14,9 +14,9 @@ import PayButton from './PayButton'
 import {Tabs, Tab} from 'react-bootstrap';
 
 const Order = (props)=> {
-    const {orderIds, order, marketing, activeKey, onCancel, onReqPay} = props
+    const {orderIds, order, marketing, activeKey, onReqPay, onCancel, canCancel} = props
     const tabs = orderIds.map(
-        (orderId, index)=>(
+        (orderId, index) => (
             <Tab eventKey={index} title={orderId} key={index}>
                 <div>
                     <OrderInfo items={order[orderId].items}/>
@@ -24,9 +24,9 @@ const Order = (props)=> {
                     <Billing items={order[orderId].items} marketing={marketing[orderId]}/>
                     <PayButton
                         orderId={orderId}
-                        canCancel={true}
-                        canPay={false}
+                        canCancel={canCancel}
                         onCancel={onCancel}
+                        canPay={marketing[orderId] ? true : false}
                         onReqPay={onReqPay}/>
                 </div>
             </Tab>
@@ -44,8 +44,9 @@ Order.propTypes = {
     order: React.PropTypes.object.isRequired,
     marketing: React.PropTypes.object.isRequired,
     activeKey: React.PropTypes.number.isRequired,
+    onReqPay: React.PropTypes.func.isRequired,
     onCancel: React.PropTypes.func.isRequired,
-    onReqPay: React.PropTypes.func.isRequired
+    canCancel: React.PropTypes.bool.isRequired
 }
 
 export default Order;

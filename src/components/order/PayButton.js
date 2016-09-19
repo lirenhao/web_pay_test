@@ -1,46 +1,37 @@
 /**
  * Author：pengfei
  * Create Date：2016/9/13
- * Modified By：pengfei
- * Why & What is modified  <修改原因描述>
+ * Modified By：liRenhao
+ * Why & What is modified 点击支付后不能再点击处理
  * <文件描述>
  */
-
-
 import React from 'react'
 import {ButtonGroup, Button} from 'react-bootstrap'
-import {browserHistory} from 'react-router'
 
-class PayButton extends React.Component {
-    componentDidUpdate() {
-        //browserHistory.push("/payFrom/"+this.props.orderId)
-    }
-
-    //todo 待完善按钮点击事件的处理
-    render() {
-        let payButton = "success";
-        let payClass = "";
-        let cancelClass = "";
-        let disabled = false;
-
-        if (!this.props.canCancel) {
-            cancelClass += "hidden";
-        }
-        if (this.props.canPay) {
-            payButton = "warning";
-            disabled = true;
-        }
+const PayButton = React.createClass({
+    getInitialState: function () {
+        return {canPay: this.props.canPay};
+    },
+    componentWillReceiveProps: function(nextProps) {
+        this.setState({canPay: nextProps.canPay})
+    },
+    onClick: function () {
+        this.props.onReqPay(this.props.orderId)
+        this.setState({canPay: false})
+    },
+    render: function () {
         return (
             <ButtonGroup justified>
-                <ButtonGroup className={payClass}>
-                    <Button bsStyle={payButton}
-                            onClick={() => this.props.onReqPay(this.props.orderId)}
-                            disabled={disabled}>
+                <ButtonGroup>
+                    <Button bsStyle={this.state.canPay ? "success" : "warning"}
+                            disabled={!this.state.canPay}
+                            onClick={this.onClick}>
                         支付
                     </Button>
                 </ButtonGroup>
-                <ButtonGroup className={cancelClass}>
+                <ButtonGroup bsClass={this.props.canCancel ? "btn-group" : "hidden"}>
                     <Button bsStyle="danger"
+                            disabled={!this.props.canCancel}
                             onClick={() => this.props.onCancel(this.props.orderId)}>
                         取消
                     </Button>
@@ -48,6 +39,14 @@ class PayButton extends React.Component {
             </ButtonGroup>
         )
     }
+})
+
+PayButton.propTypes = {
+    canPay: React.PropTypes.bool.isRequired,
+    canCancel: React.PropTypes.bool.isRequired,
+    onReqPay: React.PropTypes.func.isRequired,
+    onCancel: React.PropTypes.func.isRequired,
+    orderId: React.PropTypes.string.isRequired
 }
 
 export default PayButton;
