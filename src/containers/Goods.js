@@ -41,10 +41,10 @@ const items = [
 const Goods = (props) => {
 	const ToOrder = (value)=> {
 		Payment.createOrder(props.user, value.goods);
-		browserHistory.push("order/" + props.orderIds.length)
+		browserHistory.push("/order")
 	};
 	const waitPay = ()=> {
-		browserHistory.push("order/0")
+		browserHistory.push("/order")
 	};
 	return (
 		<GoodsForm onSubmit={ToOrder}

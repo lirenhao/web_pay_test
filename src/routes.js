@@ -21,7 +21,7 @@ export default (
 		<Route path="/" component={Login}/>
         <Route path="/goods" component={Goods}/>
 		<Route path="/orderId" component={OrderId}/>
-		<Route path="/order/:index" component={Order}/>
+		<Route path="/order" component={Order}/>
 		<Route path="/pay/:index" component={Pay}/>
 		<Route path="/dialog" component={Dialog}/>
 	</Route>

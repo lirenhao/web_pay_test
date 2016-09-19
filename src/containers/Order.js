@@ -19,8 +19,7 @@ const Order = (props) => {
     const onReqPay = (orderId) => {
         Payment.reqPayAuth(user, orderId)
     }
-    return <OrderShow activeKey={Number(index) || 0}
-                      orderIds={orderIds}
+    return <OrderShow orderIds={orderIds}
                       order={order}
                       marketing={marketing}
                       onReqPay={onReqPay}

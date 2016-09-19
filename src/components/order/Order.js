@@ -17,10 +17,7 @@ class Order extends React.Component {
     constructor(props) {
         super(props)
         // 当未匹配到订单时显示最后一条订单信息
-        if (props.orderIds.length > props.activeKey)
-            this.state = {key: props.activeKey}
-        else
-            this.state = {key: props.activeKey - 1}
+        this.state = {key: props.orderIds.length - 1}
     }
 
     handleSelect(key) {
@@ -67,7 +64,6 @@ Order.propTypes = {
     orderIds: React.PropTypes.array.isRequired,
     order: React.PropTypes.object.isRequired,
     marketing: React.PropTypes.object.isRequired,
-    activeKey: React.PropTypes.number.isRequired,
     onReqPay: React.PropTypes.func.isRequired,
     onCancel: React.PropTypes.func.isRequired,
     canCancel: React.PropTypes.bool.isRequired
