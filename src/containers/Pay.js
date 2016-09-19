@@ -42,7 +42,7 @@ const Pay = (props)=> {
                     orderIds={orderIds}
                     order={order}
                     marketing={marketing}
-                    index={index}
+                    index={Number(index)}
     />
 };
 
