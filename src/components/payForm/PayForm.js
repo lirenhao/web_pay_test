@@ -3,8 +3,6 @@
  * Created by likon on 2016/9/9.
  * Modified By：KL
  * Why & What is modified  <修改原因描述>
- * Modified By：Pengfei
- * Why & What is modified  添加订单号和流水号处理和展示样式
  * 添加支付表单组件
  * 添加商品列表组件、优惠信息组件、结算信息组件
  */
@@ -21,28 +19,16 @@ const PayField = ({input}) => (
         <option value="0" checked="checked">成功</option>
         <option value="1">失败</option>
     </FormControl>
-);
-
-const getlsNo =(orderId)=>{
-    function pad(num, n) {
-        var len = num.toString().length;
-        while(len < n) {
-            num = "0" + num;
-            len++;
-        }
-        return num;
-    }
-    return orderId+pad(Math.floor(Math.random()*100),3)
-}
+)
 
 const PayForm = (props) => {
-    const {handleSubmit, onSubmit, onCancel, orderIds, order, marketing, index} = props;
+    const {handleSubmit, onSubmit, onCancel, orderIds, order, marketing, index} = props
     return (
         <Form onSubmit={handleSubmit(onSubmit)}>
             <div className={"marginOutTopBottom"}>
                 <div className="marginBottom">
-                    <span className="marginRight"><b>订单号：{orderIds[index]}</b></span>
-                    <span><b>流水号：{getlsNo(orderIds[index])}</b></span>
+                    <span className="marginRight"><b>订单号：</b></span>
+                    <span><b>流水号：</b></span>
                 </div>
                 <div>
                     <OrderInfo items={order[orderIds[index]].items}/>
@@ -59,7 +45,7 @@ const PayForm = (props) => {
                         <Button bsStyle="success" type="submit">确定</Button>
                     </ButtonGroup>
                     <ButtonGroup>
-                        <Button bsStyle="danger" onClick={onCancel}>取消</Button>
+                        <Button bsStyle="danger" onClick={() => onCancel(orderIds[index])}>取消支付</Button>
                     </ButtonGroup>
                 </ButtonGroup>
             </Navbar>
