@@ -8,38 +8,43 @@
 import React from 'react'
 import {ButtonGroup, Button} from 'react-bootstrap'
 
-const PayButton = React.createClass({
-    getInitialState: function () {
-        return {canPay: this.props.canPay};
-    },
-    componentWillReceiveProps: function(nextProps) {
+class PayButton extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {canPay: props.canPay}
+    }
+
+    componentWillReceiveProps(nextProps) {
         this.setState({canPay: nextProps.canPay})
-    },
-    onClick: function () {
-        this.props.onReqPay(this.props.orderId)
+    }
+
+    handleClick(orderId) {
+        this.props.onReqPay(orderId)
         this.setState({canPay: false})
-    },
-    render: function () {
+    }
+
+    render() {
+        const {canCancel, onCancel, orderId} = this.props
         return (
             <ButtonGroup justified>
                 <ButtonGroup>
                     <Button bsStyle={this.state.canPay ? "success" : "warning"}
                             disabled={!this.state.canPay}
-                            onClick={this.onClick}>
+                            onClick={() => this.handleClick(orderId)}>
                         支付
                     </Button>
                 </ButtonGroup>
-                <ButtonGroup bsClass={this.props.canCancel ? "btn-group" : "hidden"}>
+                <ButtonGroup bsClass={canCancel ? "btn-group" : "hidden"}>
                     <Button bsStyle="danger"
-                            disabled={!this.props.canCancel}
-                            onClick={() => this.props.onCancel(this.props.orderId)}>
+                            disabled={!canCancel}
+                            onClick={() => onCancel(orderId)}>
                         取消
                     </Button>
                 </ButtonGroup>
             </ButtonGroup>
         )
     }
-})
+}
 
 PayButton.propTypes = {
     canPay: React.PropTypes.bool.isRequired,
