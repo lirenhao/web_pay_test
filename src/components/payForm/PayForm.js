@@ -3,7 +3,7 @@
  * Created by likon on 2016/9/9.
  * Modified By：KL
  * Why & What is modified  <修改原因描述>
- * Modified By：KL
+ * Modified By：Pengfei
  * Why & What is modified  添加订单号和流水号处理和展示样式
  * 添加支付表单组件
  * 添加商品列表组件、优惠信息组件、结算信息组件
