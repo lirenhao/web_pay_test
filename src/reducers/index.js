@@ -11,7 +11,8 @@ import user from "./userReducer"
 import order from "./orderReducer"
 import orderIds from "./orderIdsReducer"
 import marketing from "./marketingReducer"
+import dialog from "./dialogReducer"
 
 export default combineReducers({
-    form, user, orderIds, order, marketing
+    form, user, orderIds, order, marketing, dialog
 })

@@ -2,7 +2,7 @@
  * Author：liRenhao
  * Create Date：2016/9/12
  * Modified By：liRenhao
- * Why & What is modified  <修改原因描述>
+ * Why & What is modified 添加模态框
  * Modified By：Yky
  * Why & What is modified  添加context，设置各个页面的title
  * 添加组件的入口App
@@ -11,24 +11,38 @@ import React from "react"
 import {connect} from "react-redux"
 import {Router, browserHistory} from 'react-router'
 import routes from '../routes'
+import Dialog from "../components/dialog/Dialog"
+import {hideDialog} from "../actions"
 
 class App extends React.Component {
-	getChildContext() {
-		return {
-			setTitle: value => (document.title = value)
-		}
-	}
+    getChildContext() {
+        return {
+            setTitle: value => (document.title = value)
+        }
+    }
 
-	render() {
-		return (
-			<Router routes={routes} history={browserHistory}>
-			</Router>
-		)
-	}
+    render() {
+        return (
+            <div>
+                <Router routes={routes} history={browserHistory}/>
+                <Dialog {...this.props.dialog} close={this.props.close}/>
+            </div>
+        )
+    }
 }
 
 App.childContextTypes = {
-	setTitle: React.PropTypes.func
-};
+    setTitle: React.PropTypes.func
+}
 
-export default connect()(App)
+const mapStateToProps = (state)=> ({
+    dialog: state.dialog
+})
+
+const mapDispatchToProps = (dispatch) => ({
+    close: () => {
+        dispatch(hideDialog())
+    }
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(App)

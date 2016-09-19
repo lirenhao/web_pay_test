@@ -17,7 +17,7 @@ import {AppContainer} from "react-hot-loader"
 import Payment from "./Payment"
 import Const from "./constants"
 import reducer from "./reducers"
-import {addUser, addOrder, addMarketing, payAuth, remove} from "./actions"
+import {addUser, addOrder, addMarketing, payAuth, remove, showDialog} from "./actions"
 import {browserHistory} from "react-router"
 
 const store = createStore(reducer, DevTools.instrument())
@@ -77,6 +77,11 @@ const msgHandler = (data) => {
             break
         case ClientCmd.PAY_COMPLETED:
             store.dispatch(remove(msg.orderId))
+            if(msg.result){
+                store.dispatch(showDialog({header: "支付通知", body: "订单【" + msg.orderId + "】" + "支付成功"}))
+            } else {
+                store.dispatch(showDialog({header: "支付通知", body: "订单【" + msg.orderId + "】" + "取消成功"}))
+            }
             // 当用户没有订单时，商户跳转到录入商品界面、客户跳转到输入订单界面
             if (store.getState().orderIds.length < 1) {
                 if (store.getState().user.userType == Const.TerminalType.MERCHANT)
@@ -87,9 +92,10 @@ const msgHandler = (data) => {
             break
         case ClientCmd.FAIL:
             store.dispatch(remove(msg.orderId))
+            store.dispatch(showDialog({header: eventType, body: msg.msg}))
             break
         case ClientCmd.MESSAGE:
-            console.log(msg)
+            store.dispatch(showDialog({header: msg.level, body: msg.msg}))
             break
     }
 }
