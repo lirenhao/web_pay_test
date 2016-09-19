@@ -20,7 +20,7 @@ const OrderId = (props) => {
         if (index < 0) {
             // state中没有该订单向服务器请求
             Payment.joinOrder(user, values.orderId)
-            browserHistory.push("order/" + orderIds.length)
+            browserHistory.push("order/0")
         } else {
             browserHistory.push("order/" + index)
         }
