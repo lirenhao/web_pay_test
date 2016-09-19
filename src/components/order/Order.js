@@ -16,8 +16,7 @@ import {Tabs, Tab} from 'react-bootstrap';
 class Order extends React.Component {
     constructor(props) {
         super(props)
-        // 当未匹配到订单时显示最后一条订单信息
-        this.state = {key: props.orderIds.length - 1}
+        this.state = {key: props.orderIds.length}
     }
 
     handleSelect(key) {
@@ -52,7 +51,7 @@ class Order extends React.Component {
         )
         return (
             <Tabs id="OrderSelect"
-                  activeKey={this.state.key}
+                  activeKey={orderIds[this.state.key] ? this.state.key : this.state.key - 1}
                   onSelect={(key) => this.handleSelect(key)}>
                 {tabItems}
             </Tabs>
