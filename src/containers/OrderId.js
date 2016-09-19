@@ -13,29 +13,29 @@ import Payment from "../Payment"
 import OrderIdForm from "../components/orderIdForm/OrderIdForm"
 
 const OrderId = (props) => {
-    const {user, orderIds} = props
-    const onSubmit = (values) => {
-        // 判断state中是否有该订单
-        const index = orderIds.indexOf(values.orderId)
-        if (index < 0) {
-            // state中没有该订单向服务器请求
-            Payment.joinOrder(user, values.orderId)
-            browserHistory.push("order/0")
-        } else {
-            browserHistory.push("order/" + index)
-        }
-    }
-    const onButton = () => {
-        browserHistory.push("order/0")
-    }
-    return (
-        <OrderIdForm onSubmit={onSubmit} onButton={onButton} orderNum={orderIds.length}/>
-    )
+	const {user, orderIds} = props
+	const onSubmit = (values) => {
+		// 判断state中是否有该订单
+		const index = orderIds.indexOf(values.orderId)
+		if (index < 0) {
+			// state中没有该订单向服务器请求
+			Payment.joinOrder(user, values.orderId)
+			browserHistory.push("order/" + orderIds.length)
+		} else {
+			browserHistory.push("order/" + index)
+		}
+	}
+	const onButton = () => {
+		browserHistory.push("order/0")
+	}
+	return (
+		<OrderIdForm onSubmit={onSubmit} onButton={onButton} orderNum={orderIds.length}/>
+	)
 }
 
 const mapStateToProps = (state)=> ({
-    user: state.user,
-    orderIds: state.orderIds
+	user: state.user,
+	orderIds: state.orderIds
 })
 
 export default connect(mapStateToProps)(OrderId)
