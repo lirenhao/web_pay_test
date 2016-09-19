@@ -52,7 +52,7 @@ class Order extends React.Component {
         return (
             <Tabs id="OrderSelect"
                   activeKey={this.state.key}
-                  onSelect={this.handleSelect}>
+                  onSelect={(key) => this.handleSelect(key)}>
                 {tabItems}
             </Tabs>
         )
@@ -69,4 +69,4 @@ Order.propTypes = {
     canCancel: React.PropTypes.bool.isRequired
 }
 
-export default Order;
+export default Order
