@@ -80,7 +80,7 @@ const msgHandler = (data) => {
             if(msg.result){
                 store.dispatch(showDialog({header: "支付通知", body: "订单【" + msg.orderId + "】" + "支付成功"}))
             } else {
-                store.dispatch(showDialog({header: "支付通知", body: "订单【" + msg.orderId + "】" + "取消成功"}))
+                store.dispatch(showDialog({header: "支付通知", body: "订单【" + msg.orderId + "】" + "支付失败"}))
             }
             // 当用户没有订单时，商户跳转到录入商品界面、客户跳转到输入订单界面
             if (store.getState().orderIds.length < 1) {
@@ -93,6 +93,13 @@ const msgHandler = (data) => {
         case ClientCmd.FAIL:
             store.dispatch(remove(msg.orderId))
             store.dispatch(showDialog({header: eventType, body: msg.msg}))
+            // 当用户没有订单时，商户跳转到录入商品界面、客户跳转到输入订单界面
+            if (store.getState().orderIds.length < 1) {
+                if (store.getState().user.userType == Const.TerminalType.MERCHANT)
+                    browserHistory.push("/goods")
+                else
+                    browserHistory.push("/orderId")
+            }
             break
         case ClientCmd.MESSAGE:
             store.dispatch(showDialog({header: msg.level, body: msg.msg}))
