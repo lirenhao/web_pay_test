@@ -2,13 +2,12 @@
  * Author：KL
  * Created by likon on 2016/9/13.
  * Modified By：KL
- * Why & What is modified  <修改原因描述>
+ * Why & What is modified  添加支付页面的容器
+ * Why & What is modified 初始化支付结果下拉菜单：成功
+ * Why & What is modified 点击支付按钮：如果用户角色为商户，则页面跳转到添加商品信息页面；如果为用户，则页面跳转到扫描订单页面
+ * Why & What is modified 点击取消支付按钮：如果用户角色为商户，则页面跳转到添加商品信息页面；如果为用户，则页面跳转到扫描订单页面
  * Modified By：Pengfei
  * Why & What is modified  添加支付确认和支付取消事件，以及配置mapStateToProps
- * 添加支付表单容器
- * 初始化数据：传递订单的索引号，初始化为第一个订单；初始化支付结果下拉菜单值为成功
- * 提交支付表单时：如果用户角色为商户，则页面跳转到添加商品信息页面；如果为用户，则页面跳转到扫描订单页面
- * 取消支付时，如果用户角色为商户，则页面跳转到添加商品信息页面；如果为用户，则页面跳转到扫描订单页面
  */
 import React from "react"
 import PayForm from '../components/payForm/PayForm'
