@@ -2,11 +2,9 @@
  * Author：KL
  * Created by likon on 2016/9/9.
  * Modified By：KL
- * Why & What is modified  <修改原因描述>
+ * Why & What is modified  添加支付表单组件，包括：商品列表组件、优惠信息组件、结算信息组件、确定按钮、取消支付按钮
  * Modified By：Pengfei
  * Why & What is modified  添加订单号和流水号处理和展示样式
- * 添加支付表单组件
- * 添加商品列表组件、优惠信息组件、结算信息组件
  */
 import React from 'react'
 import {Field, reduxForm} from "redux-form"
