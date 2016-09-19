@@ -35,10 +35,10 @@ const items = [
 		price: 27450,
 		quantity: 1
 	}
-]
+];
 
-
-const Goods = (props) => {
+const Goods = (props, context) => {
+	context.setTitle("创建订单");
 	const ToOrder = (value)=> {
 		Payment.createOrder(props.user, value.goods);
 		browserHistory.push("/order")
@@ -54,6 +54,8 @@ const Goods = (props) => {
 		/>
 	)
 };
+
+Goods.contextTypes = {setTitle: React.PropTypes.func.isRequired};
 
 const mapPropsFromState = (state)=>({
 	user: state.user,

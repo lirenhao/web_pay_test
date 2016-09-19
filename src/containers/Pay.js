@@ -19,41 +19,44 @@ import Payment from "../Payment"
 
 const TerminalType = Const.TerminalType;
 
-const Pay = (props)=> {
-    const {user, orderIds, order, marketing, params: {index}} = props
+const Pay = (props, context)=> {
+	context.setTitle("支付");
+	const {user, orderIds, order, marketing, params: {index}} = props;
 
-    var onSubmitHandle = (result) => {
-        Payment.payResult(user, result);
-        if (user.userType == TerminalType.USER)
-            browserHistory.push("/orderId");
-        else
-            browserHistory.push("/goods");
-    };
+	var onSubmitHandle = (result) => {
+		Payment.payResult(user, result);
+		if (user.userType == TerminalType.USER)
+			browserHistory.push("/orderId");
+		else
+			browserHistory.push("/goods");
+	};
 
-    var onCancelHandle = (orderId) => {
-        Payment.giveUpPay(user, orderId)
-        if (user.userType == TerminalType.USER)
-            browserHistory.push("/orderId");
-        else
-            browserHistory.push("/goods");
-    };
+	var onCancelHandle = (orderId) => {
+		Payment.giveUpPay(user, orderId);
+		if (user.userType == TerminalType.USER)
+			browserHistory.push("/orderId");
+		else
+			browserHistory.push("/goods");
+	};
 
-    return <PayForm initialValues={{orderId: orderIds[index], state: "0"}}
-                    onSubmit={onSubmitHandle}
-                    onCancel={()=>onCancelHandle(orderIds[index])}
-                    orderIds={orderIds}
-                    order={order}
-                    marketing={marketing}
-                    index={Number(index)}
-    />
+	return <PayForm initialValues={{orderId: orderIds[index], state: "0"}}
+	                onSubmit={onSubmitHandle}
+	                onCancel={()=>onCancelHandle(orderIds[index])}
+	                orderIds={orderIds}
+	                order={order}
+	                marketing={marketing}
+	                index={Number(index)}
+	/>
 };
 
+Pay.contextTypes = {setTitle: React.PropTypes.func.isRequired}
+
 const mapStateToProps = (state)=> ({
-    user: state.user,
-    orderIds: state.orderIds,
-    order: state.order,
-    marketing: state.marketing
-})
+	user: state.user,
+	orderIds: state.orderIds,
+	order: state.order,
+	marketing: state.marketing
+});
 
 
 export default connect(mapStateToProps)(Pay)
