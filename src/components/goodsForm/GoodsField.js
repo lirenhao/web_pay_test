@@ -4,9 +4,9 @@
  * Modified By：liRenhao
  * Why & What is modified  <修改原因描述>
  * 使用redux-form的FieldArray实现动态添加商品录入框
- *  * Modified By：kongli
+ * Modified By：kongli
  * Why & What is modified  <修改原因描述>
- * 给添加按钮和提交按钮添加底部导航</Navbar>
+ * 给添加按钮和提交按钮添加底部导航<Navbar> 属性为fixedBottom
  */
 import React from "react"
 import {ListGroup, ListGroupItem, InputGroup, ButtonGroup, Button,Navbar} from "react-bootstrap"
