@@ -16,7 +16,11 @@ import {Tabs, Tab} from 'react-bootstrap';
 class Order extends React.Component {
     constructor(props) {
         super(props)
-        this.state = {key: props.activeKey}
+        // 当未匹配到订单时显示最后一条订单信息
+        if (props.orderIds.length > props.activeKey)
+            this.state = {key: props.activeKey}
+        else
+            this.state = {key: props.activeKey - 1}
     }
 
     handleSelect(key) {
