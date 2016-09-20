@@ -8,6 +8,8 @@
 import {createReducer} from "redux-act"
 import {showDialog, hideDialog} from "../actions"
 
+const initialState={show: false, header: "", body: ""}
+
 export default createReducer({
     [showDialog]: (state, msg) => {
         return {show: true, header: msg.header, body: msg.body}
@@ -15,4 +17,4 @@ export default createReducer({
     [hideDialog]: (state) => {
         return {...state, show: false}
     }
-}, {show: false, header: "", body: ""})
+}, initialState)
