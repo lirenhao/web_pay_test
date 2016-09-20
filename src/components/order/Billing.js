@@ -3,10 +3,13 @@
  * Create Date：2016/9/9
  * Modified By：liRenhao
  * Why & What is modified 添加Panel组件的应用
+ * Modified By：Pengfei
+ * Why & What is modified 添加展示金额数据的组件
  * 定义金额结算信息组件
  */
 import React from 'react';
 import {Panel, Table, Glyphicon} from 'react-bootstrap';
+import AmtDisplay from './AmtDisplay'
 
 const Billing = ({items, marketing}) => {
     const header = (
@@ -22,7 +25,7 @@ const Billing = ({items, marketing}) => {
                     <thead>
                     <tr>
                         <td>总价</td>
-                        <td>{totalAmt}</td>
+                        <td><AmtDisplay amt={totalAmt}/></td>
                     </tr>
                     <tr>
                         <td>优惠</td>
@@ -30,7 +33,7 @@ const Billing = ({items, marketing}) => {
                     </tr>
                     <tr>
                         <td>结算</td>
-                        <td>{totalAmt - marketing.amt}</td>
+                        <td><AmtDisplay amt={totalAmt - marketing.amt}/></td>
                     </tr>
                     </thead>
                 </Table>
