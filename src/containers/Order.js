@@ -3,6 +3,8 @@
  * Create Date：2016/9/14
  * Modified By：liRenhao
  * Why & What is modified 添加支付、取消事件
+ * Modified By：Pengfei
+ * Why & What is modified 删除组件中定义的路由传参的参数
  * <文件描述>
  */
 import React from "react"
@@ -13,7 +15,7 @@ import OrderShow from "../components/order/Order"
 
 const Order = (props, context) => {
 	context.setTitle("订单");
-	const {user, orderIds, order, marketing, params: {index}} = props;
+	const {user, orderIds, order, marketing} = props;
 	const onCancel = (orderId) => {
 		Payment.cancelOrder(user, orderId)
 	};
