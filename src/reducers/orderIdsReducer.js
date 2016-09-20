@@ -15,7 +15,7 @@ import {addOrder, remove} from "../actions"
 export default createReducer({
 	[addOrder]: (state, order) => {
 		if (state.indexOf(order.orderId) < 0) {
-			let newState = [...state, order.orderId];
+			let newState = [...state, Number(order.orderId)];
 			const compare = (v1, v2)=>v1 - v2;
 			newState.sort(compare);
 			return newState
