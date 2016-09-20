@@ -28,8 +28,14 @@ module.exports = {
 	module: {
 		loaders: [
 			{test: /\.js?$/, loader: "babel", include: path.resolve(__dirname, "./src")},
-			{test: /\.css$/, loader: "style!css"},
-			{test: /\.s[a,c]ss$/, loader: "style!css!sass"},
+			{
+				test: /\.css$/,
+				loader: "style!css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]"
+			},
+			{
+				test: /\.s[a,c]ss$/,
+				loader: "style!css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!sass"
+			},
 			{
 				test: /\.(woff|woff2)(\?v=\d\.\d+\.\d+)?$/,
 				loader: "url?limit=10000&mimetype=application/font-woff"

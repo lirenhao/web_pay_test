@@ -1,31 +1,31 @@
 @media (min-width: 500px) {
-  #form {
+  .form {
     width: 300px;
   }
 }
 
 @media (min-width: 350px) {
-  #form {
+  .form {
     width: 270px;
   }
 }
 
 @media (min-width: 768px) and(max-width: 992px) {
-  #form {
+  .form {
     width: 400px;
   }
 }
 
 @media (min-width: 992px) {
-  #form {
+  .form {
     width: 500px;
   }
 }
 
-#login {
+.login {
   position: fixed;
   top: 0;
-  right: 250px;
+  right: 0;
   bottom: 0;
   left: 0;
   display: flex;
@@ -33,6 +33,6 @@
   justify-content: center;
 }
 
-#lBtn {
-  margin-top: 25px;
+.logBtn {
+  margin-top: 15px;
 }

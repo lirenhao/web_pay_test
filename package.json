@@ -2,7 +2,7 @@
   "private": true,
   "scripts": {
     "start": "webpack && webpack-dev-server --inline --hot",
-    "test": "mocha test/.setup.js  test/**/*-test.js --reporter mochawesome --no-exit --reporter-options reportDir=customReportDir,reportName=customReportName"
+    "test": "mocha --require babel-register test/.setup.js  test/**/*-test.js --reporter mochawesome --no-exit --reporter-options reportDir=customReportDir,reportName=customReportName"
   },
   "dependencies": {
     "bootstrap-sass": "^3.3.7",
