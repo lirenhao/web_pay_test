@@ -12,7 +12,7 @@ import React from 'react'
 
 const AmtDisplay =({amt})=>{
     return(
-        <div>{amt/100} 元</div>
+        <span>{amt/100} 元</span>
     )
 }
 
