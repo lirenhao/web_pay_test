@@ -19,7 +19,7 @@ const Billing = ({items, marketing}) => {
     )
     const content = (items, marketing) => {
         if (items && marketing) {
-            const totalAmt = items.reduce((p, q)=>p + q.price * q.quantity, 0);
+            const totalAmt = items.reduce((r, v)=>r + v.price * v.quantity, 0);
             return (
                 <Table>
                     <thead>
@@ -29,7 +29,7 @@ const Billing = ({items, marketing}) => {
                     </tr>
                     <tr>
                         <td>优惠</td>
-                        <td>{marketing.amt}</td>
+                        <td><AmtDisplay amt={marketing.amt}/></td>
                     </tr>
                     <tr>
                         <td>结算</td>
