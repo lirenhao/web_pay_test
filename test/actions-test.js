@@ -26,7 +26,7 @@ describe("action功能测试", ()=> {
 	});
 	it("addOrder函数创建的对象是不是期望值", ()=> {
 		const payload = {
-			orderIds: [1],
+			orderIds: ["1"],
 			order: {
 				1: {
 					orderId: "1",

@@ -3,7 +3,7 @@
  * Create Date：2016/9/9
  * Modified By：Yky
  * Why & What is modified  <修改原因描述>
- * 试例子的一部分，为了练习用enzyme和jsdom和mocha在node环境中测试react组件的方法
+ * 测试例子的一部分，为了练习用enzyme和jsdom和mocha在node环境中测试react组件的方法
  * 使用jsdom在node环境中模拟浏览器环境
  */
 require('babel-register')();

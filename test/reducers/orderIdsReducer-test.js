@@ -29,7 +29,7 @@ describe("orderIdsReducer功能测试", ()=> {
 			]
 		};
 		const exceptedState = {
-			orderIds: [1, 2]
+			orderIds: ["1", "2"]
 		};
 		store.dispatch(actions.addOrder(payload));
 		store.dispatch(actions.addOrder(payload2));
@@ -39,11 +39,13 @@ describe("orderIdsReducer功能测试", ()=> {
 		});
 	});
 	it("接收action将对应的订单号从state.orderIds中移除", ()=> {
-		const payload = 1;
+		const payload = "1";
+		const payload2 = "2";
 		const exceptedState = {
-			orderIds: [2]
+			orderIds: []
 		};
 		store.dispatch(actions.remove(payload));
+		store.dispatch(actions.remove(payload2));
 		const orderIds = store.getState().orderIds;
 		orderIds.forEach((k, i)=> {
 			expect(orderIds[i]).to.equal(exceptedState.orderIds[i])
