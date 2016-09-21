@@ -2,11 +2,11 @@
  * Author：pengfei
  * Create Date：2016/9/9
  * Modified By：pengfei
- * Why & What is modified  <修改原因描述>
+ * Why & What is modified  修改引入的组件（GoodsItem）名称
  * 定义商品信息展示列表组件
  */
 import React from 'react';
-import Product from './GoodsItem';
+import GoodsItem from './GoodsItem';
 import {Table} from 'react-bootstrap';
 
 
@@ -22,7 +22,7 @@ class GoodsItems extends React.Component {
                 </tr>
                 </thead>
                 <tbody>
-                {this.props.items.map((item, index)=>(<Product key={index} {...item}/>))}
+                {this.props.items.map((item, index)=>(<GoodsItem key={index} {...item}/>))}
                 </tbody>
             </Table>
         )
