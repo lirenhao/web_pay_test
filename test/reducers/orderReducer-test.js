@@ -54,10 +54,21 @@ describe("orderReducer功能测试", ()=> {
 		Object.keys(order).forEach(id=> {
 			Object.keys(order[id]).forEach(key=> {
 				if (key != "items") {
-					console.log(order[id][key]);
 					expect(order[id][key]).to.equal(expectedState.order[id][key])
 				} else {
-
+					let stateItems = "";
+					let expectedStateItems = "";
+					order[id][key].forEach(item=> {
+						Object.keys(item).forEach(iKey=> {
+							stateItems += item[iKey]
+						})
+					});
+					expectedState.order[id][key].forEach(item=> {
+						Object.keys(item).forEach(iKey=> {
+							expectedStateItems += item[iKey]
+						})
+					});
+					expect(stateItems).to.equal(expectedStateItems)
 				}
 			})
 		})
