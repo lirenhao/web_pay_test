@@ -6,6 +6,7 @@
   },
   "dependencies": {
     "bootstrap-sass": "^3.3.7",
+    "enzyme-redux": "^0.1.6",
     "jquery": "^2.2.4",
     "keymirror": "^0.1.1",
     "mochawesome": "^1.5.2",
