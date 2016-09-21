@@ -8,7 +8,7 @@
 
 import React from 'react';
 import {expect} from 'chai';
-import {shallow, mount} from 'enzyme';
+import {shallow} from 'enzyme';
 import AmtDisplay from '../../../src/components/order/AmtDisplay'
 import GoodsItem from '../../../src/components/order/GoodsItem'
 
