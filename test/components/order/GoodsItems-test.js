@@ -8,7 +8,7 @@
 
 import React from 'react';
 import {expect} from 'chai';
-import { mount} from 'enzyme';
+import {mount} from 'enzyme';
 import GoodsItems from '../../../src/components/order/GoodsItems'
 
 
@@ -26,7 +26,7 @@ describe("测试商品列表组件（GoodsItems）", function () {
         expect(mount(<GoodsItems items={items}/>).find('span').length).to.equal(3);
     })
 
-    it("是否渲染正确个数的商品名称",function () {
+    it("是否渲染正确个数的商品名称", function () {
         expect(mount(<GoodsItems items={items}/>).containsMatchingElement(
             <td>ONLY修身撞色拼接女针织裙</td>
         )).to.equal(true);
