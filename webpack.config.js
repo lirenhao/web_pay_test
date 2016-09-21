@@ -7,12 +7,14 @@
  * Why & What is modified react-hot-loader版本从3.0.0-beta.3回退到1.3.0
  * Modified By：liRenhao
  * Why & What is modified react-hot-loader1.3.0不支持redux-form v6.0重新换回到3.0.0-beta.3版
+ *  * Modified By：liRenhao
+ * Why & What is modified 添加环境参数
  * webpack的配置文件,搭建webpack的环境
  */
-var path = require("path");
-var webpack = require("webpack");
-var OpenBrowserPlugin = require("open-browser-webpack-plugin");
-var HtmlWebpackPlugin = require("html-webpack-plugin");
+var path = require("path")
+var webpack = require("webpack")
+var OpenBrowserPlugin = require("open-browser-webpack-plugin")
+var HtmlWebpackPlugin = require("html-webpack-plugin")
 
 module.exports = {
 	entry: {
@@ -56,6 +58,10 @@ module.exports = {
 		historyApiFallback: true
 	},
 	plugins: [
+		// Define free variables
+		new webpack.DefinePlugin({
+			"process.env.wsUrl": "'ws://localhost:9000/ws'",
+		}),
 		new HtmlWebpackPlugin({
 			title: "测试页",
 		}),
@@ -69,4 +75,4 @@ module.exports = {
 		})
 	]
 
-};
+}

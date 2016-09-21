@@ -35,13 +35,13 @@ class Payment {
         if (this._isClosed && !this._waitOpen) {
             try {
                 this._waitOpen = true
-                this.webSocket = new WebSocket("ws://localhost:9000/ws")
+                this.webSocket = new WebSocket(process.env.wsUrl)
                 this.webSocket.onopen = () => {
                     this._isClosed = false
                     this._waitOpen = false
                     this.handleOpened()
                     this._tmpMessages.forEach(msg => {
-                        return Payment.prototype.send.call(this, msg);
+                        return Payment.prototype.send.call(this, msg)
                     })
                     this._tmpMessages = []
                 }

@@ -8,10 +8,11 @@
  */
 import React from 'react'
 import {Field, reduxForm} from "redux-form"
-import {ButtonGroup, Button, FormControl, Navbar, Form} from 'react-bootstrap'
+import {ButtonGroup, Button, FormControl, Navbar} from 'react-bootstrap'
 import Billing from '../order/Billing'
 import OrderInfo from '../order/OrderInfo'
 import './PayForm.scss'
+import s from './PayForm.scss'
 
 const PayField = ({input}) => (
 	<FormControl {...input} componentClass="select">
@@ -36,17 +37,20 @@ const getlsNo = (orderId)=> {
 class PayForm extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = {items: this.props.order[this.props.orderIds[this.props.index]].items}
+		this.state = {
+			items: this.props.order[this.props.orderIds[this.props.index]].items,
+			orderId: this.props.orderIds[this.props.index]
+		};
 	}
 
 	render() {
 		const {handleSubmit, onSubmit, onCancel, orderIds, marketing, index} = this.props;
 		return (
-			<Form onSubmit={handleSubmit(onSubmit)}>
-				<div className={"marginOutTopBottom"}>
-					<div className="marginBottom">
-						<span className="marginRight"><b>订单号：{orderIds[index]}</b></span>
-						<span><b>流水号：{getlsNo(orderIds[index])}</b></span>
+			<form onSubmit={handleSubmit(onSubmit)}>
+				<div className={s.marginOutTopBottom}>
+					<div className={s.marginBottom}>
+						<span className={s.marginRight}><b>订单号：{this.state.orderId}</b></span>
+						<span><b>流水号：{getlsNo(this.state.orderId)}</b></span>
 					</div>
 					<div>
 						<OrderInfo items={this.state.items}/>
@@ -66,7 +70,7 @@ class PayForm extends React.Component {
 						</ButtonGroup>
 					</ButtonGroup>
 				</Navbar>
-			</Form>
+			</form>
 		)
 	}
 }

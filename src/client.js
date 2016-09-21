@@ -22,9 +22,9 @@ import {browserHistory} from "react-router"
 
 export const store = createStore(reducer, DevTools.instrument())
 
-const container = document.createElement("div");
-container.setAttribute("class", "container");
-document.body.appendChild(container);
+const container = document.createElement("div")
+container.setAttribute("class", "container")
+document.body.appendChild(container)
 
 render(
 	<AppContainer>
@@ -36,11 +36,11 @@ render(
 		</Provider>
 	</AppContainer>,
 	container
-);
+)
 
 if (module.hot) {
 	module.hot.accept('./containers/App', () => {
-		const NextApp = require('./containers/App').default;
+		const NextApp = require('./containers/App').default
 		render(
 			<AppContainer>
 				<Provider store={store}>
@@ -51,8 +51,8 @@ if (module.hot) {
 				</Provider>
 			</AppContainer>,
 			container
-		);
-	});
+		)
+	})
 }
 
 // TODO 后续再移出
@@ -108,5 +108,5 @@ const msgHandler = (data) => {
 }
 
 window.addEventListener("load", () => {
-	Payment.setMsgHandler(msgHandler);
+	Payment.setMsgHandler(msgHandler)
 })
