@@ -37,7 +37,6 @@ class Order extends React.Component {
             (orderId, index) => (
                 <Tab eventKey={index} title={orderId} key={index}>
                     <div className={s.marginBottom}>
-                        <label className="global-class-name">111</label>
                         <OrderInfo items={order[orderId].items}/>
                         <Marketing marketing={marketing[orderId]}/>
                         <Billing items={order[orderId].items} marketing={marketing[orderId]}/>
