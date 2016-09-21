@@ -12,6 +12,7 @@ import Marketing from './Marketing'
 import Billing from './Billing'
 import PayButton from './PayButton'
 import {Tabs, Tab} from 'react-bootstrap';
+import s from './Order.scss'
 
 class Order extends React.Component {
     constructor(props) {
@@ -35,17 +36,18 @@ class Order extends React.Component {
         const tabItems = orderIds.map(
             (orderId, index) => (
                 <Tab eventKey={index} title={orderId} key={index}>
-                    <div>
+                    <div className={s.marginBottom}>
+                        <label className="global-class-name">111</label>
                         <OrderInfo items={order[orderId].items}/>
                         <Marketing marketing={marketing[orderId]}/>
                         <Billing items={order[orderId].items} marketing={marketing[orderId]}/>
-                        <PayButton
-                            orderId={orderId}
-                            canCancel={canCancel}
-                            onCancel={() => this.handleCancel(orderId)}
-                            canPay={marketing[orderId] ? true : false}
-                            onReqPay={onReqPay}/>
                     </div>
+                    <PayButton
+                        orderId={orderId}
+                        canCancel={canCancel}
+                        onCancel={() => this.handleCancel(orderId)}
+                        canPay={marketing[orderId] ? true : false}
+                        onReqPay={onReqPay}/>
                 </Tab>
             )
         )
