@@ -29,7 +29,7 @@ const Billing = ({items, marketing}) => {
                     </tr>
                     <tr>
                         <td>优惠</td>
-                        <td>{marketing.amt}</td>
+                        <td><AmtDisplay amt={marketing.amt}/></td>
                     </tr>
                     <tr>
                         <td>结算</td>
