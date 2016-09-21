@@ -11,6 +11,7 @@ import React from "react"
 import {FieldArray, reduxForm} from "redux-form"
 import {Form} from "react-bootstrap"
 import GoodsField from "./GoodsField"
+import s from './Goods.scss'
 
 /**
  * 表单验证，验证输入的值是否符合标准
@@ -60,9 +61,11 @@ const validate = (values) => {
 const GoodsForm = (props) => {
     const {handleSubmit, onSubmit, orderNum, onButton} = props
     return (
-        <Form inline onSubmit={handleSubmit(onSubmit)}>
-            <FieldArray name="goods" component={GoodsField} orderNum={orderNum} onButton={onButton}/>
-        </Form>
+            <Form inline onSubmit={handleSubmit(onSubmit)} >
+                <div className={s.marginBottom}>
+                    <FieldArray name="goods" component={GoodsField} orderNum={orderNum} onButton={onButton}/>
+                </div>
+            </Form>
     )
 }
 
