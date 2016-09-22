@@ -8,8 +8,10 @@
 
 import React from 'react';
 import {expect} from 'chai';
-import {mount} from 'enzyme';
+import {shallow} from 'enzyme';
 import GoodsItems from '../../../src/components/order/GoodsItems'
+import GoodsItem from '../../../src/components/order/GoodsItem'
+import AmtDisplay from '../../../src/components/order/AmtDisplay'
 
 
 describe("测试商品列表组件（GoodsItems）", () => {
@@ -21,20 +23,13 @@ describe("测试商品列表组件（GoodsItems）", () => {
             {name: "ONLY棉宽松字母牛仔女外套", price: 27450, quantity: 1}
         ]
     })
-    it("是否渲染正确个数的商品信息组件", ()=> {
-        expect(mount(<GoodsItems items={items}/>).find('tr').length).to.equal(4);
-        expect(mount(<GoodsItems items={items}/>).find('span').length).to.equal(3);
-    })
 
-    it("是否渲染正确个数的商品名称", ()=> {
-        expect(mount(<GoodsItems items={items}/>).containsMatchingElement(
-            <td>ONLY修身撞色拼接女针织裙</td>
-        )).to.equal(true);
-        expect(mount(<GoodsItems items={items}/>).containsMatchingElement(
-            <td>ONLY圆点荷叶边女修身裙</td>
-        )).to.equal(true);
-        expect(mount(<GoodsItems items={items}/>).containsMatchingElement(
-            <td>ONLY棉宽松字母牛仔女外套</td>
-        )).to.equal(true);
+    it("是否渲染正确个数以及正确内容的商品信息", ()=> {
+        expect(shallow(<GoodsItems
+            items={items}/>).find(GoodsItem).at(0).html()).to.equal('<tr><td>ONLY修身撞色拼接女针织裙</td><td><span>349.5 元</span></td><td>2</td></tr>')
+        expect(shallow(<GoodsItems
+            items={items}/>).find(GoodsItem).at(1).html()).to.equal('<tr><td>ONLY圆点荷叶边女修身裙</td><td><span>199.5 元</span></td><td>1</td></tr>')
+        expect(shallow(<GoodsItems
+            items={items}/>).find(GoodsItem).at(2).html()).to.equal('<tr><td>ONLY棉宽松字母牛仔女外套</td><td><span>274.5 元</span></td><td>1</td></tr>')
     })
 })
