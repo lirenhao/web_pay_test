@@ -27,85 +27,88 @@ container.setAttribute("class", "container")
 document.body.appendChild(container)
 
 render(
-	<AppContainer>
-		<Provider store={store}>
-			<div>
-				<App/>
-				<DevTools/>
-			</div>
-		</Provider>
-	</AppContainer>,
-	container
+    <AppContainer>
+        <Provider store={store}>
+            <div>
+                <App/>
+                <DevTools/>
+            </div>
+        </Provider>
+    </AppContainer>,
+    container
 )
 
 if (module.hot) {
-	module.hot.accept('./containers/App', () => {
-		const NextApp = require('./containers/App').default
-		render(
-			<AppContainer>
-				<Provider store={store}>
-					<div>
-						<NextApp/>
-						<DevTools/>
-					</div>
-				</Provider>
-			</AppContainer>,
-			container
-		)
-	})
+    module.hot.accept('./containers/App', () => {
+        const NextApp = require('./containers/App').default
+        render(
+            <AppContainer>
+                <Provider store={store}>
+                    <div>
+                        <NextApp/>
+                        <DevTools/>
+                    </div>
+                </Provider>
+            </AppContainer>,
+            container
+        )
+    })
 }
 
 // TODO 后续再移出
 const ClientCmd = Const.ClientCmd
 const ServerCmd = Const.ServerCmd
 const msgHandler = (data) => {
-	const {eventType, ...msg} = data
-	switch (eventType) {
-		case ServerCmd.CLIENT_SIGN_IN:
-			store.dispatch(addUser({userId: msg.id, userType: msg.terminalType}))
-			break
-		case ClientCmd.ORDER_ITEMS:
-			store.dispatch(addOrder({...msg}))
-			break
-		case ClientCmd.MARKETING:
-			store.dispatch(addMarketing({...msg}))
-			break
-		case ClientCmd.PAY_AUTH:
-			// 获取支付权限跳转到pay
-			browserHistory.push("/pay/" + store.getState().orderIds.indexOf(msg.orderId))
-			break
-		case ClientCmd.PAY_COMPLETED:
-			store.dispatch(remove(msg.orderId))
-			if (msg.result) {
-				store.dispatch(showDialog({header: "支付通知", body: "订单【" + msg.orderId + "】" + "支付成功"}))
-			} else {
-				store.dispatch(showDialog({header: "支付通知", body: "订单【" + msg.orderId + "】" + "支付失败"}))
-			}
-			// 当用户没有订单时，商户跳转到录入商品界面、客户跳转到输入订单界面
-			if (store.getState().orderIds.length < 1) {
-				if (store.getState().user.userType == Const.TerminalType.MERCHANT)
-					browserHistory.push("/goods")
-				else
-					browserHistory.push("/orderId")
-			}
-			break
-		case ClientCmd.FAIL:
-			store.dispatch(remove(msg.orderId))
-			store.dispatch(showDialog({header: eventType, body: msg.msg}))
-			// 当用户没有订单时，商户跳转到录入商品界面、客户跳转到输入订单界面
-			if (store.getState().orderIds.length < 1) {
-				if (store.getState().user.userType == Const.TerminalType.MERCHANT)
-					browserHistory.push("/goods")
-				else
-					browserHistory.push("/orderId")
-			}
-			break
-		case ClientCmd.MESSAGE:
-			store.dispatch(showDialog({header: msg.level, body: msg.msg}))
-			break
-	}
+    const {eventType, ...msg} = data
+    switch (eventType) {
+        case ServerCmd.CLIENT_SIGN_IN:
+            store.dispatch(addUser({userId: msg.id, userType: msg.terminalType}))
+            break
+        case ClientCmd.ORDER_ITEMS:
+            store.dispatch(addOrder({...msg}))
+            break
+        case ClientCmd.MARKETING:
+            store.dispatch(addMarketing({...msg}))
+            break
+        case ClientCmd.PAY_AUTH:
+            // 获取支付权限跳转到pay
+            browserHistory.push("/pay/" + store.getState().orderIds.indexOf(msg.orderId))
+            break
+        case ClientCmd.PAY_COMPLETED:
+            store.dispatch(remove(msg.orderId))
+            if (msg.result) {
+                store.dispatch(showDialog({header: "支付通知", body: "订单【" + msg.orderId + "】" + "支付成功"}))
+            } else {
+                if (msg.channel !== "Client")
+                    store.dispatch(showDialog({header: "支付通知", body: "订单【" + msg.orderId + "】" + "支付失败"}))
+                else
+                    store.dispatch(showDialog({header: "订单通知", body: "订单【" + msg.orderId + "】" + "取消成功"}))
+            }
+            // 当用户没有订单时，商户跳转到录入商品界面、客户跳转到输入订单界面
+            if (store.getState().orderIds.length < 1) {
+                if (store.getState().user.userType == Const.TerminalType.MERCHANT)
+                    browserHistory.push("/goods")
+                else
+                    browserHistory.push("/orderId")
+            }
+            break
+        case ClientCmd.FAIL:
+            store.dispatch(remove(msg.orderId))
+            store.dispatch(showDialog({header: eventType, body: msg.msg}))
+            // 当用户没有订单时，商户跳转到录入商品界面、客户跳转到输入订单界面
+            if (store.getState().orderIds.length < 1) {
+                if (store.getState().user.userType == Const.TerminalType.MERCHANT)
+                    browserHistory.push("/goods")
+                else
+                    browserHistory.push("/orderId")
+            }
+            break
+        case ClientCmd.MESSAGE:
+            store.dispatch(showDialog({header: msg.level, body: msg.msg}))
+            break
+    }
 }
 
 window.addEventListener("load", () => {
-	Payment.setMsgHandler(msgHandler)
+    Payment.setMsgHandler(msgHandler)
 })
