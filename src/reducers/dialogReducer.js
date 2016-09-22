@@ -2,19 +2,18 @@
  * Author：liRenhao
  * Create Date：2016/9/19
  * Modified By：liRenhao
- * Why & What is modified  <修改原因描述>
+ * Why & What is modified 模态框的state改为数组使可以接受多个模态框的信息
  * 定义模态框的state
  */
 import {createReducer} from "redux-act"
 import {showDialog, hideDialog} from "../actions"
 
-const initialState={show: false, header: "", body: ""}
-
 export default createReducer({
     [showDialog]: (state, msg) => {
-        return {show: true, header: msg.header, body: msg.body}
+        return [...state, {...msg, show: true}]
     },
     [hideDialog]: (state) => {
-        return {...state, show: false}
+        state.shift()
+        return [...state]
     }
-}, initialState)
+}, [])

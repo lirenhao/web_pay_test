@@ -20,12 +20,9 @@ export default createReducer({
 			return [...state]
 	},
 	[remove]: (state, orderId) => {
-		/**
-		 * ES6中有delete、array.splice(index, 1)两种方法删除array中的元素
-		 * 由于delete是把元素替换成undefined、array.splice(-1, 1)是去除最后一个元素，所以不使用这两种方法
-		 */
-		return state.filter((value) => {
-			return value !== orderId
-		})
+		// TODO 使用filter有问题之后在查找问题的原因
+		if (state.indexOf(orderId) >= 0)
+			state.splice(state.indexOf(orderId), 1)
+		return [...state]
 	}
 }, [])

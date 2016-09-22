@@ -36,7 +36,7 @@ App.childContextTypes = {
 }
 
 const mapStateToProps = (state)=> ({
-    dialog: state.dialog
+    dialog: state.dialog[0] || {show: false, header: "", body: ""}
 })
 
 const mapDispatchToProps = (dispatch) => ({
