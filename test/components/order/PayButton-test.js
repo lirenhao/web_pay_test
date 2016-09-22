@@ -14,7 +14,7 @@ import sinon from "sinon"
 import PayButton from '../../../src/components/order/PayButton'
 import {Button} from 'react-bootstrap'
 
-describe("测试按钮组件", ()=> {
+describe("测试按钮组件(PayButton)", ()=> {
     let canPay
     let canCancel
     let onReqPay

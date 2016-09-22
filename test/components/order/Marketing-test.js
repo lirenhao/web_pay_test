@@ -13,17 +13,17 @@ import Marketing from '../../../src/components/order/Marketing'
 import AmtDisplay from '../../../src/components/order/AmtDisplay'
 
 
-describe("测试优惠信息组件", function () {
+describe("测试优惠信息组件(Marketing)", () => {
     var data;
     before("初始化数据", function () {
         data = {orderId: "1", amt: 58650, msg: "测试优惠, 一律5折"}
     })
 
-    it("是否渲染出金额展示组件", function () {
+    it("是否渲染出金额展示组件", () => {
         expect(shallow(<Marketing marketing={data}/>).find(AmtDisplay).render().find('span')).to.have.length(1)
     })
 
-    it("是否能显示出优惠信息内容", function () {
+    it("是否能显示出优惠信息内容", ()=> {
         expect(shallow(<Marketing marketing={data}/>).find('td').at(3).text()).to.equal(data.msg)
     })
 })

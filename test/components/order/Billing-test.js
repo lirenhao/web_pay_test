@@ -12,7 +12,7 @@ import {shallow} from 'enzyme';
 import Billing from '../../../src/components/order/Billing'
 import AmtDisplay from '../../../src/components/order/AmtDisplay'
 
-describe("测试结算组件", function () {
+describe("测试结算组件(Billing)", ()=> {
     let items
     let marketing
     before("初始化测试数据", function () {
@@ -24,15 +24,18 @@ describe("测试结算组件", function () {
         marketing = {orderId: "1", amt: 58650, msg: "测试优惠, 一律5折"}
     })
 
-    it("金额组件是否渲染成功", function () {
-        expect(shallow(<Billing items={items}  marketing={marketing}/>).find(AmtDisplay)).to.have.length(3);
+    it("金额组件是否渲染成功", () => {
+        expect(shallow(<Billing items={items} marketing={marketing}/>).find(AmtDisplay)).to.have.length(3);
     })
 
-    it("金额组件渲染后内容是否正确", function () {
-        expect(shallow(<Billing items={items}  marketing={marketing}/>).find(AmtDisplay).at(0).render().find('span').text()).to.equal('1173 元')
+    it("金额组件渲染后内容是否正确", () => {
+        expect(shallow(<Billing items={items}
+                                marketing={marketing}/>).find(AmtDisplay).at(0).render().find('span').text()).to.equal('1173 元')
 
-        expect(shallow(<Billing items={items}  marketing={marketing}/>).find(AmtDisplay).at(1).render().find('span').text()).to.equal('586.5 元')
+        expect(shallow(<Billing items={items}
+                                marketing={marketing}/>).find(AmtDisplay).at(1).render().find('span').text()).to.equal('586.5 元')
 
-        expect(shallow(<Billing items={items}  marketing={marketing}/>).find(AmtDisplay).at(2).render().find('span').text()).to.equal('586.5 元')
+        expect(shallow(<Billing items={items}
+                                marketing={marketing}/>).find(AmtDisplay).at(2).render().find('span').text()).to.equal('586.5 元')
     })
 })
