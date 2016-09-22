@@ -17,7 +17,7 @@ import {AppContainer} from "react-hot-loader"
 import Payment from "./Payment"
 import Const from "./constants"
 import reducer from "./reducers"
-import {addUser, addOrder, addMarketing, payAuth, remove, showDialog} from "./actions"
+import {addUser, addOrder, addMarketing, remove, showDialog} from "./actions"
 import {browserHistory} from "react-router"
 
 export const store = createStore(reducer, DevTools.instrument())
@@ -71,7 +71,6 @@ const msgHandler = (data) => {
 			store.dispatch(addMarketing({...msg}))
 			break
 		case ClientCmd.PAY_AUTH:
-			store.dispatch(payAuth(msg.orderId))
 			// 获取支付权限跳转到pay
 			browserHistory.push("/pay/" + store.getState().orderIds.indexOf(msg.orderId))
 			break

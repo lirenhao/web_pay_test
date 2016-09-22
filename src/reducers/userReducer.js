@@ -11,6 +11,6 @@ import {addUser} from "../actions"
 
 export default createReducer({
 	[addUser]: (state, user) => {
-		return user
+		return {...user}
 	}
 }, {})

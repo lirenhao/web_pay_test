@@ -12,7 +12,6 @@ import {createAction} from "redux-act"
 export const addUser = createAction("ADD_USER");
 export const addOrder = createAction("ADD_ORDER");
 export const addMarketing = createAction("ADD_MARKETING");
-export const payAuth = createAction("PAY_AUTH");
 export const remove = createAction("REMOVE");
 
 export const showDialog = createAction("SHOW_DIALOG");
