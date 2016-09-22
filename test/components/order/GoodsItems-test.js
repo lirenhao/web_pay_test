@@ -11,7 +11,6 @@ import {expect} from 'chai';
 import {shallow} from 'enzyme';
 import GoodsItems from '../../../src/components/order/GoodsItems'
 import GoodsItem from '../../../src/components/order/GoodsItem'
-import AmtDisplay from '../../../src/components/order/AmtDisplay'
 
 
 describe("测试商品列表组件（GoodsItems）", () => {
