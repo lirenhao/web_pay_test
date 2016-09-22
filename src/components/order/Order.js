@@ -52,7 +52,7 @@ class Order extends React.Component {
         )
         return (
             <Tabs id="OrderSelect"
-                  activeKey={orderIds[this.state.key] ? this.state.key : this.state.key - 1}
+                  activeKey={orderIds[this.state.key] ? this.state.key : orderIds.length - 1}
                   onSelect={(key) => this.handleSelect(key)}>
                 {tabItems}
             </Tabs>
