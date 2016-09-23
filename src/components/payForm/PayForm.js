@@ -48,6 +48,7 @@ class PayForm extends React.Component {
 
     render() {
         const {handleSubmit, onSubmit, onCancel, orderIds, order, marketing, index} = this.props
+        // TODO 订单信息展示组件只穿商品信息是否合适
         return (
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className={style.marginOutTopBottom}>
@@ -56,9 +57,9 @@ class PayForm extends React.Component {
                         <span><b>流水号：{getLsNo(orderIds[index])}</b></span>
                     </div>
                     <div>
-                        <OrderInfo items={order[orderIds[index]].items}/>
+                        <OrderInfo items={order[orderIds[index]] ? order[orderIds[index]].items : []}/>
                         <Marketing marketing={marketing[orderIds[index]]}/>
-                        <Billing items={order[orderIds[index]].items} marketing={marketing[orderIds[index]]}/>
+                        <Billing items={order[orderIds[index]] ? order[orderIds[index]].items : []} marketing={marketing[orderIds[index]]}/>
                     </div>
                 </div>
                 <Navbar fixedBottom>
