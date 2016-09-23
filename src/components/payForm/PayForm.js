@@ -39,27 +39,31 @@ const getLsNo = (orderId)=> {
 
 class PayForm extends React.Component {
 
+    constructor(props) {
+        super(props)
+        this.state = {orderId: props.orderIds[props.index]}
+    }
+
     componentWillReceiveProps(nextProps) {
-        const orderId = this.props.orderIds[this.props.index]
-        if (nextProps.orderIds.indexOf(orderId) < 0) {
+        if (nextProps.orderIds.indexOf(this.state.orderId) < 0)
             nextProps.onLink()
-        }
     }
 
     render() {
-        const {handleSubmit, onSubmit, onCancel, orderIds, order, marketing, index} = this.props
+        const {handleSubmit, onSubmit, onCancel, order, marketing} = this.props
         // TODO 订单信息展示组件只穿商品信息是否合适
         return (
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className={style.marginOutTopBottom}>
                     <div className={style.marginBottom}>
-                        <span className={style.marginRight}><b>订单号：{orderIds[index]}</b></span>
-                        <span><b>流水号：{getLsNo(orderIds[index])}</b></span>
+                        <span className={style.marginRight}><b>订单号：{this.state.orderId}</b></span>
+                        <span><b>流水号：{getLsNo(this.state.orderId)}</b></span>
                     </div>
                     <div>
-                        <OrderInfo items={order[orderIds[index]] ? order[orderIds[index]].items : []}/>
-                        <Marketing marketing={marketing[orderIds[index]]}/>
-                        <Billing items={order[orderIds[index]] ? order[orderIds[index]].items : []} marketing={marketing[orderIds[index]]}/>
+                        <OrderInfo items={order[this.state.orderId] ? order[this.state.orderId].items : []}/>
+                        <Marketing marketing={marketing[this.state.orderId]}/>
+                        <Billing items={order[this.state.orderId] ? order[this.state.orderId].items : []}
+                                 marketing={marketing[this.state.orderId]}/>
                     </div>
                 </div>
                 <Navbar fixedBottom>
@@ -71,7 +75,7 @@ class PayForm extends React.Component {
                             <Button bsStyle="success" type="submit">确定</Button>
                         </ButtonGroup>
                         <ButtonGroup>
-                            <Button bsStyle="danger" onClick={() => onCancel(orderIds[index])}>取消支付</Button>
+                            <Button bsStyle="danger" onClick={() => onCancel(this.state.orderId)}>取消支付</Button>
                         </ButtonGroup>
                     </ButtonGroup>
                 </Navbar>
