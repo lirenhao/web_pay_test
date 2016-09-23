@@ -2,8 +2,8 @@
  * Author：likon
  * Create Date：2016/9/23
  * Modified By：likon
- * Why & What is modified  <修改原因描述>
- * <文件描述>
+ * Why & What is modified  添加商户端BDD功能测试描述框架
+ * <文件描述>：测试客户端中终端类型为商户的功能，包括：登陆、创建订单、查看订单信息、支付订单、通知
  */ 
 import React from 'react'
 import expect from 'chai'
