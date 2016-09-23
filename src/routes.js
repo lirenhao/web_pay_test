@@ -8,7 +8,8 @@
  * 路由文件
  */
 import React from 'react'
-import {Route} from 'react-router'
+import {Router, IndexRoute, Route, browserHistory} from 'react-router'
+import App from './containers/App'
 import Login from './containers/Login'
 import Goods from './containers/Goods'
 import OrderId from './containers/OrderId'
@@ -17,12 +18,15 @@ import Pay from './containers/Pay'
 import Dialog from './components/dialog/Dialog'
 
 export default (
-	<Route>
-		<Route path="/" component={Login}/>
-        <Route path="/goods" component={Goods}/>
-		<Route path="/orderId" component={OrderId}/>
-		<Route path="/order" component={Order}/>
-		<Route path="/pay/:index" component={Pay}/>
-		<Route path="/dialog" component={Dialog}/>
-	</Route>
+    <Router history={browserHistory}>
+        <Route path="/" component={App}>
+            <IndexRoute component={Login}/>
+            <Route path="/login" component={Login}/>
+            <Route path="/goods" component={Goods}/>
+            <Route path="/orderId" component={OrderId}/>
+            <Route path="/order" component={Order}/>
+            <Route path="/pay/:index" component={Pay}/>
+            <Route path="/dialog" component={Dialog}/>
+        </Route>
+    </Router>
 )

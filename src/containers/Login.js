@@ -11,29 +11,24 @@ import Payment from "../Payment"
 import Const from "../constants"
 import LoginForm from "../components/login/LoginForm"
 
-const TerminalType = Const.TerminalType;
-class Login extends React.Component {
-	static contextTypes = {
-		setTitle: React.PropTypes.func.isRequired
-	};
+const Login = (props, context) => {
+    context.setTitle("登录")
 
-	componentWillMount() {
-		this.context.setTitle("登录");
-	}
+    const TerminalType = Const.TerminalType
 
-	onLogin(values) {
-		Payment.clientSignIn({...values});
-		if (values.userType == TerminalType.MERCHANT)
-			browserHistory.push("/goods");
-		else
-			browserHistory.push("/orderId")
-	}
+    const onLogin = (values) => {
+        Payment.clientSignIn({...values})
+        if (values.userType == TerminalType.MERCHANT)
+            browserHistory.push("/goods")
+        else
+            browserHistory.push("/orderId")
+    }
 
-	render() {
-		return (
-			<LoginForm onLogin={this.onLogin.bind(this)} initialValues={{userType: TerminalType.MERCHANT}}/>
-		)
-	}
+    return (
+        <LoginForm onLogin={onLogin} initialValues={{userType: TerminalType.MERCHANT}}/>
+    )
 }
+
+Login.contextTypes = {setTitle: React.PropTypes.func.isRequired}
 
 export default Login
