@@ -77,12 +77,16 @@ const msgHandler = (data) => {
         case ClientCmd.PAY_COMPLETED:
             store.dispatch(remove(msg.orderId))
             if (msg.result) {
+                // 支付成功时模态框弹出支付结果
                 store.dispatch(showDialog({header: "支付通知", body: "订单【" + msg.orderId + "】" + "支付成功"}))
             } else {
-                if (msg.channel !== "Client")
+                if (msg.channel !== "Client") {
+                    // 支付成功时模态框弹出支付结果
                     store.dispatch(showDialog({header: "支付通知", body: "订单【" + msg.orderId + "】" + "支付失败"}))
-                else
+                } else if (store.getState().user.userType == Const.TerminalType.USER) {
+                    // 取消订单时只有客户端是用户才弹出取消订单通知
                     store.dispatch(showDialog({header: "订单通知", body: "订单【" + msg.orderId + "】" + "取消成功"}))
+                }
             }
             // 当用户没有订单时，商户跳转到录入商品界面、客户跳转到输入订单界面
             if (store.getState().orderIds.length < 1) {
