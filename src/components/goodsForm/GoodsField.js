@@ -17,7 +17,7 @@ import InputField from "./InputField"
 
 /**
  * 描述：定义一个商品信息组件，传入参数是一个包括三个值的对象，
- * 输出组件包括：商品信息（名称、价格、数量、删除按钮）、添加按钮、提交按钮、待支付订单按钮
+ * 输出组件内容：商品信息（名称、价格、数量、删除按钮）、添加按钮、提交按钮、待支付订单按钮
  * 实现了对商品输入信息的验证
  * @param fields ：是指商品信息，它是一个数组
  * @param orderNum：是指订单号，是值类型的必输值
@@ -73,8 +73,8 @@ const GoodsField = ({fields, orderNum, onButton}) => (
 
 /**
  * 商品信息组件的属性
- * @type {{orderNum: *}}:值类型的订单号，是必输项
- * @type {{onButton: *}}:待支付按钮点击事件，是必输的函数
+ * @type {{orderNum: *}}:值类型的订单号，是必传属性
+ * @type {{onButton: *}}:待支付按钮点击事件，是必传的函数属性
  */
 GoodsField.propTypes = {
     orderNum: React.PropTypes.number.isRequired,

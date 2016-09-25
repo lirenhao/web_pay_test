@@ -4,10 +4,19 @@
  * Modified By：Pengfei
  * Why & What is modified 添加展示金额数据的组件
  * 定义一组商品信息组件
+ * Modified By：kongli
+ * Why & What is modified 添加注释
  */
+
 import React from 'react'
 import AmtDisplay from './AmtDisplay'
 
+/**
+ * 商品信息组件：包括商品名称、单价、数量，它是
+ * @param name 商品名称
+ * @param price 单价
+ * @param quantity 数量
+ */
 const goodsItem = ({name,price,quantity})=>(
         <tr>
             <td>{name}</td>

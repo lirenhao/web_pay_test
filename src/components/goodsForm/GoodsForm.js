@@ -13,7 +13,7 @@ import React from "react"
 import {FieldArray, reduxForm} from "redux-form"
 import {Form} from "react-bootstrap"
 import GoodsField from "./GoodsField"
-import s from './Goods.scss'
+import style from './Goods.scss'
 
 /**
  * 商品信息表单验证，验证输入的值是否符合标准
@@ -64,7 +64,7 @@ const GoodsForm = (props) => {
     const {handleSubmit, onSubmit, orderNum, onButton} = props
     return (
             <Form inline onSubmit={handleSubmit(onSubmit)} >
-                <div className={s.marginBottom}>
+                <div className={style.marginBottom}>
                     <FieldArray name="goods" component={GoodsField} orderNum={orderNum} onButton={onButton}/>
                 </div>
             </Form>
@@ -72,8 +72,10 @@ const GoodsForm = (props) => {
 }
 
 /**
+ * 商品信息表单组件
  * @type {{onSubmit: *}} 提交表单后的处理事件
  * @type {{orderNum: *}} 商户已有的订单数量
+ * @type {{onButton: *}} 待支付订单事件
  */
 
 GoodsForm.propTypes = {
