@@ -19,7 +19,7 @@ class App extends React.Component {
     getChildContext() {
         return {
             setTitle: value => (document.title = value),
-            history: this.context.history
+            router: this.context.router
         }
     }
 
@@ -36,11 +36,11 @@ class App extends React.Component {
 
 App.childContextTypes = {
     setTitle: React.PropTypes.func,
-    history: React.PropTypes.object
+    router: React.PropTypes.object
 }
 
 App.contextTypes = {
-    history: React.PropTypes.object.isRequired
+    router: React.PropTypes.object.isRequired
 }
 
 const mapStateToProps = (state)=> ({

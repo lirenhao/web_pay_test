@@ -26,24 +26,24 @@ const Pay = (props, context)=> {
 	const onSubmitHandle = (result) => {
 		Payment.payResult(user, result)
 		if (user.userType == TerminalType.USER)
-			context.history.push("/orderId")
+			context.router.push("/orderId")
 		else
-			context.history.push("/goods")
+			context.router.push("/goods")
 	}
 
 	const onCancelHandle = (orderId) => {
 		Payment.giveUpPay(user, orderId)
 		if (user.userType == TerminalType.USER)
-			context.history.push("/orderId")
+			context.router.push("/orderId")
 		else
-			context.history.push("/goods")
+			context.router.push("/goods")
 	}
 
 	const onLinkHandle = () => {
 		if (user.userType == TerminalType.USER)
-			context.history.push("/orderId")
+			context.router.push("/orderId")
 		else
-			context.history.push("/goods")
+			context.router.push("/goods")
 	}
 
 	return <PayForm initialValues={{orderId: orderIds[index], state: "0"}}
@@ -59,7 +59,7 @@ const Pay = (props, context)=> {
 
 Pay.contextTypes = {
 	setTitle: React.PropTypes.func.isRequired,
-	history: React.PropTypes.object.isRequired
+	router: React.PropTypes.object.isRequired
 }
 
 const mapStateToProps = (state)=> ({

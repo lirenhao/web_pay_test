@@ -39,10 +39,10 @@ const Goods = (props, context) => {
 	context.setTitle("创建订单")
 	const ToOrder = (value)=> {
 		Payment.createOrder(props.user, value.goods)
-		context.history.push("/order")
+		context.router.push("/order")
 	}
 	const waitPay = ()=> {
-		context.history.push("/order")
+		context.router.push("/order")
 	}
 	return (
 		<GoodsForm onSubmit={ToOrder}
@@ -55,7 +55,7 @@ const Goods = (props, context) => {
 
 Goods.contextTypes = {
 	setTitle: React.PropTypes.func.isRequired,
-	history: React.PropTypes.object.isRequired
+	router: React.PropTypes.object.isRequired
 }
 
 const mapPropsFromState = (state)=>({

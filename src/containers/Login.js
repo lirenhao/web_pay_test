@@ -17,9 +17,9 @@ const Login = (props, context) => {
     const onLogin = (values) => {
         Payment.clientSignIn({...values})
         if (values.userType == TerminalType.MERCHANT)
-            context.history.push("/goods")
+            context.router.push("/goods")
         else
-            context.history.push("/orderId")
+            context.router.push("/orderId")
     }
 
     return (
@@ -29,7 +29,7 @@ const Login = (props, context) => {
 
 Login.contextTypes = {
     setTitle: React.PropTypes.func.isRequired,
-    history: React.PropTypes.object.isRequired
+    router: React.PropTypes.object.isRequired
 }
 
 export default Login

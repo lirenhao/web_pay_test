@@ -20,13 +20,13 @@ const OrderId = (props, context) => {
 		if (index < 0) {
 			// state中没有该订单向服务器请求
 			Payment.joinOrder(user, values.orderId)
-			context.history.push("/order")
+			context.router.push("/order")
 		} else {
-			context.history.push("/order")
+			context.router.push("/order")
 		}
 	}
 	const onButton = () => {
-		context.history.push("/order")
+		context.router.push("/order")
 	}
 	return (
 		<OrderIdForm onSubmit={onSubmit} onButton={onButton} orderNum={orderIds.length}/>
@@ -35,7 +35,7 @@ const OrderId = (props, context) => {
 
 OrderId.contextTypes = {
 	setTitle: React.PropTypes.func.isRequired,
-	history: React.PropTypes.object.isRequired
+	router: React.PropTypes.object.isRequired
 }
 
 const mapStateToProps = (state)=> ({
