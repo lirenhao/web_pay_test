@@ -28,7 +28,7 @@ describe('支付系统分两块，包括客户端和服务端', ()=> {
             let store = null
             let router = null
             let subject = null
-            before(() => {
+            beforeEach(() => {
                 server = new MockServer()
                 store = createStore(reducer, DevTools.instrument())
                 router = new MockRouter()
@@ -42,7 +42,7 @@ describe('支付系统分两块，包括客户端和服务端', ()=> {
                     }
                 })
             })
-            after(() => {
+            afterEach(() => {
                 server.close()
             })
             it('测试商户端登陆失败', ()=> {
@@ -64,7 +64,7 @@ describe('支付系统分两块，包括客户端和服务端', ()=> {
             let router = null
             let subject = null
             const state = {user: {userId: '1', userType: 'USER'}}
-            before(() => {
+            beforeEach(() => {
                 server = new MockServer()
                 store = createStore(reducer, state, DevTools.instrument())
                 router = new MockRouter()
@@ -79,70 +79,93 @@ describe('支付系统分两块，包括客户端和服务端', ()=> {
                     }
                 })
             })
-            after(() => {
+            afterEach(() => {
                 server.close()
             })
             describe('单个用户登陆时，用户在扫描订单页面的情况', ()=> {
-                describe('点击“待支付”按钮：未支付完成的订单。已完成的订单状态包括：订单支付成功、订单支付失败、取消订单。未支付完成：非已完成订单', ()=> {
-                    it('当用户没有未完成支付的订单时，结果不会显示“待支付”按钮', ()=> {
-                        expect(subject.find("button").length).to.equal(1)
-                    })
-                    describe('当用户存在至少一个未完成支付的订单时，结果会显示带有待支付订单的个数“待支付”按钮', ()=> {
-                        it('用户点击“待支付”按钮，页面跳转进入“订单页面”', ()=> {
-                            const order = {
-                                eventType: "ORDER_ITEMS",
-                                orderId: "1",
-                                items: [{name: "ONLY修身撞色拼接女针织裙", price: 34950, quantity: 2}]
-                            }
-                            server.send(order)
-                            expect(subject.find("button").length).to.equal(2)
-                        })
-                    })
+                it('当用户没有未完成支付的订单时，结果不会显示“待支付”按钮', ()=> {
+                    expect(subject.find("button").length).to.equal(1)
                 })
-                describe('在文本框内录入订单号操作，用户点击“加入”按钮：匹配商户端创建的订单操作', ()=> {
-                    it('当加入的订单号时服务器订单存在，页面会跳转到当前订单的“订单页面”', ()=> {
-                        subject.find("input").first().simulate("change", {target: {value: "1"}})
-                        subject.find("form").simulate("submit")
-                        const order = {
-                            orderId: "1",
-                            items: [{name: "ONLY修身撞色拼接女针织裙", price: 34950, quantity: 2}]
-                        }
-                        server.send({...order, eventType: "ORDER_ITEMS"})
-                        const marketing = {
-                            orderId: "1",
-                            amt: 58650,
-                            msg: "测试优惠, 一律5折"
-                        }
-                        server.send({...marketing, eventType: "MARKETING"})
-                        expect(JSON.stringify(store.getState().order[order.orderId])).to.equal(JSON.stringify(order))
-                        expect(JSON.stringify(store.getState().marketing[marketing.orderId])).to.equal(JSON.stringify(marketing))
-                        expect(router.route).to.equal("/order")
-                    })
-                    it('当加入的订单号时服务器订单不存在，页面会跳到已经匹配完成的“订单页面”', ()=> {
-                        subject.find("input").first().simulate("change", {target: {value: "1"}})
-                        subject.find("form").simulate("submit")
-                        expect(router.route).to.equal("/order")
-                    })
+                it('当用户存在至少一个未完成支付的订单时，用户点击“待支付”按钮，页面跳转进入“订单页面”', ()=> {
+                    const order = {
+                        eventType: "ORDER_ITEMS",
+                        orderId: "1",
+                        items: [{name: "ONLY修身撞色拼接女针织裙", price: 34950, quantity: 2}]
+                    }
+                    server.send(order)
+                    expect(subject.find("button").length).to.equal(2)
                 })
             })
+            describe('在文本框内录入订单号操作，用户点击“加入”按钮：匹配商户端创建的订单操作', ()=> {
+                it('当加入的订单号时服务器订单存在，页面会跳转到当前订单的“订单页面”', ()=> {
+                    subject.find("input").first().simulate("change", {target: {value: "1"}})
+                    subject.find("form").simulate("submit")
+                    const order = {
+                        orderId: "1",
+                        items: [{name: "ONLY修身撞色拼接女针织裙", price: 34950, quantity: 2}]
+                    }
+                    server.send({...order, eventType: "ORDER_ITEMS"})
+                    const marketing = {
+                        orderId: "1",
+                        amt: 58650,
+                        msg: "测试优惠, 一律5折"
+                    }
+                    server.send({...marketing, eventType: "MARKETING"})
+                    expect(JSON.stringify(store.getState().order[order.orderId])).to.equal(JSON.stringify(order))
+                    expect(JSON.stringify(store.getState().marketing[marketing.orderId])).to.equal(JSON.stringify(marketing))
+                    expect(router.route).to.equal("/order")
+                })
+                it('当加入的订单号时服务器订单不存在，页面会跳到已经匹配完成的“订单页面”', ()=> {
+                    subject.find("input").first().simulate("change", {target: {value: "1"}})
+                    subject.find("form").simulate("submit")
+                    expect(router.route).to.equal("/order")
+                })
+
+            })
             describe('同一用户多处登陆时，用户在扫描订单页面的情况', ()=> {
-                describe('前提：商户生成多个订单，用户1和用户2是同一用户，且同时登陆的情况', ()=> {
-                    it('用户1在扫描订单页面，加入成功1个订单。用户2在扫描订单页面，结果会出现“1个待支付”按钮', ()=> {
-
-                    })
-                    it('用户1在扫描订单页面，加入成功1个订单。用户2在订单页面，结果出现用户1加入成功的订单', ()=> {
-
-                    })
+                it('别处登录用户成功加入一个订单。用户在扫描订单页面会出现待支付按钮', ()=> {
+                    expect(subject.find("button").length).to.equal(1)
+                    const order = {
+                        orderId: "1",
+                        items: [{name: "ONLY修身撞色拼接女针织裙", price: 34950, quantity: 2}]
+                    }
+                    server.send({...order, eventType: "ORDER_ITEMS"})
+                    const marketing = {
+                        orderId: "1",
+                        amt: 58650,
+                        msg: "测试优惠, 一律5折"
+                    }
+                    server.send({...marketing, eventType: "MARKETING"})
+                    expect(subject.find("button").length).to.equal(2)
                 })
             })
             describe('不同用户登陆，匹配同一订单的情况', ()=> {
-                describe('前提：商户生成1个订单，用户1和用户2时不同的两个用户', ()=> {
-                    it('用户1在“扫描订单”页面点击“加入”一个订单，页面跳转进入该订单的“支付页面”，用户2也去“加入”该订单，用户2跳转进入该订单的“支付页面”，用户1收到通知：用户 u2 参与支付', ()=> {
-
-                    })
-                    it('用户1进入支付页面，用户2在“扫描订单页面”，用户2会收到通知：订单正在支付, 当前用户不能参与支付', ()=> {
-
-                    })
+                it('该订单已被匹配还未支付，用户“加入”该订单，页面跳转进入“订单页面”', ()=> {
+                    subject.find("input").first().simulate("change", {target: {value: "1"}})
+                    subject.find("form").simulate("submit")
+                    const order = {
+                        orderId: "1",
+                        items: [{name: "ONLY修身撞色拼接女针织裙", price: 34950, quantity: 2}]
+                    }
+                    server.send({...order, eventType: "ORDER_ITEMS"})
+                    const marketing = {
+                        orderId: "1",
+                        amt: 58650,
+                        msg: "测试优惠, 一律5折"
+                    }
+                    server.send({...marketing, eventType: "MARKETING"})
+                    expect(JSON.stringify(store.getState().order[order.orderId])).to.equal(JSON.stringify(order))
+                    expect(JSON.stringify(store.getState().marketing[marketing.orderId])).to.equal(JSON.stringify(marketing))
+                    expect(router.route).to.equal("/order")
+                })
+                it('该订单已被匹配正在支付，用户“加入”该订单，提示用户订单正在支付, 当前用户不能参与支付', ()=> {
+                    subject.find("input").first().simulate("change", {target: {value: "1"}})
+                    subject.find("form").simulate("submit")
+                    server.send({eventType: "FAIL", orderId: "1", msg: "用户 u2 参与支付"})
+                    expect(store.getState().dialog[0].show).to.equal(true)
+                    expect(store.getState().dialog[0].header).to.equal("FAIL")
+                    expect(store.getState().dialog[0].body).to.equal("用户 u2 参与支付")
+                    expect(router.route).to.equal("/orderId")
                 })
             })
         })
@@ -158,7 +181,7 @@ describe('支付系统分两块，包括客户端和服务端', ()=> {
                 order: {'1': {orderId: '1', items: [{name: "ONLY修身撞色拼接女针织裙", price: 1, quantity: 1}]}},
                 marketing: {'1': {orderId: '1', amt: 58650, msg: '测试优惠, 一律5折'}}
             }
-            before(() => {
+            beforeEach(() => {
                 server = new MockServer()
                 store = createStore(reducer, state, DevTools.instrument())
                 router = new MockRouter()
@@ -173,7 +196,7 @@ describe('支付系统分两块，包括客户端和服务端', ()=> {
                     }
                 })
             })
-            after(() => {
+            afterEach(() => {
                 server.close()
             })
             describe('测试“支付”按钮', ()=> {
@@ -201,7 +224,7 @@ describe('支付系统分两块，包括客户端和服务端', ()=> {
                 order: {'1': {orderId: '1', items: [{name: "ONLY修身撞色拼接女针织裙", price: 1, quantity: 1}]}},
                 marketing: {'1': {orderId: '1', amt: 58650, msg: '测试优惠, 一律5折'}}
             }
-            before(() => {
+            beforeEach(() => {
                 server = new MockServer()
                 store = createStore(reducer, state, DevTools.instrument())
                 router = new MockRouter()
@@ -216,63 +239,51 @@ describe('支付系统分两块，包括客户端和服务端', ()=> {
                     }
                 })
             })
-            after(() => {
+            afterEach(() => {
                 server.close()
             })
-            describe('单个用户登陆的情况', ()=> {
-                describe('商户和用户都登陆，且用户已匹配该订单', ()=> {
-                    describe('选择支付结果下拉菜单，点击“确定”按钮.', ()=> {
-                        it('选择支付结果-成功,点击“确定”按钮.结果：页面跳转进"扫描订单页面"，用户收到支付结果通知：支付完成，支付成功', ()=> {
-                            subject.find("select").first().simulate("change", {target: {value: "0"}})
-                            subject.find("form").simulate("submit")
-                            expect(router.route).to.equal("/orderId")
-                            expect(server.clientDate.state).to.equal(true)
-                        })
-                        it('选择支付结果-失败,点击“确定”按钮.结果：页面跳转进"扫描订单页面"，用户收到支付结果通知：支付完成，支付失败', ()=> {
-                            subject.find("select").first().simulate("change", {target: {value: "1"}})
-                            subject.find("form").simulate("submit")
-                            expect(router.route).to.equal("/orderId")
-                            expect(server.clientDate.state).to.equal(false)
-                        })
-
+            describe('用户获得该订单支付权限', ()=> {
+                describe('选择支付结果下拉菜单，点击“确定”按钮.', ()=> {
+                    it('选择支付结果-成功,点击“确定”按钮.结果：页面跳转进"扫描订单页面"，用户收到支付结果通知：支付完成，支付成功', ()=> {
+                        subject.find("select").first().simulate("change", {target: {value: "0"}})
+                        subject.find("form").simulate("submit")
+                        expect(router.route).to.equal("/orderId")
+                        expect(server.clientDate.state).to.equal(true)
                     })
-                    describe('点击“取消支付”按钮操作', ()=> {
-                        it('操作：用户点击“取消支付”按钮，结果：从“订单页面”跳转进入“支付页面”', ()=> {
-                            subject.find("button").last().simulate("click")
-                            expect(router.route).to.equal("/orderId")
-                            expect(server.clientDate.eventType).to.equal("GIVE_UP_PAY")
-                        })
+                    it('选择支付结果-失败,点击“确定”按钮.结果：页面跳转进"扫描订单页面"，用户收到支付结果通知：支付完成，支付失败', ()=> {
+                        subject.find("select").first().simulate("change", {target: {value: "1"}})
+                        subject.find("form").simulate("submit")
+                        expect(router.route).to.equal("/orderId")
+                        expect(server.clientDate.state).to.equal(false)
+                    })
+
+                })
+                describe('点击“取消支付”按钮操作', ()=> {
+                    it('操作：用户点击“取消支付”按钮，结果：从“订单页面”跳转进入“支付页面”', ()=> {
+                        subject.find("button").last().simulate("click")
+                        expect(router.route).to.equal("/orderId")
+                        expect(server.clientDate.eventType).to.equal("GIVE_UP_PAY")
                     })
                 })
-            })
-            describe('多个同一用户同时登陆的情况', ()=> {
-                describe('商户端生成两个订单，用户1和用户2是同一用户', ()=> {
-                    it('用户1在“支付”页面支付成功两个订单，用户2在“订单页面”连续收到两个通知：订单支付成功。', ()=> {
-
-                    })
-                })
-
             })
         })
 
-        describe('用户通知', ()=> {
+        // TODO 无法取到模态框，后续再做优化
+        describe('用户接收通知', ()=> {
             let server = null
             let store = null
             let router = null
             let subject = null
             const state = {
                 user: {userId: '1', userType: 'USER'},
-                orderIds: ['1'],
-                order: {'1': {orderId: '1', items: [{name: "ONLY修身撞色拼接女针织裙", price: 1, quantity: 1}]}},
-                marketing: {'1': {orderId: '1', amt: 58650, msg: '测试优惠, 一律5折'}}
             }
-            before(() => {
+            beforeEach(() => {
                 server = new MockServer()
                 store = createStore(reducer, state, DevTools.instrument())
                 router = new MockRouter()
                 Payment.setMsgHandler(msgHandler(store, router))
                 Payment.open()
-                subject = mount(<Provider store={store}><App><Pay params={{index: "0"}}/></App></Provider>, {
+                subject = mount(<Provider store={store}><App/></Provider>, {
                     context: {
                         router: router
                     },
@@ -281,18 +292,41 @@ describe('支付系统分两块，包括客户端和服务端', ()=> {
                     }
                 })
             })
-            after(() => {
+            afterEach(() => {
                 server.close()
             })
-            describe('商户和用户都登陆的情况，商户在“订单页面”点击“取消”按钮，用户无论在哪个页面都会收到“订单通知”', ()=> {
-                describe('用户收到多条通知的情况', ()=> {
-                    it('用户在扫描在订单页面，已加入三个订单，商户在“订单页面”连续取消该2个订单，即点击2次“取消”按钮。结果用户端会在“订单页面”切换到第三个订单的页面，并且会收到两个订单取消的通知', ()=> {
-
-                    })
-                    it('用户在扫描在订单页面，已加入三个订单，商户在“订单页面”连续取消该3个订单，即点击3次“取消”按钮。结果用户端会跳转到“扫描订单页面”，并且会收到三个订单取消的通知 ', ()=> {
-
-                    })
+            it('用户收到订单取消通知', () => {
+                server.send({
+                    eventType: "PAY_COMPLETED",
+                    orderId: "1", result: false,
+                    channel: "Client", msg: "取消"
                 })
+                expect(store.getState().dialog[0].show).to.equal(true)
+                expect(store.getState().dialog[0].header).to.equal("订单通知")
+                expect(store.getState().dialog[0].body).to.equal("订单【1】取消成功")
+                subject.children().first().props().close()
+            })
+            it('用户收到支付成功通知', () => {
+                server.send({
+                    eventType: "PAY_COMPLETED",
+                    orderId: "1", result: true,
+                    channel: "测试渠道", msg: "成功"
+                })
+                expect(store.getState().dialog[0].show).to.equal(true)
+                expect(store.getState().dialog[0].header).to.equal("支付通知")
+                expect(store.getState().dialog[0].body).to.equal("订单【1】支付成功")
+                subject.children().first().props().close()
+            })
+            it('用户收到支付失败通知', () => {
+                server.send({
+                    eventType: "PAY_COMPLETED",
+                    orderId: "1", result: false,
+                    channel: "测试渠道", msg: "失败"
+                })
+                expect(store.getState().dialog[0].show).to.equal(true)
+                expect(store.getState().dialog[0].header).to.equal("支付通知")
+                expect(store.getState().dialog[0].body).to.equal("订单【1】支付失败")
+                subject.children().first().props().close()
             })
         })
 
