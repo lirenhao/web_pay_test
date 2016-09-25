@@ -16,12 +16,15 @@ import {Field} from "redux-form"
 import InputField from "./InputField"
 
 /**
- * 描述：定义一个商品信息组件，传入参数是一个包括三个值的对象，输出组件包括：商品信息（名称、价格、数量、删除按钮）、添加按钮、提交按钮、待支付订单按钮
+ * 描述：定义一个商品信息组件，传入参数是一个包括三个值的对象，
+ * 输出组件包括：商品信息（名称、价格、数量、删除按钮）、添加按钮、提交按钮、待支付订单按钮
+ * 实现了对商品输入信息的验证
  * @param fields ：是指商品信息，它是一个数组
  * @param orderNum：是指订单号，是值类型的必输值
  * @param onButton：待支付按钮点击事件，是必输的函数
  */
 const GoodsField = ({fields, orderNum, onButton}) => (
+    /*商品信息和底部导航按钮*/
     <ListGroup>
         /*将商品信息数组做映射，并给商品信息组件赋值*/
         {fields.map((item, index) =>
@@ -50,7 +53,6 @@ const GoodsField = ({fields, orderNum, onButton}) => (
                 </InputGroup>
             </ListGroupItem>
         )}
-        /*底部导航*/
         <Navbar fixedBottom>
             <ButtonGroup justified>
                 <ButtonGroup>

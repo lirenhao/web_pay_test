@@ -30,7 +30,7 @@ const GoodsInput = ({input, label, type, placeholder, meta: {error}}) => {
         //当error为false,则验证状态为成功
         validationState = "success"
     }
-    // <FormControl.Feedback />:是指回馈图标
+    // <FormControl.Feedback />:是指表单验证的回馈图标
     return (
         <FormGroup controlId={input.name} validationState={validationState}>
             <InputGroup>
