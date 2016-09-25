@@ -23,7 +23,7 @@ import Pay from "../../src/containers/Pay"
 
 describe('支付系统分两块，包括客户端和服务端', ()=> {
     describe('客户端环境：不确定，可能是PC端的Windows系统、嵌入式系统也可能是手机', ()=> {
-        describe('测试客户端登陆：它分为两种类型包括商户端和用户端', ()=> {
+        describe('用户端登陆', ()=> {
             let server = null
             let store = null
             let router = null
@@ -54,10 +54,11 @@ describe('支付系统分两块，包括客户端和服务端', ()=> {
                 subject.find("form").simulate("submit")
                 expect(store.getState().user.userId).to.equal("1")
                 expect(store.getState().user.userType).to.equal("USER")
-                expect(router.routes[router.routes.length - 1]).to.equal("/orderId")
+                expect(router.route).to.equal("/orderId")
             })
         })
-        describe('测试扫描订单', ()=> {
+
+        describe('用户扫描订单', ()=> {
             let server = null
             let store = null
             let router = null
@@ -115,12 +116,12 @@ describe('支付系统分两块，包括客户端和服务端', ()=> {
                         server.send({...marketing, eventType: "MARKETING"})
                         expect(JSON.stringify(store.getState().order[order.orderId])).to.equal(JSON.stringify(order))
                         expect(JSON.stringify(store.getState().marketing[marketing.orderId])).to.equal(JSON.stringify(marketing))
-                        expect(router.routes[router.routes.length - 1]).to.equal("/order")
+                        expect(router.route).to.equal("/order")
                     })
                     it('当加入的订单号时服务器订单不存在，页面会跳到已经匹配完成的“订单页面”', ()=> {
                         subject.find("input").first().simulate("change", {target: {value: "1"}})
                         subject.find("form").simulate("submit")
-                        expect(router.routes[router.routes.length - 1]).to.equal("/order")
+                        expect(router.route).to.equal("/order")
                     })
                 })
             })
@@ -145,6 +146,7 @@ describe('支付系统分两块，包括客户端和服务端', ()=> {
                 })
             })
         })
+
         describe('用户查看订单', ()=> {
             let server = null
             let store = null
@@ -174,29 +176,20 @@ describe('支付系统分两块，包括客户端和服务端', ()=> {
             after(() => {
                 server.close()
             })
-            describe('一个用户登陆的情况下', ()=> {
-                describe('测试“支付”按钮', ()=> {
-                    it('商户在订单页面未操作，用户在订单页面，点击“支付”按钮，用户进入“支付页面”', ()=> {
-                        subject.find("button").first().simulate("click")
-                        server.send({eventType: "PAY_AUTH", orderId: "1"})
-                        expect(router.routes[router.routes.length - 1]).to.equal("/pay/0")
-                    })
-                    it('商户在订单页面点击“支付”按钮，进入订单的支付页面。用户在订单页面，点击“支付”按钮，按钮变为灰色的情况', ()=> {
-                        const payButton = subject.find("button").first()
-                        payButton.simulate("click")
-                        expect(router.routes.length).to.equal(1)
-                        expect(payButton.props().disabled).to.equal(true)
-                    })
+            describe('测试“支付”按钮', ()=> {
+                it('没用商户或用户获得支付权限时，用户在订单页面，点击“支付”按钮，用户进入“支付页面”', ()=> {
+                    subject.find("button").first().simulate("click")
+                    server.send({eventType: "PAY_AUTH", orderId: "1"})
+                    expect(router.route).to.equal("/pay/0")
                 })
-            })
-            describe('多个不同用户同时登陆，操作同一个订单的情况', ()=> {
-                describe('测试“支付”按钮，前提：用户1和用户2是不同用户', ()=> {
-                    it('用户1在订单页面先点击“支付”按钮，进入订单的支付页面。用户2在订单页面，点击“支付”按钮，按钮变为灰色的情况', ()=> {
-
-                    })
+                it('已有商户或用户获得支付权限时，用户在订单页面，点击“支付”按钮，按钮变为灰色的情况', ()=> {
+                    const payButton = subject.find("button").first()
+                    payButton.simulate("click")
+                    expect(payButton.props().disabled).to.equal(true)
                 })
             })
         })
+
         describe('用户支付订单', ()=> {
             let server = null
             let store = null
@@ -232,13 +225,13 @@ describe('支付系统分两块，包括客户端和服务端', ()=> {
                         it('选择支付结果-成功,点击“确定”按钮.结果：页面跳转进"扫描订单页面"，用户收到支付结果通知：支付完成，支付成功', ()=> {
                             subject.find("select").first().simulate("change", {target: {value: "0"}})
                             subject.find("form").simulate("submit")
-                            expect(router.routes[router.routes.length - 1]).to.equal("/orderId")
+                            expect(router.route).to.equal("/orderId")
                             expect(server.clientDate.state).to.equal(true)
                         })
                         it('选择支付结果-失败,点击“确定”按钮.结果：页面跳转进"扫描订单页面"，用户收到支付结果通知：支付完成，支付失败', ()=> {
                             subject.find("select").first().simulate("change", {target: {value: "1"}})
                             subject.find("form").simulate("submit")
-                            expect(router.routes[router.routes.length - 1]).to.equal("/orderId")
+                            expect(router.route).to.equal("/orderId")
                             expect(server.clientDate.state).to.equal(false)
                         })
 
@@ -246,7 +239,7 @@ describe('支付系统分两块，包括客户端和服务端', ()=> {
                     describe('点击“取消支付”按钮操作', ()=> {
                         it('操作：用户点击“取消支付”按钮，结果：从“订单页面”跳转进入“支付页面”', ()=> {
                             subject.find("button").last().simulate("click")
-                            expect(router.routes[router.routes.length - 1]).to.equal("/orderId")
+                            expect(router.route).to.equal("/orderId")
                             expect(server.clientDate.eventType).to.equal("GIVE_UP_PAY")
                         })
                     })
@@ -261,7 +254,36 @@ describe('支付系统分两块，包括客户端和服务端', ()=> {
 
             })
         })
+
         describe('用户通知', ()=> {
+            let server = null
+            let store = null
+            let router = null
+            let subject = null
+            const state = {
+                user: {userId: '1', userType: 'USER'},
+                orderIds: ['1'],
+                order: {'1': {orderId: '1', items: [{name: "ONLY修身撞色拼接女针织裙", price: 1, quantity: 1}]}},
+                marketing: {'1': {orderId: '1', amt: 58650, msg: '测试优惠, 一律5折'}}
+            }
+            before(() => {
+                server = new MockServer()
+                store = createStore(reducer, state, DevTools.instrument())
+                router = new MockRouter()
+                Payment.setMsgHandler(msgHandler(store, router))
+                Payment.open()
+                subject = mount(<Provider store={store}><App><Pay params={{index: "0"}}/></App></Provider>, {
+                    context: {
+                        router: router
+                    },
+                    childContextTypes: {
+                        router: React.PropTypes.object
+                    }
+                })
+            })
+            after(() => {
+                server.close()
+            })
             describe('商户和用户都登陆的情况，商户在“订单页面”点击“取消”按钮，用户无论在哪个页面都会收到“订单通知”', ()=> {
                 describe('用户收到多条通知的情况', ()=> {
                     it('用户在扫描在订单页面，已加入三个订单，商户在“订单页面”连续取消该2个订单，即点击2次“取消”按钮。结果用户端会在“订单页面”切换到第三个订单的页面，并且会收到两个订单取消的通知', ()=> {

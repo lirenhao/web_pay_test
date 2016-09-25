@@ -25,12 +25,7 @@ export class MockServer {
 }
 
 export class MockRouter {
-    constructor() {
-        this.routes = []
-    }
-
     push(path) {
-        this.routes.push(path)
+        this.route = path
     }
-
 }
