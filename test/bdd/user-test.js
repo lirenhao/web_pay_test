@@ -211,6 +211,38 @@ describe('支付系统分两块，包括客户端和服务端', ()=> {
                     expect(payButton.props().disabled).to.equal(true)
                 })
             })
+            describe('其他用户匹配该用户的订单', ()=> {
+                it('用户如果没有其他订单，收到订单取消提示，并跳转到订单扫描界面', ()=> {
+                    server.send({
+                        eventType: "PAY_COMPLETED",
+                        orderId: "1", result: false,
+                        channel: "Client", msg: "取消"
+                    })
+                    expect(store.getState().dialog[0].show).to.equal(true)
+                    expect(store.getState().dialog[0].header).to.equal("订单通知")
+                    expect(store.getState().dialog[0].body).to.equal("订单【1】取消成功")
+                    expect(router.route).to.equal("/orderId")
+                })
+                it('用户如果还有其他订单，收到订单取消提示，并显示其他界面', ()=> {
+                    server.send({
+                        eventType: "ORDER_ITEMS",
+                        orderId: '2',
+                        items: [{name: "ONLY修身撞色拼接女针织裙", price: 1, quantity: 1}]
+                    })
+                    server.send({eventType: "ORDER_ITEMS", orderId: '2', amt: 58650, msg: '测试优惠, 一律5折'})
+                    server.send({
+                        eventType: "PAY_COMPLETED",
+                        orderId: "1", result: false,
+                        channel: "Client", msg: "取消"
+                    })
+                    expect(store.getState().dialog[0].show).to.equal(true)
+                    expect(store.getState().dialog[0].header).to.equal("订单通知")
+                    expect(store.getState().dialog[0].body).to.equal("订单【1】取消成功")
+                    expect(router.route).to.equal(undefined)
+                    expect(subject.find("button").length).to.equal(2)
+                    expect(store.getState().orderIds.length).to.equal(1)
+                })
+            })
         })
 
         describe('用户支付订单', ()=> {
@@ -268,7 +300,7 @@ describe('支付系统分两块，包括客户端和服务端', ()=> {
             })
         })
 
-        // TODO 无法取到模态框，后续再做优化
+        // TODO 无法取到模态框先判断state的状态，后续再做优化
         describe('用户接收通知', ()=> {
             let server = null
             let store = null
@@ -304,7 +336,26 @@ describe('支付系统分两块，包括客户端和服务端', ()=> {
                 expect(store.getState().dialog[0].show).to.equal(true)
                 expect(store.getState().dialog[0].header).to.equal("订单通知")
                 expect(store.getState().dialog[0].body).to.equal("订单【1】取消成功")
-                subject.children().first().props().close()
+            })
+            it('用户收到FAIL通知', () => {
+                server.send({
+                    eventType: "FAIL",
+                    orderId: "1",
+                    msg: "用户 u2 参与支付"
+                })
+                expect(store.getState().dialog[0].show).to.equal(true)
+                expect(store.getState().dialog[0].header).to.equal("FAIL")
+                expect(store.getState().dialog[0].body).to.equal("用户 u2 参与支付")
+            })
+            it('用户收到MESSAGE通知', () => {
+                server.send({
+                    eventType: "MESSAGE",
+                    orderId: "1", level: "WARN",
+                    msg: "订单正在支付, 当前用户不能参与支付"
+                })
+                expect(store.getState().dialog[0].show).to.equal(true)
+                expect(store.getState().dialog[0].header).to.equal("WARN")
+                expect(store.getState().dialog[0].body).to.equal("订单正在支付, 当前用户不能参与支付")
             })
             it('用户收到支付成功通知', () => {
                 server.send({
@@ -315,7 +366,6 @@ describe('支付系统分两块，包括客户端和服务端', ()=> {
                 expect(store.getState().dialog[0].show).to.equal(true)
                 expect(store.getState().dialog[0].header).to.equal("支付通知")
                 expect(store.getState().dialog[0].body).to.equal("订单【1】支付成功")
-                subject.children().first().props().close()
             })
             it('用户收到支付失败通知', () => {
                 server.send({
@@ -326,7 +376,6 @@ describe('支付系统分两块，包括客户端和服务端', ()=> {
                 expect(store.getState().dialog[0].show).to.equal(true)
                 expect(store.getState().dialog[0].header).to.equal("支付通知")
                 expect(store.getState().dialog[0].body).to.equal("订单【1】支付失败")
-                subject.children().first().props().close()
             })
         })
 
