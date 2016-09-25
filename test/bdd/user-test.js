@@ -41,12 +41,11 @@ describe('支付系统分两块，包括客户端和服务端', ()=> {
             })
             it('测试用户登陆成功', ()=> {
                 subject.find("input").first().simulate("change", {target: {value: "1"}})
-                console.log(subject.find("input").at(2).props().onChange.toString());
-                subject.find("input").at(2).simulate("change", {target: {checked: "true"}})
+                subject.find("input").at(2).simulate("change")
                 subject.find("form").simulate("submit")
                 expect(store.getState().user.userId).to.equal("1")
                 expect(store.getState().user.userType).to.equal("USER")
-                expect(history.routes[history.routes.length - 1]).to.equal("/goods")
+                expect(history.routes[history.routes.length - 1]).to.equal("/orderId")
             });
             it('测试商户端登陆失败', ()=> {
                 expect(subject.find("button").first().props().disabled).to.equal(false)
