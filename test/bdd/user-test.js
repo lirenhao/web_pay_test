@@ -59,9 +59,10 @@ describe('支付系统分两块，包括客户端和服务端', ()=> {
             let store = null
             let router = null
             let subject = null
+            const state = {user: {userId: '1', userType: 'USER'}}
             before(() => {
                 server = new MockServer()
-                store = createStore(reducer, DevTools.instrument())
+                store = createStore(reducer, state, DevTools.instrument())
                 router = new MockRouter()
                 Payment.setMsgHandler(msgHandler(store, router))
                 Payment.open()
@@ -143,9 +144,15 @@ describe('支付系统分两块，包括客户端和服务端', ()=> {
             let store = null
             let router = null
             let subject = null
+            const state = {
+                user: {userId: '1', userType: 'USER'},
+                orderIds: ['1'],
+                order: {'1': {orderId: '1', items: [{name: "ONLY修身撞色拼接女针织裙", price: 1, quantity: 1}]}},
+                marketing: {'1': {orderId: '1', amt: 58650, msg: '测试优惠, 一律5折'}}
+            }
             before(() => {
                 server = new MockServer()
-                store = createStore(reducer, DevTools.instrument())
+                store = createStore(reducer, state, DevTools.instrument())
                 router = new MockRouter()
                 Payment.setMsgHandler(msgHandler(store, router))
                 Payment.open()
@@ -157,17 +164,6 @@ describe('支付系统分两块，包括客户端和服务端', ()=> {
                         router: React.PropTypes.object
                     }
                 })
-                const order = {
-                    orderId: "1",
-                    items: [{name: "ONLY修身撞色拼接女针织裙", price: 34950, quantity: 2}]
-                }
-                server.send({...order, eventType: "ORDER_ITEMS"})
-                const marketing = {
-                    orderId: "1",
-                    amt: 58650,
-                    msg: "测试优惠, 一律5折"
-                }
-                server.send({...marketing, eventType: "MARKETING"})
             })
             describe('一个用户登陆的情况下', ()=> {
                 describe('测试“支付”按钮', ()=> {
@@ -191,16 +187,21 @@ describe('支付系统分两块，包括客户端和服务端', ()=> {
                     })
                 })
             })
-
         })
         describe('用户支付订单', ()=> {
             let server = null
             let store = null
             let router = null
             let subject = null
+            const state = {
+                user: {userId: '1', userType: 'USER'},
+                orderIds: ['1'],
+                order: {'1': {orderId: '1', items: [{name: "ONLY修身撞色拼接女针织裙", price: 1, quantity: 1}]}},
+                marketing: {'1': {orderId: '1', amt: 58650, msg: '测试优惠, 一律5折'}}
+            }
             before(() => {
                 server = new MockServer()
-                store = createStore(reducer, DevTools.instrument())
+                store = createStore(reducer, state, DevTools.instrument())
                 router = new MockRouter()
                 Payment.setMsgHandler(msgHandler(store, router))
                 Payment.open()
@@ -212,34 +213,29 @@ describe('支付系统分两块，包括客户端和服务端', ()=> {
                         router: React.PropTypes.object
                     }
                 })
-                const order = {
-                    orderId: "1",
-                    items: [{name: "ONLY修身撞色拼接女针织裙", price: 1, quantity: 1}]
-                }
-                server.send({...order, eventType: "ORDER_ITEMS"})
-                const marketing = {
-                    orderId: "1",
-                    amt: 58650,
-                    msg: "测试优惠, 一律5折"
-                }
-                server.send({...marketing, eventType: "MARKETING"})
             })
             describe('单个用户登陆的情况', ()=> {
                 describe('商户和用户都登陆，且用户已匹配该订单', ()=> {
                     describe('选择支付结果下拉菜单，点击“确定”按钮.', ()=> {
                         it('选择支付结果-成功,点击“确定”按钮.结果：页面跳转进"扫描订单页面"，用户收到支付结果通知：支付完成，支付成功', ()=> {
-
+                            subject.find("select").first().simulate("change", {target: {value: "0"}})
+                            subject.find("form").simulate("submit")
+                            expect(router.routes[router.routes.length - 1]).to.equal("/orderId")
+                            expect(server.clientDate.state).to.equal(true)
                         });
                         it('选择支付结果-失败,点击“确定”按钮.结果：页面跳转进"扫描订单页面"，用户收到支付结果通知：支付完成，支付失败', ()=> {
-
+                            subject.find("select").first().simulate("change", {target: {value: "1"}})
+                            subject.find("form").simulate("submit")
+                            expect(router.routes[router.routes.length - 1]).to.equal("/orderId")
+                            expect(server.clientDate.state).to.equal(false)
                         })
 
                     });
                     describe('点击“取消支付”按钮操作', ()=> {
-                        describe('商户和用户操作同一订单，商户先进入“支付页面”，用户在“订单页面”再点击“支付”按钮变为灰色，商户在支付页面“取消支付”的情况', ()=> {
-                            it('操作：商户点击“取消支付”按钮，结果：用户端获得支付授权，从“订单页面”跳转进入“支付页面”', ()=> {
-
-                            })
+                        it('操作：用户点击“取消支付”按钮，结果：从“订单页面”跳转进入“支付页面”', ()=> {
+                            subject.find("button").last().simulate("click")
+                            expect(router.routes[router.routes.length - 1]).to.equal("/orderId")
+                            console.log(server.clientDate.state);
                         })
                     })
                 })

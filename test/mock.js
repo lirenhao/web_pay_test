@@ -10,10 +10,9 @@ import {Server} from 'mock-socket'
 export class MockServer {
     constructor() {
         this.server = new Server(process.env.wsUrl)
-    }
-
-    getClientDate() {
-        return this.clientDate
+        this.server.on("message", (data) => {
+            this.clientDate = JSON.parse(data)
+        })
     }
 
     send(msg) {
