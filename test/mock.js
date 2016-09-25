@@ -21,7 +21,7 @@ export class MockServer {
     }
 }
 
-export class MockHistory {
+export class MockRouter {
     constructor() {
         this.routes = []
     }
