@@ -18,6 +18,10 @@ export class MockServer {
     send(msg) {
         this.server.send(JSON.stringify(msg))
     }
+
+    close() {
+        this.server.close()
+    }
 }
 
 export class MockRouter {
