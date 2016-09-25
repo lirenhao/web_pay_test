@@ -8,37 +8,39 @@
 
 import React from "react"
 import {connect} from "react-redux"
-import {browserHistory} from "react-router"
 import Payment from "../Payment"
 import OrderIdForm from "../components/orderIdForm/OrderIdForm"
 
 const OrderId = (props, context) => {
-	context.setTitle("扫描订单");
-	const {user, orderIds} = props;
+	context.setTitle("扫描订单")
+	const {user, orderIds} = props
 	const onSubmit = (values) => {
 		// 判断state中是否有该订单
-		const index = orderIds.indexOf(values.orderId);
+		const index = orderIds.indexOf(values.orderId)
 		if (index < 0) {
 			// state中没有该订单向服务器请求
-			Payment.joinOrder(user, values.orderId);
-			browserHistory.push("/order")
+			Payment.joinOrder(user, values.orderId)
+			context.history.push("/order")
 		} else {
-			browserHistory.push("/order")
+			context.history.push("/order")
 		}
-	};
+	}
 	const onButton = () => {
-		browserHistory.push("/order")
-	};
+		context.history.push("/order")
+	}
 	return (
 		<OrderIdForm onSubmit={onSubmit} onButton={onButton} orderNum={orderIds.length}/>
 	)
-};
+}
 
-OrderId.contextTypes = {setTitle: React.PropTypes.func.isRequired};
+OrderId.contextTypes = {
+	setTitle: React.PropTypes.func.isRequired,
+	history: React.PropTypes.object.isRequired
+}
 
 const mapStateToProps = (state)=> ({
 	user: state.user,
 	orderIds: state.orderIds
-});
+})
 
 export default connect(mapStateToProps)(OrderId)

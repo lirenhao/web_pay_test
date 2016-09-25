@@ -14,7 +14,6 @@
 import React from "react"
 import PayForm from '../components/payForm/PayForm'
 import {connect} from "react-redux"
-import {browserHistory} from 'react-router'
 import Const from "../constants"
 import Payment from "../Payment"
 
@@ -27,24 +26,24 @@ const Pay = (props, context)=> {
 	const onSubmitHandle = (result) => {
 		Payment.payResult(user, result)
 		if (user.userType == TerminalType.USER)
-			browserHistory.push("/orderId")
+			context.history.push("/orderId")
 		else
-			browserHistory.push("/goods")
+			context.history.push("/goods")
 	}
 
 	const onCancelHandle = (orderId) => {
 		Payment.giveUpPay(user, orderId)
 		if (user.userType == TerminalType.USER)
-			browserHistory.push("/orderId")
+			context.history.push("/orderId")
 		else
-			browserHistory.push("/goods")
+			context.history.push("/goods")
 	}
 
 	const onLinkHandle = () => {
 		if (user.userType == TerminalType.USER)
-			browserHistory.push("/orderId")
+			context.history.push("/orderId")
 		else
-			browserHistory.push("/goods")
+			context.history.push("/goods")
 	}
 
 	return <PayForm initialValues={{orderId: orderIds[index], state: "0"}}
@@ -58,7 +57,10 @@ const Pay = (props, context)=> {
 	/>
 }
 
-Pay.contextTypes = {setTitle: React.PropTypes.func.isRequired}
+Pay.contextTypes = {
+	setTitle: React.PropTypes.func.isRequired,
+	history: React.PropTypes.object.isRequired
+}
 
 const mapStateToProps = (state)=> ({
 	user: state.user,

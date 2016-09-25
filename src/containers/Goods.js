@@ -9,11 +9,9 @@
  * Why & What is modified  添加提交按钮、N个待支付按钮完整功能
  * 录入商品信息的容器，暂时用做测试后续再修改
  */
-
 import React from "react"
 import {connect} from "react-redux"
 import GoodsForm from "../components/goodsForm/GoodsForm"
-import {browserHistory} from 'react-router'
 import Payment from '../Payment'
 
 /**
@@ -35,17 +33,17 @@ const items = [
 		price: 27450,
 		quantity: 1
 	}
-];
+]
 
 const Goods = (props, context) => {
-	context.setTitle("创建订单");
+	context.setTitle("创建订单")
 	const ToOrder = (value)=> {
-		Payment.createOrder(props.user, value.goods);
-		browserHistory.push("/order")
-	};
+		Payment.createOrder(props.user, value.goods)
+		context.history.push("/order")
+	}
 	const waitPay = ()=> {
-		browserHistory.push("/order")
-	};
+		context.history.push("/order")
+	}
 	return (
 		<GoodsForm onSubmit={ToOrder}
 		           initialValues={{goods: items}}
@@ -53,13 +51,16 @@ const Goods = (props, context) => {
 		           onButton={waitPay}
 		/>
 	)
-};
+}
 
-Goods.contextTypes = {setTitle: React.PropTypes.func.isRequired};
+Goods.contextTypes = {
+	setTitle: React.PropTypes.func.isRequired,
+	history: React.PropTypes.object.isRequired
+}
 
 const mapPropsFromState = (state)=>({
 	user: state.user,
 	orderIds: state.orderIds
-});
+})
 
 export default connect(mapPropsFromState)(Goods)

@@ -17,10 +17,9 @@ import {browserHistory} from "react-router"
 import {AppContainer} from "react-hot-loader"
 import DevTools from "./containers/DevTools"
 import Payment from "./Payment"
-import Const from "./constants"
 import reducer from "./reducers"
 import routes from "./routes"
-import {addUser, addOrder, addMarketing, remove, showDialog} from "./actions"
+import {msgHandler} from "./handler"
 
 export const store = createStore(reducer, DevTools.instrument())
 
@@ -51,64 +50,6 @@ if (module.hot) {
     })
 }
 
-// TODO 后续再移出
-const ClientCmd = Const.ClientCmd
-const ServerCmd = Const.ServerCmd
-const msgHandler = (data) => {
-    const {eventType, ...msg} = data
-    switch (eventType) {
-        case ServerCmd.CLIENT_SIGN_IN:
-            store.dispatch(addUser({userId: msg.id, userType: msg.terminalType}))
-            break
-        case ClientCmd.ORDER_ITEMS:
-            store.dispatch(addOrder({...msg}))
-            break
-        case ClientCmd.MARKETING:
-            store.dispatch(addMarketing({...msg}))
-            break
-        case ClientCmd.PAY_AUTH:
-            // 获取支付权限跳转到pay
-            browserHistory.push("/pay/" + store.getState().orderIds.indexOf(msg.orderId))
-            break
-        case ClientCmd.PAY_COMPLETED:
-            store.dispatch(remove(msg.orderId))
-            if (msg.result) {
-                // 支付成功时模态框弹出支付结果
-                store.dispatch(showDialog({header: "支付通知", body: "订单【" + msg.orderId + "】" + "支付成功"}))
-            } else {
-                if (msg.channel !== "Client") {
-                    // 支付成功时模态框弹出支付结果
-                    store.dispatch(showDialog({header: "支付通知", body: "订单【" + msg.orderId + "】" + "支付失败"}))
-                } else if (store.getState().user.userType == Const.TerminalType.USER) {
-                    // 取消订单时只有客户端是用户才弹出取消订单通知
-                    store.dispatch(showDialog({header: "订单通知", body: "订单【" + msg.orderId + "】" + "取消成功"}))
-                }
-            }
-            // 当用户没有订单时，商户跳转到录入商品界面、客户跳转到输入订单界面
-            if (store.getState().orderIds.length < 1) {
-                if (store.getState().user.userType == Const.TerminalType.MERCHANT)
-                    browserHistory.push("/goods")
-                else
-                    browserHistory.push("/orderId")
-            }
-            break
-        case ClientCmd.FAIL:
-            store.dispatch(remove(msg.orderId))
-            store.dispatch(showDialog({header: eventType, body: msg.msg}))
-            // 当用户没有订单时，商户跳转到录入商品界面、客户跳转到输入订单界面
-            if (store.getState().orderIds.length < 1) {
-                if (store.getState().user.userType == Const.TerminalType.MERCHANT)
-                    browserHistory.push("/goods")
-                else
-                    browserHistory.push("/orderId")
-            }
-            break
-        case ClientCmd.MESSAGE:
-            store.dispatch(showDialog({header: msg.level, body: msg.msg}))
-            break
-    }
-}
-
 window.addEventListener("load", () => {
-    Payment.setMsgHandler(msgHandler)
+    Payment.setMsgHandler(msgHandler(store, browserHistory))
 })
