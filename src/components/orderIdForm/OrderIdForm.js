@@ -11,6 +11,11 @@ import React from "react"
 import {Field, reduxForm} from "redux-form"
 import {Form, FormGroup, InputGroup, FormControl, Button, Glyphicon} from "react-bootstrap"
 
+/**
+ * 描述：表单验证时要验证的数据规则
+ * @param values 表单验证的值
+ * @returns {{}}
+ */
 const validate = values  => {
 	const error = {}
 	if (!values.orderId) {
@@ -21,6 +26,12 @@ const validate = values  => {
 	return error
 }
 
+/**
+ * 自定义订单号匹配表单验证组件：包括订单号输入框、加入按钮
+ * @param input input属性
+ * @param touched
+ * @param error
+ */
 const OrderIdField = ({input, meta:{touched, error}}) => (
 	<FormGroup controlId="orderId">
 		<InputGroup>
@@ -35,6 +46,10 @@ const OrderIdField = ({input, meta:{touched, error}}) => (
 	</FormGroup>
 )
 
+/**
+ * 扫描订单组件
+ * @param props 调用组件者传递给组件的属性
+ */
 const OrderIdForm = (props) => {
 	const {handleSubmit, onSubmit, onButton, orderNum} = props
 	const button = (orderNum) => {

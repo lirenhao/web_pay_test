@@ -17,6 +17,10 @@ import OrderInfo from '../order/OrderInfo'
 import './PayForm.scss'
 import style from './PayForm.scss'
 
+/**
+ * 自定义支付结果下拉菜单表单验证组件
+ * @param input input属性
+ */
 const PayField = ({input}) => (
     <FormControl {...input} componentClass="select">
         <option value="0" checked="checked">成功</option>
@@ -24,6 +28,11 @@ const PayField = ({input}) => (
     </FormControl>
 )
 
+/**
+ * 获取流水号函数
+ * @param orderId 订单ID
+ * @returns {*} 流水号
+ */
 const getLsNo = (orderId)=> {
     function pad(num, n) {
         var len = num.toString().length
@@ -37,8 +46,15 @@ const getLsNo = (orderId)=> {
     return orderId + pad(Math.floor(Math.random() * 100), 3)
 }
 
+/**
+ * 支付表单组件
+ */
 class PayForm extends React.Component {
 
+    /**
+     * 初始化支付表单组件的状态，订单ID为通过属性的订单ID数组的下标的值进行获取
+     * @param props 调用组件者给组件传递的参数
+     */
     constructor(props) {
         super(props)
         this.state = {orderId: props.orderIds[props.index]}
@@ -83,7 +99,16 @@ class PayForm extends React.Component {
         )
     }
 }
-
+/**
+ *
+ * @type {{onSubmit: *}}  表单支付完成事件
+ * @type {{onCancel: *,}} 取消支付事件
+ * @type {{onLink: *,}}   订单取消，页面跳转事件
+ * @type {{orderIds: *}}  订单ID
+ * @type {{order: *,}}    订单信息
+ * @type {{marketing: *}}  优惠信息
+ * @type {{index: *}}      订单ID的索引
+ */
 PayForm.propTypes = {
     onSubmit: React.PropTypes.func.isRequired,
     onCancel: React.PropTypes.func.isRequired,
