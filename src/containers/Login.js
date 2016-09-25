@@ -29,7 +29,7 @@ const Login = (props, context) => {
 
 Login.contextTypes = {
     setTitle: React.PropTypes.func.isRequired,
-    history: React.PropTypes.func.isRequired
+    history: React.PropTypes.object.isRequired
 }
 
 export default Login

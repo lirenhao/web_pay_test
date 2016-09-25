@@ -25,6 +25,10 @@ global.navigator = {
     userAgent: 'node.js'
 };
 
+global.WebSocket = require('mock-socket').WebSocket;
+
+global.process.env.wsUrl = '"ws://localhost:9999"'
+
 require.extensions['.scss'] = function () {
     return null
 };
