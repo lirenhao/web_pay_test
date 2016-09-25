@@ -16,28 +16,8 @@ export class MockServer {
         return this.clientDate
     }
 
-    sendOrder(order) {
-        this.server.send(JSON.stringify(order))
-    }
-
-    sendMarketing(marketing) {
-        this.server.send(JSON.stringify(marketing))
-    }
-
-    sendPayAuth() {
-        this.server.send(JSON.stringify(order))
-    }
-
-    sendPayCompleted(order) {
-        this.server.send(JSON.stringify(order))
-    }
-
-    sendFail() {
-        this.server.send(JSON.stringify(order))
-    }
-
-    sendMessage() {
-        this.server.send(JSON.stringify(order))
+    send(msg) {
+        this.server.send(JSON.stringify(msg))
     }
 }
 
