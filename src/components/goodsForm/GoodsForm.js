@@ -6,6 +6,8 @@
  * 定义一个商品录入的form组件
  * 用户点击添加按钮时添加一组商品信息的录入框
  * 点击提交按钮时如果输入框输入的值通过验证触发onSubmit事件
+ * Modified By：kongli
+ * Why & What is modified 添加代码注释
  */
 import React from "react"
 import {FieldArray, reduxForm} from "redux-form"
@@ -14,7 +16,7 @@ import GoodsField from "./GoodsField"
 import s from './Goods.scss'
 
 /**
- * 表单验证，验证输入的值是否符合标准
+ * 商品信息表单验证，验证输入的值是否符合标准
  * @param values 输入框的值
  */
 const validate = (values) => {

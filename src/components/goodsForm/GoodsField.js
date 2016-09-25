@@ -7,15 +7,28 @@
  * Modified By：kongli
  * Why & What is modified  <修改原因描述>
  * 给添加按钮和提交按钮添加底部导航<Navbar> 属性为fixedBottom
+ * Modified By：kongli
+ * Why & What is modified 添加注释
  */
 import React from "react"
 import {ListGroup, ListGroupItem, InputGroup, ButtonGroup, Button,Navbar} from "react-bootstrap"
 import {Field} from "redux-form"
 import InputField from "./InputField"
 
+/**
+ * 描述：定义一个商品信息组件，传入参数是一个包括三个值的对象，
+ * 输出组件包括：商品信息（名称、价格、数量、删除按钮）、添加按钮、提交按钮、待支付订单按钮
+ * 实现了对商品输入信息的验证
+ * @param fields ：是指商品信息，它是一个数组
+ * @param orderNum：是指订单号，是值类型的必输值
+ * @param onButton：待支付按钮点击事件，是必输的函数
+ */
 const GoodsField = ({fields, orderNum, onButton}) => (
+    /*商品信息和底部导航按钮*/
     <ListGroup>
+        /*将商品信息数组做映射，并给商品信息组件赋值*/
         {fields.map((item, index) =>
+            /*商品信息组件（名称、价格、数量）*/
             <ListGroupItem key={index}>
                 <Field type="text"
                        name={`${item}.name`}
@@ -58,6 +71,11 @@ const GoodsField = ({fields, orderNum, onButton}) => (
     </ListGroup>
 )
 
+/**
+ * 商品信息组件的属性
+ * @type {{orderNum: *}}:值类型的订单号，是必输项
+ * @type {{onButton: *}}:待支付按钮点击事件，是必输的函数
+ */
 GoodsField.propTypes = {
     orderNum: React.PropTypes.number.isRequired,
     onButton: React.PropTypes.func.isRequired
