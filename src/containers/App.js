@@ -17,7 +17,6 @@ import Dialog from "../components/dialog/Dialog"
 
 class App extends React.Component {
     getChildContext() {
-        console.log(this.context);
         return {
             setTitle: value => (document.title = value),
             history: this.context.history
