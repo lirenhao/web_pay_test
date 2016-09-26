@@ -24,12 +24,10 @@ import Pay from "../../src/containers/Pay"
 describe('支付系统分两块，包括客户端和服务端', ()=> {
     describe('客户端环境：不确定，可能是PC端的Windows系统、嵌入式系统也可能是手机', ()=> {
         describe('用户端登陆', ()=> {
-            let server = null
             let store = null
             let router = null
             let subject = null
             beforeEach(() => {
-                server = new MockServer()
                 store = createStore(reducer, DevTools.instrument())
                 router = new MockRouter()
                 Payment.setMsgHandler(msgHandler(store, router))
@@ -42,10 +40,7 @@ describe('支付系统分两块，包括客户端和服务端', ()=> {
                     }
                 })
             })
-            afterEach(() => {
-                server.close()
-            })
-            it('测试商户端登陆失败', ()=> {
+            it('测试用户登陆失败', ()=> {
                 expect(subject.find("button").first().props().disabled).to.equal(true)
             })
             it('测试用户登陆成功', ()=> {
@@ -59,13 +54,11 @@ describe('支付系统分两块，包括客户端和服务端', ()=> {
         })
 
         describe('用户扫描订单', ()=> {
-            let server = null
             let store = null
             let router = null
             let subject = null
             const state = {user: {userId: '1', userType: 'USER'}}
             beforeEach(() => {
-                server = new MockServer()
                 store = createStore(reducer, state, DevTools.instrument())
                 router = new MockRouter()
                 Payment.setMsgHandler(msgHandler(store, router))
@@ -78,9 +71,6 @@ describe('支付系统分两块，包括客户端和服务端', ()=> {
                         router: React.PropTypes.object
                     }
                 })
-            })
-            afterEach(() => {
-                server.close()
             })
             describe('单个用户登陆时，用户在扫描订单页面的情况', ()=> {
                 it('当用户没有未完成支付的订单时，结果不会显示“待支付”按钮', ()=> {
@@ -171,7 +161,6 @@ describe('支付系统分两块，包括客户端和服务端', ()=> {
         })
 
         describe('用户查看订单', ()=> {
-            let server = null
             let store = null
             let router = null
             let subject = null
@@ -182,7 +171,6 @@ describe('支付系统分两块，包括客户端和服务端', ()=> {
                 marketing: {'1': {orderId: '1', amt: 58650, msg: '测试优惠, 一律5折'}}
             }
             beforeEach(() => {
-                server = new MockServer()
                 store = createStore(reducer, state, DevTools.instrument())
                 router = new MockRouter()
                 Payment.setMsgHandler(msgHandler(store, router))
@@ -195,9 +183,6 @@ describe('支付系统分两块，包括客户端和服务端', ()=> {
                         router: React.PropTypes.object
                     }
                 })
-            })
-            afterEach(() => {
-                server.close()
             })
             describe('测试“支付”按钮', ()=> {
                 it('没用商户或用户获得支付权限时，用户在订单页面，点击“支付”按钮，用户进入“支付页面”', ()=> {
@@ -246,7 +231,6 @@ describe('支付系统分两块，包括客户端和服务端', ()=> {
         })
 
         describe('用户支付订单', ()=> {
-            let server = null
             let store = null
             let router = null
             let subject = null
@@ -257,7 +241,6 @@ describe('支付系统分两块，包括客户端和服务端', ()=> {
                 marketing: {'1': {orderId: '1', amt: 58650, msg: '测试优惠, 一律5折'}}
             }
             beforeEach(() => {
-                server = new MockServer()
                 store = createStore(reducer, state, DevTools.instrument())
                 router = new MockRouter()
                 Payment.setMsgHandler(msgHandler(store, router))
@@ -270,9 +253,6 @@ describe('支付系统分两块，包括客户端和服务端', ()=> {
                         router: React.PropTypes.object
                     }
                 })
-            })
-            afterEach(() => {
-                server.close()
             })
             describe('用户获得该订单支付权限', ()=> {
                 describe('选择支付结果下拉菜单，点击“确定”按钮.', ()=> {
@@ -302,7 +282,6 @@ describe('支付系统分两块，包括客户端和服务端', ()=> {
 
         // TODO 无法取到模态框先判断state的状态，后续再做优化
         describe('用户接收通知', ()=> {
-            let server = null
             let store = null
             let router = null
             let subject = null
@@ -310,7 +289,6 @@ describe('支付系统分两块，包括客户端和服务端', ()=> {
                 user: {userId: '1', userType: 'USER'},
             }
             beforeEach(() => {
-                server = new MockServer()
                 store = createStore(reducer, state, DevTools.instrument())
                 router = new MockRouter()
                 Payment.setMsgHandler(msgHandler(store, router))
@@ -323,9 +301,6 @@ describe('支付系统分两块，包括客户端和服务端', ()=> {
                         router: React.PropTypes.object
                     }
                 })
-            })
-            afterEach(() => {
-                server.close()
             })
             it('用户收到订单取消通知', () => {
                 server.send({
