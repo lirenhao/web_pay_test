@@ -6,6 +6,8 @@
  * Modified By：Pengfei
  * Why & What is modified 删除组件中定义的路由传参的参数
  * <文件描述>
+ * Modified By：kongli
+ * Why & What is modified 添加注释
  */
 import React from "react"
 import {connect} from "react-redux"
