@@ -29,6 +29,9 @@ global.WebSocket = require('mock-socket').WebSocket;
 
 global.process.env.wsUrl = '"ws://localhost:9999"'
 
+import {MockServer} from './mock'
+global.server = new MockServer()
+
 require.extensions['.scss'] = function () {
     return null
 };
