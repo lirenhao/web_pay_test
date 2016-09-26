@@ -10,14 +10,14 @@
  * 订单显示界面的按钮组
  */
 import React from 'react'
-import {ButtonGroup, Button,Navbar} from 'react-bootstrap'
+import {ButtonGroup, Button, Navbar} from 'react-bootstrap'
 
 /**
  * 支付、取消按钮组件：它是订单信息组件(Order)的子组件
  */
 class PayButton extends React.Component {
     /**
-     * 初始化支付、取消按钮组件的状态：是否能支付
+     * 初始化支付按钮能否点击值存储到组件state中
      * @param props 调用者传给组件的属性
      */
     constructor(props) {
@@ -26,7 +26,7 @@ class PayButton extends React.Component {
     }
 
     /**
-     * 组件将要接收属性时触发的事件
+     * 组件将要刷新时触发的事件，给组件state设置新的值
      * @param nextProps 调用者传给组件的下一个属性
      */
     componentWillReceiveProps(nextProps) {
@@ -71,8 +71,8 @@ class PayButton extends React.Component {
  * 支付、取消按钮组件的必传属性
  * @type {{canPay: *}}  是否能支付
  * @type {{canCancel: *}} 是否有取消按钮
- * @type {{onReqPay: *}}  支付请求事件
- * @type {{onCancel: *}}  取消订单事件
+ * @type {{onReqPay: *}}  支付请求事件（事件内容：向订单服务发送授权请求）
+ * @type {{onCancel: *}}  取消订单事件（事件内容：向订单服务发送取消订单请求）
  * @type {{orderId: *}}   订单ID
  */
 PayButton.propTypes = {
