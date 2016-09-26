@@ -2,17 +2,19 @@
  * Author：likon
  * Create Date：2016/9/23
  * Modified By：likon
- * Why & What is modified  添加用户端BDD测试方式的功能描述框架
+ * Why & What is modified 添加用户端BDD测试方式的功能描述框架
+ * Modified By：liRenhao
+ * Why & What is modified 实现各个功能的测试验证
  * <文件描述>：测试客户端中终端类型为用户的功能，包括：登陆、扫描订单、查看订单信息、支付订单、通知
  */
-import React from 'react'
-import {expect} from 'chai'
-import {mount} from 'enzyme'
-import {createStore} from 'redux'
+import React from "react"
+import {expect} from "chai"
+import {mount} from "enzyme"
+import {createStore} from "redux"
 import {Provider} from "react-redux"
-import {MockServer, MockRouter} from "../mock"
-import Payment from "../../src/Payment"
+import {MockRouter} from "../mock"
 import {msgHandler} from "../../src/handler"
+import Payment from "../../src/Payment"
 import reducer from "../../src/reducers"
 import DevTools from "../../src/containers/DevTools"
 import App from "../../src/containers/App"
