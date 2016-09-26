@@ -62,14 +62,19 @@ class PayForm extends React.Component {
         this.state = {orderId: props.orderIds[props.index]}
     }
 
+    /**
+     *
+     * @param nextProps
+     */
     componentWillReceiveProps(nextProps) {
         if (nextProps.orderIds.indexOf(this.state.orderId) < 0)
             nextProps.onLink()
     }
 
     render() {
+        //定义支付组件的属性
         const {handleSubmit, onSubmit, onCancel, order, marketing} = this.props
-        // TODO 订单信息展示组件只穿商品信息是否合适
+        // TODO 订单信息展示组件只传商品信息是否合适
         return (
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className={style.marginOutTopBottom}>
@@ -120,7 +125,9 @@ PayForm.propTypes = {
     marketing: React.PropTypes.object.isRequired,
     index: React.PropTypes.number.isRequired
 }
-
+/**
+ * 输出支付表单验证组件
+ */
 export default reduxForm({
     form: "payForm"
 })(PayForm)
