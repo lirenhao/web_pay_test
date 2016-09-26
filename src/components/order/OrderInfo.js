@@ -13,7 +13,7 @@ import GoodsItems from './GoodsItems'
 import {Panel} from 'react-bootstrap'
 
 /**
- * 订单商品信息组件：是订单信息组件(Order)的子组件
+ * 订单商品信息组件：对GoodsItems组件的封装，是订单信息组件(Order)的子组件，同时也为支付界面提供子组件支持
  */
 class OrderInfo extends React.Component {
 
