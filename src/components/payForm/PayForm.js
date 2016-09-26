@@ -22,7 +22,7 @@ import style from './PayForm.scss'
 
 /**
  * 自定义支付结果下拉菜单表单验证组件
- * @param input input属性
+ * @param input 属性对象
  */
 const PayField = ({input}) => (
     <FormControl {...input} componentClass="select">
@@ -106,15 +106,16 @@ class PayForm extends React.Component {
         )
     }
 }
+
 /**
- *
- * @type {{onSubmit: *}}  表单支付完成事件
- * @type {{onCancel: *,}} 取消支付事件
- * @type {{onLink: *,}}   订单取消，页面跳转事件
- * @type {{orderIds: *}}  订单ID
- * @type {{order: *,}}    订单信息
- * @type {{marketing: *}}  优惠信息
- * @type {{index: *}}      订单ID的索引
+ * onSubmit:表单支付完成事件（事件内容：向订单服务发送支付结果；根据用户类型跳转到“创建订单界面”或“匹配订单界面”）
+ * onCancel:取消支付事件（事件内容：向订单服务发送giveUpPay事件；根据用户类型跳转到“创建订单界面”或“匹配订单界面”）
+ * onLink: 订单取消，页面跳转事件（事件内容：）
+ * orderIds: 订单ID数组
+ * order: 订单信息
+ * marketing: 优惠信息
+ * index: 订单ID在订单ID数组中的索引
+ * @type {{onSubmit: func, onCancel: func, onLink: func, orderIds: array, order: object, marketing: object, index: number}}
  */
 PayForm.propTypes = {
     onSubmit: React.PropTypes.func.isRequired,
