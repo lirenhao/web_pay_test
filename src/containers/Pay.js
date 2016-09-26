@@ -23,7 +23,7 @@ const TerminalType = Const.TerminalType
 
 /**
  * 定义支付页面的容器：业务逻辑的处理和初始化数据
- * @param props 外界传递过来组件属性
+ * @param props 外组件属性
  * @param context 上下文属性
  */
 const Pay = (props, context)=> {

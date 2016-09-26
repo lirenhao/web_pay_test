@@ -39,7 +39,7 @@ const items = [
 
 /**
  * 创建订单容器
- * @param props 传递过来的组件属性
+ * @param props 组件属性
  * @param context 上下文属性
  */
 const Goods = (props, context) => {
