@@ -63,8 +63,8 @@ class PayForm extends React.Component {
     }
 
     /**
-     *
-     * @param nextProps
+     * 当组件的props改变时，判断要支付的订单是否被取消，如果被取消则执行onLink函数
+     * @param nextProps 改变后的props
      */
     componentWillReceiveProps(nextProps) {
         if (nextProps.orderIds.indexOf(this.state.orderId) < 0)
@@ -74,7 +74,6 @@ class PayForm extends React.Component {
     render() {
         //定义支付组件的属性
         const {handleSubmit, onSubmit, onCancel, order, marketing} = this.props
-        // TODO 订单信息展示组件只传商品信息是否合适
         return (
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className={style.marginOutTopBottom}>

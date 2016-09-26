@@ -18,6 +18,7 @@ import LoginForm from "../components/login/LoginForm"
  * @param context 上下文属性
  */
 const Login = (props, context) => {
+    context.setTitle("登录")
 
     const TerminalType = Const.TerminalType
 
