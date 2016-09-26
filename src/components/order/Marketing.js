@@ -16,7 +16,7 @@ import AmtDisplay from './AmtDisplay'
 
 /**
  * 优惠信息组件：是订单信息组件(Order)的子组件
- * @param marketing 优惠信息
+ * @param marketing 单个订单优惠信息
  */
 const Marketing = ({marketing}) => {
     //定义优惠信息面板的标题:为一个字体图标
@@ -27,8 +27,7 @@ const Marketing = ({marketing}) => {
     )
     /**
      * 定义优惠信息面板的内容组件
-     * @param marketing 优惠信息
-     * @returns {XML}
+     * @param marketing 单个订单优惠信息
      */
     const content = (marketing) => {
         if (marketing) {
