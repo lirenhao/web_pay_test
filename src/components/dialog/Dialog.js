@@ -11,13 +11,6 @@
 import React from 'react'
 import {Modal, Button} from 'react-bootstrap'
 
-/**
- * 模态框组件描述：定义dialog组件，传入一个对象，该对象包括四个参数，返回dialog组件
- * @param show:是bool类型的必输值。指是否展示dialog。当模态框modal的属性show为true时，则显示模态框
- * @param header:dialog的标题
- * @param body:dialog内容
- * @param close:关闭事件
- */
 const Dialog = ({show, header, body, close}) => {
     return (
         <Modal show={show}>
@@ -34,6 +27,13 @@ const Dialog = ({show, header, body, close}) => {
     )
 }
 
+/**
+ * show:是否展示dialog。当模态框modal的属性show为true时，则显示模态框
+ * header:dialog的标题
+ * body:dialog内容
+ * close:关闭事件
+ * @type {{show: bool, header: string, body: string, close: func}}
+ */
 Dialog.propTypes = {
     show: React.PropTypes.bool.isRequired,
     header: React.PropTypes.string.isRequired,
