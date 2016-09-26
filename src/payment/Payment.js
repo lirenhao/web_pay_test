@@ -208,16 +208,15 @@ class Payment {
 	 * @method
 	 * @for Payment
 	 * @param {Object} user 一个对象包括userId、userType两个属性
-	 * @param {Object} result {"eventType":"PAY_RESULT","orderId":"23","state":true,"channel":"测试渠道","msg":"成功","id":"1","terminalType":"USER"}
+	 * @param {Object} result 一个对象包括orderId、state属性
 	 */
 	payResult(user, result) {
-		// TODO 根据result中的值判断成功还是失败
 		this.send({
 			eventType: ServerCmd.PAY_RESULT,
 			id: user.userId,
 			terminalType: user.userType,
 			orderId: result.orderId,
-			state: result.state === "0" ? true : false,
+			state: result.state === "0",
 			channel: "测试渠道",
 			msg: result.state === "0" ? "成功" : "失败"
 		})

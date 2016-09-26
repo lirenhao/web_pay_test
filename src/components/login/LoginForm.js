@@ -53,7 +53,6 @@ const LoginForm = (props) => {
 	//pristine:是指禁用登陆表单提交的值
 	//submitting：是指禁用登陆表单提交的值
 	const {handleSubmit, onLogin, pristine, submitting} = props
-	// TODO 暂时不知道如何给userType设置默认值，暂且设置在容器中
 	return (
 		<div className={style.login}>
 			<Form onSubmit={handleSubmit(onLogin)} className={style.form}>

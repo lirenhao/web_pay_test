@@ -20,7 +20,6 @@ export default createReducer({
 			return [...state]
 	},
 	[remove]: (state, orderId) => {
-		// TODO 使用filter有问题之后在查找问题的原因
 		if (state.indexOf(orderId) >= 0)
 			state.splice(state.indexOf(orderId), 1)
 		return [...state]
