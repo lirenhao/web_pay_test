@@ -3,9 +3,9 @@
  * Create Date：2016/9/14
  * Modified By：liRenhao
  * Why & What is modified  <修改原因描述>
- * 添加订单号表单的容器
  * Modified By：kongli
  * Why & What is modified 添加注释
+ * 添加订单号表单的容器
  */
 
 import React from "react"
@@ -59,7 +59,7 @@ OrderId.contextTypes = {
 }
 
 /**
- *  该函数作为connect的参数
+ * 该函数作为connect的参数
  * 定义该参数，支付组件将会监听 Redux store 的变化。
  * 该回调函数必须返回一个纯对象，这个对象会与组件的 props 合并。
  * @param state 组件状态
@@ -70,7 +70,7 @@ const mapStateToProps = (state)=> ({
 })
 
 /**
- *  输出react-redux关联之后的支付容器组件
+ * 输出react-redux关联之后的支付容器组件
  * 连接支付组件与 Redux store
  * 只要 Redux store 发生改变，mapStateToProps 函数就会被调用。
  */

@@ -7,9 +7,9 @@
  * Why & What is modified  提交按钮添加跳转到订单页面事件
  * Modified By：Yky
  * Why & What is modified  添加提交按钮、N个待支付按钮完整功能
- * 录入商品信息的容器，暂时用做测试后续再修改
  * Modified By：kongli
  * Why & What is modified 添加注释
+ * 录入商品信息的容器，暂时用做测试后续再修改
  */
 import React from "react"
 import {connect} from "react-redux"
@@ -61,7 +61,7 @@ const Goods = (props, context) => {
 }
 
 /**
- *创建订单容器必传的属性
+ * 创建订单容器必传的属性
  * @type {{setTitle: *}} 设置标题
  * @type {{router: *}}   路由
  */

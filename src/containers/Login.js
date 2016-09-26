@@ -3,9 +3,9 @@
  * Create Date：2016/9/13
  * Modified By：liRenhao
  * Why & What is modified  <修改原因描述>
- * 登录界面的容器，需要给LoginForm传一个登陆处理的函数onLogin
  * Modified By：kongli
  * Why & What is modified 添加注释
+ * 登录界面的容器，需要给LoginForm传一个登陆处理的函数onLogin
  */
 import React from "react"
 import Payment from "../Payment"
@@ -23,8 +23,8 @@ const Login = (props, context) => {
     const TerminalType = Const.TerminalType
 
     /**
-     * 定义登陆提交按钮事件
-     * @param values
+     * 定义登陆提交成功后的处理事件
+     * @param values 用户的登录信息
      */
     const onLogin = (values) => {
         //客户端将登陆信息数据发送给服务端

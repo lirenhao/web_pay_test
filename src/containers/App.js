@@ -15,10 +15,11 @@ import {hideDialog} from "../actions"
 import DevTools from "./DevTools"
 import Dialog from "../components/dialog/Dialog"
 
-/**
- *
- */
 class App extends React.Component {
+    /**
+     * 将设置页面title的函数和路由对象传递给children
+     * @returns {{setTitle: (function(*): *), router: *}}
+     */
     getChildContext() {
         return {
             setTitle: value => (document.title = value),
