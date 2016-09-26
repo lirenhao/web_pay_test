@@ -29,7 +29,7 @@ const userIdField = ({input, label, type, meta: {touched, error}}) => (
 
 /**
  * 用户类型自定义组件
- * @param input：是指input属性
+ * @param input：包含一些事件以及name，value的属性对象
  */
 const userTypeField = ({input}) => (
 	<div className="btn-group btn-group-justified" data-toggle="buttons">
@@ -43,15 +43,10 @@ const userTypeField = ({input}) => (
 )
 
 /**
- * 登陆验证表单：包括用户名输入框组件、用户类型单选框组件、登陆按钮
+ * 登录验证表单：包括用户名输入框组件、用户类型单选框组件、登陆按钮
  * @param props 登陆表单组件的属性
  */
 const LoginForm = (props) => {
-	//定义登陆组件的四个属性
-	//handleSubmit:是指redux-form的处理表单事件
-	//onLogin:提交登陆信息表单事件
-	//pristine:是指禁用登陆表单提交的值
-	//submitting：是指禁用登陆表单提交的值
 	const {handleSubmit, onLogin, pristine, submitting} = props
 	return (
 		<div className={style.login}>
@@ -66,7 +61,7 @@ const LoginForm = (props) => {
 
 /**
  *登陆组件必须要传递的数据
- * @type {{onLogin: *}}:提交登陆表单信息事件
+ * @type {{onLogin: *}}:登录事件（事件内容：向服务发送登录请求事件；根据用户类型判断路由跳转到创建订单界面或匹配订单界面）
  */
 LoginForm.propTypes = {
 	onLogin: React.PropTypes.func.isRequired
