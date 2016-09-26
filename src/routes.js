@@ -15,7 +15,6 @@ import Goods from './containers/Goods'
 import OrderId from './containers/OrderId'
 import Order from './containers/Order'
 import Pay from './containers/Pay'
-import Dialog from './components/dialog/Dialog'
 
 export default (
     <Router history={browserHistory}>
@@ -26,7 +25,6 @@ export default (
             <Route path="/orderId" component={OrderId}/>
             <Route path="/order" component={Order}/>
             <Route path="/pay/:index" component={Pay}/>
-            <Route path="/dialog" component={Dialog}/>
         </Route>
     </Router>
 )
