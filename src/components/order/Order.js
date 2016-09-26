@@ -17,12 +17,12 @@ import {Tabs, Tab} from 'react-bootstrap';
 import style from './Order.scss'
 
 /**
- * 是指订单信息组件：包括订单商品信息组件(OrderInfo)、优惠信息组件(Marketing)、结算信息组件(Billing)、支付和取消按钮组件（PayButton）
+ * 订单信息组件：包括订单商品信息组件(OrderInfo)、优惠信息组件(Marketing)、结算信息组件(Billing)、支付和取消按钮组件（PayButton）
  */
 class Order extends React.Component {
 
     /**
-     * 通过constructor构造函数设置state，初始化组件的状态：key为orderIds数组的长度
+     * 通过constructor构造函数设置state，初始化组件的状态：key为orderIds数组的长度，作用：为了每次跳转到订单界面都显示最后一个订单信息
      * @param props
      */
     constructor(props) {
@@ -32,14 +32,14 @@ class Order extends React.Component {
 
     /**
      * Tabs的选中事件
-     * @param key 订单数组的索引
+     * @param key 订单号数组的索引
      */
     handleSelect(key) {
         this.setState({key})
     }
 
     /**
-     * 取消订单事件
+     * 取消订单事件，把订单号传给取消事件，并把该订单的上一个订单号在订单号数组中对应的索引存到组件state中
      * @param orderId 订单ID
      */
     handleCancel(orderId) {
@@ -50,9 +50,6 @@ class Order extends React.Component {
     }
 
     render() {
-        /**
-         *定义订单信息组件的属性
-         */
         const {orderIds, order, marketing, onReqPay, canCancel} = this.props
         const tabItems = orderIds.map(
             (orderId, index) => (
@@ -86,8 +83,8 @@ class Order extends React.Component {
  * @type {{orderIds: *}} 订单号数组
  * @type {{order: *}}    订单信息对象
  * @type {{marketing: *}} 优惠信息对象
- * @type {{onReqPay: *}} 支付请求事件
- * @type {{onCancel: *}} 取消订单事件
+ * @type {{onReqPay: *}} 支付请求事件（事件内容：向订单服务发送授权请求）
+ * @type {{onCancel: *}} 取消订单事件（事件内容：向订单服务发送取消订单请求）
  * @type {{canCancel: *}} 是否有取消按钮
  */
 Order.propTypes = {
