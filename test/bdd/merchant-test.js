@@ -10,7 +10,7 @@ import {expect} from 'chai'
 import {mount} from 'enzyme';
 import {createStore} from 'redux'
 import {Provider} from "react-redux"
-import { MockRouter} from "../mock"
+import {MockRouter} from "../mock"
 import Payment from "../../src/Payment"
 import {msgHandler} from "../../src/handler"
 import reducer from "../../src/reducers"
@@ -154,49 +154,32 @@ describe('支付系统分两块，包括客户端和服务端', ()=> {
             });
         });
         describe('测试商户查看订单', ()=> {
-            describe('测试点击“支付”按钮操作', ()=> {
-                describe('无法点击“支付”按钮', ()=> {
-                    const state = {
-                        user: {userId: '1', userType: 'MERCHANT'},
-                        orderIds: ['1'],
-                        order: {'1': {orderId: '1', items: [{name: "ONLY修身撞色拼接女针织裙", price: 1, quantity: 1}]}}
+            const state = {
+                user: {userId: '1', userType: 'MERCHANT'},
+                orderIds: ['1'],
+                order: {'1': {orderId: '1', items: [{name: "ONLY修身撞色拼接女针织裙", price: 1, quantity: 1}]}}
+            }
+            beforeEach(()=> {
+                store = createStore(reducer, state, DevTools.instrument())
+                Payment.setMsgHandler(msgHandler(store, router))
+                subject = mount(<Provider store={store}><App><Order/></App></Provider>, {
+                    context: {
+                        router: router
+                    },
+                    childContextTypes: {
+                        router: React.PropTypes.object
                     }
-                    beforeEach(()=> {
-                        store = createStore(reducer, state, DevTools.instrument())
-                        Payment.setMsgHandler(msgHandler(store, router))
-                        subject = mount(<Provider store={store}><App><Order/></App></Provider>, {
-                            context: {
-                                router: router
-                            },
-                            childContextTypes: {
-                                router: React.PropTypes.object
-                            }
-                        })
-                    })
+                })
+            })
+            describe('测试点击“支付”按钮操作', ()=> {
+                describe("按钮无法点击时", ()=> {
                     it('当用户未匹配该订单时，商户无法看到优惠信息和结算信息，无法点击“支付”按钮', ()=> {
                         expect(subject.find("button").first().props().disabled).to.equal(true)
                     });
                 })
-                describe('可以点击“支付”按钮', ()=> {
-                    const state = {
-                        user: {userId: '1', userType: 'MERCHANT'},
-                        orderIds: ['1'],
-                        order: {'1': {orderId: '1', items: [{name: "ONLY修身撞色拼接女针织裙", price: 1, quantity: 1}]}},
-                        marketing: {'1': {orderId: '1', amt: 58650, msg: '测试优惠, 一律5折'}}
-                    }
-                    beforeEach(()=> {
-                        store = createStore(reducer, state, DevTools.instrument())
-                        Payment.setMsgHandler(msgHandler(store, router))
-                        subject = mount(<Provider store={store}><App><Order/></App></Provider>, {
-                            context: {
-                                router: router
-                            },
-                            childContextTypes: {
-                                router: React.PropTypes.object
-                            }
-                        })
-                    })
+                describe("按钮可以点击时", ()=> {
                     it('当用户已匹配该订单时，商户可以点击“支付”按钮，页面跳转进入“订单支付”页面', ()=> {
+                        server.send({"eventType": "MARKETING", "orderId": "1", "amt": 58650, "msg": "测试优惠, 一律5折"})
                         //获得支付按钮
                         const button = subject.find("button").first()
                         //是否可以点击支付按钮
@@ -209,7 +192,15 @@ describe('支付系统分两块，包括客户端和服务端', ()=> {
                         expect(router.route).to.equal("/pay/0")
                     })
                 })
-            });
+                describe('商户和用户操作同一订单，用户先进入“支付页面”，商户在“订单页面”再点击“支付”按钮变为灰色，用户在支付页面“取消支付”的情况.', ()=> {
+                    it('用户点击“取消支付”按钮.结果：商户端获得支付授权，从“订单页面”跳转进入“支付页面”', ()=> {
+                        //用户端取消支付，订单服务会根据用户发送的取消支付事件，相应的给商户端发送支付授权
+                        server.send({eventType: "PAY_AUTH", orderId: "1"})
+                        //商户端收到支付授权后会路由跳转
+                        expect(router.route).to.equal("/pay/0")
+                    })
+                })
+            })
             describe('测试点击“取消”按钮操作', ()=> {
                 describe('商户有多个未完成支付的订单时', ()=> {
                     const state = {
@@ -257,26 +248,6 @@ describe('支付系统分两块，包括客户端和服务端', ()=> {
                     });
                 });
                 describe('当商户只有一个订单时', ()=> {
-                    const state = {
-                        user: {userId: '1', userType: 'MERCHANT'},
-                        orderIds: ['1'],
-                        order: {
-                            '1': {orderId: '1', items: [{name: 'ONLY修身撞色拼接女针织裙', price: 1, quantity: 1}]}
-                        },
-                        marketing: {'1': {orderId: '1', amt: 58650, msg: '测试优惠, 一律5折'}}
-                    }
-                    beforeEach(()=> {
-                        store = createStore(reducer, state, DevTools.instrument())
-                        Payment.setMsgHandler(msgHandler(store, router))
-                        subject = mount(<Provider store={store}><App><Order/></App></Provider>, {
-                            context: {
-                                router: router
-                            },
-                            childContextTypes: {
-                                router: React.PropTypes.object
-                            }
-                        })
-                    })
                     it('商户取消订单，页面跳转到“创建订单”页面，并且商户不会收到取消订单的通知', ()=> {
                         const button = subject.find("button").last()
                         // //点击按钮
@@ -351,26 +322,6 @@ describe('支付系统分两块，包括客户端和服务端', ()=> {
                     })
                 });
                 describe('点击“取消支付”按钮', ()=> {
-                    const state = {
-                        user: {userId: '1', userType: 'MERCHANT'},
-                        orderIds: ['1'],
-                        order: {
-                            '1': {orderId: '1', items: [{name: 'ONLY修身撞色拼接女针织裙', price: 1, quantity: 1}]}
-                        },
-                        marketing: {'1': {orderId: '1', amt: 58650, msg: '测试优惠, 一律5折'}}
-                    }
-                    beforeEach(()=> {
-                        store = createStore(reducer, state, DevTools.instrument())
-                        Payment.setMsgHandler(msgHandler(store, router))
-                        subject = mount(<Provider store={store}><App><Pay params={{index: "0"}}/></App></Provider>, {
-                            context: {
-                                router: router
-                            },
-                            childContextTypes: {
-                                router: React.PropTypes.object
-                            }
-                        })
-                    })
                     describe('只有商户操作该订单', ()=> {
                         it('商户点击“取消支付”按钮结果：页面跳转到“创建订单”页面', ()=> {
                             const button = subject.find("button").last()
@@ -379,56 +330,49 @@ describe('支付系统分两块，包括客户端和服务端', ()=> {
                         })
 
                     })
-                    describe('商户和用户操作同一订单，用户先进入“支付页面”，商户在“订单页面”再点击“支付”按钮变为灰色，用户在支付页面“取消支付”的情况.', ()=> {
-                        it('用户点击“取消支付”按钮.结果：商户端获得支付授权，从“订单页面”跳转进入“支付页面”', ()=> {
-                            //todo 待定测试方式
-                        })
-                    })
-
                 });
             })
-            describe('商户端通知', ()=> {
-                describe('商户端和用户端已登陆的情况下，用户支付完成，商户会收到通知', ()=> {
-                    const state = {
-                        user: {userId: '1', userType: 'MERCHANT'},
-                    }
-                    beforeEach(()=> {
-                        store = createStore(reducer,state, DevTools.instrument())
-                        Payment.setMsgHandler(msgHandler(store, router))
-                        Payment.open()
-                        subject = mount(<Provider store={store}><App/></Provider>, {
-                            context: {
-                                router: router
-                            },
-                            childContextTypes: {
-                                router: React.PropTypes.object
-                            }
-                        })
-                    })
-                    it('无论商户端在哪个页面，用户支付成功订单，商户会收到支付成功通知。', ()=> {
-                        server.send({
-                            eventType: "PAY_COMPLETED",
-                            orderId: "1", result: true,
-                            channel: "测试渠道", msg: "成功"
-                        })
-
-                        expect(store.getState().dialog[0].show).to.equal(true)
-                        expect(store.getState().dialog[0].header).to.equal("支付通知")
-                        expect(store.getState().dialog[0].body).to.equal("订单【1】支付成功")
-                    })
-                    it('无论商户端在哪个页面，用户支付失败订单，商户会收到支付失败通知。', ()=> {
-                        server.send({
-                            eventType: "PAY_COMPLETED",
-                            orderId: "1", result: false,
-                            channel: "测试渠道", msg: "失败"
-                        })
-                        expect(store.getState().dialog[0].show).to.equal(true)
-                        expect(store.getState().dialog[0].header).to.equal("支付通知")
-                        expect(store.getState().dialog[0].body).to.equal("订单【1】支付失败")
+        })
+        describe('商户端通知', ()=> {
+            describe('商户端和用户端已登陆的情况下，用户支付完成，商户会收到通知', ()=> {
+                const state = {
+                    user: {userId: '1', userType: 'MERCHANT'},
+                }
+                beforeEach(()=> {
+                    store = createStore(reducer, state, DevTools.instrument())
+                    Payment.setMsgHandler(msgHandler(store, router))
+                    Payment.open()
+                    subject = mount(<Provider store={store}><App/></Provider>, {
+                        context: {
+                            router: router
+                        },
+                        childContextTypes: {
+                            router: React.PropTypes.object
+                        }
                     })
                 })
-             });
-        })
+                it('无论商户端在哪个页面，用户支付成功订单，商户会收到支付成功通知。', ()=> {
+                    server.send({
+                        eventType: "PAY_COMPLETED",
+                        orderId: "1", result: true,
+                        channel: "测试渠道", msg: "成功"
+                    })
+
+                    expect(store.getState().dialog[0].show).to.equal(true)
+                    expect(store.getState().dialog[0].header).to.equal("支付通知")
+                    expect(store.getState().dialog[0].body).to.equal("订单【1】支付成功")
+                })
+                it('无论商户端在哪个页面，用户支付失败订单，商户会收到支付失败通知。', ()=> {
+                    server.send({
+                        eventType: "PAY_COMPLETED",
+                        orderId: "1", result: false,
+                        channel: "测试渠道", msg: "失败"
+                    })
+                    expect(store.getState().dialog[0].show).to.equal(true)
+                    expect(store.getState().dialog[0].header).to.equal("支付通知")
+                    expect(store.getState().dialog[0].body).to.equal("订单【1】支付失败")
+                })
+            })
+        });
     })
 })
-
