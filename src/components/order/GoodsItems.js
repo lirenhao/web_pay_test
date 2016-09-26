@@ -3,9 +3,9 @@
  * Create Date：2016/9/9
  * Modified By：pengfei
  * Why & What is modified  修改引入的组件（GoodsItem）名称
- * 定义商品信息展示列表组件
  * Modified By：kongli
  * Why & What is modified 添加注释
+ * 定义商品信息展示列表组件
  */
 import React from 'react';
 import GoodsItem from './GoodsItem';

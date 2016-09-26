@@ -5,9 +5,9 @@
  * Why & What is modified 添加Panel组件的应用
  * Modified By：Pengfei
  * Why & What is modified 添加展示金额数据的组件
- * 定义金额结算信息组件
  * Modified By：kongli
  * Why & What is modified 添加注释
+ * 定义金额结算信息组件
  */
 
 import React from 'react';
@@ -66,6 +66,5 @@ const Billing = ({items, marketing}) => {
         </Panel>
     )
 }
-
 
 export default Billing;

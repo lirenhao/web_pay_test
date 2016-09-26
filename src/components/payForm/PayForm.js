@@ -9,6 +9,7 @@
  * Why & What is modified  解决商户取消订单用户还停留在支付界面的Bug
  * Modified By：kongli
  * Why & What is modified 添加注释
+ * 支付表单组件，包括：商品列表组件、优惠信息组件、结算信息组件、确定按钮、取消支付按钮
  */
 import React from 'react'
 import {Field, reduxForm} from "redux-form"

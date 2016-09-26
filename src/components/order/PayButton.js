@@ -3,11 +3,11 @@
  * Create Date：2016/9/13
  * Modified By：liRenhao
  * Why & What is modified 点击支付后不能再点击处理
- * <文件描述>
  * Modified By：kongli
  * Why & What is modified:添加底部导航<Navbar fixedBottom></Navbar>
  * Modified By：kongli
  * Why & What is modified 添加注释
+ * 订单显示界面的按钮组
  */
 import React from 'react'
 import {ButtonGroup, Button,Navbar} from 'react-bootstrap'
@@ -25,7 +25,6 @@ class PayButton extends React.Component {
         this.state = {canPay: props.canPay}
     }
 
-    // TODO 补充componentWillReceiveProps注释
     /**
      * 组件将要接收属性时触发的事件
      * @param nextProps 调用者传给组件的下一个属性

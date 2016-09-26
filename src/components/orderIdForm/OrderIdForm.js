@@ -5,9 +5,9 @@
  * Why & What is modified  <修改原因描述>
  * Modified By：yky
  * Why & What is modified  添加如果订单号为空时的验证
- * 添加订单号的表单
  * Modified By：kongli
  * Why & What is modified 添加注释
+ * 添加输入订单号的表单
  */
 import React from "react"
 import {Field, reduxForm} from "redux-form"
@@ -16,7 +16,6 @@ import {Form, FormGroup, InputGroup, FormControl, Button, Glyphicon} from "react
 /**
  * 描述：表单验证时要验证的数据规则
  * @param values 表单验证的值
- * @returns {{}}
  */
 const validate = values  => {
 	const error = {}

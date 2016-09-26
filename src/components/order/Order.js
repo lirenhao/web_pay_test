@@ -3,9 +3,9 @@
  * Create Date：2016/9/12
  * Modified By：liRenhao
  * Why & What is modified 删除订单时展示第一个tab
- * 组合订单页面的所需的组件
  * Modified By：kongli
  * Why & What is modified 添加注释
+ * 组合订单页面的所需的组件
  */
 
 import React from 'react'

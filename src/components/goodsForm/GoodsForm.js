@@ -3,11 +3,11 @@
  * Create Date：2016/9/9
  * Modified By：liRenhao
  * Why & What is modified  <修改原因描述>
+ * Modified By：kongli
+ * Why & What is modified 添加代码注释
  * 定义一个商品录入的form组件
  * 用户点击添加按钮时添加一组商品信息的录入框
  * 点击提交按钮时如果输入框输入的值通过验证触发onSubmit事件
- * Modified By：kongli
- * Why & What is modified 添加代码注释
  */
 import React from "react"
 import {FieldArray, reduxForm} from "redux-form"
@@ -77,7 +77,6 @@ const GoodsForm = (props) => {
  * @type {{orderNum: *}} 商户已有的订单数量
  * @type {{onButton: *}} 待支付订单事件
  */
-
 GoodsForm.propTypes = {
     onSubmit: React.PropTypes.func.isRequired,
     orderNum: React.PropTypes.number.isRequired,
