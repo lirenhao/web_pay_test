@@ -15,6 +15,9 @@ import {hideDialog} from "../actions"
 import DevTools from "./DevTools"
 import Dialog from "../components/dialog/Dialog"
 
+/**
+ *
+ */
 class App extends React.Component {
     getChildContext() {
         return {
