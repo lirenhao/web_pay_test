@@ -7,8 +7,11 @@
  * Why & What is modified 给添加按钮和提交按钮添加底部导航<Navbar>属性为fixedBottom
  * Modified By：kongli
  * Why & What is modified 添加注释
+ * Modified By：Pengfei
+ * Why & What is modified 修改和完善注释
  * 使用redux-form的FieldArray实现动态添加商品录入框
  */
+
 import React from "react"
 import {ListGroup, ListGroupItem, InputGroup, ButtonGroup, Button,Navbar} from "react-bootstrap"
 import {Field} from "redux-form"
@@ -19,8 +22,8 @@ import InputField from "./InputField"
  * 输出组件内容：商品信息（名称、价格、数量、删除按钮）、添加按钮、提交按钮、待支付订单按钮
  * 实现了对商品输入信息的验证
  * @param fields ：是指商品信息，它是一个数组，将商品信息数组做映射，并给商品信息组件赋值
- * @param orderNum：是指订单号，是值类型的必输值
- * @param onButton：待支付按钮点击事件，是必输的函数
+ * @param orderNum：是指待支付订单数量，是数值类型的必输值
+ * @param onButton：待支付按钮点击事件（事件处理内容：页面跳转到订单界面），是必输的函数
  */
 const GoodsField = ({fields, orderNum, onButton}) => (
     <ListGroup>
@@ -69,8 +72,8 @@ const GoodsField = ({fields, orderNum, onButton}) => (
 
 /**
  * 商品信息组件的属性
- * @type {{orderNum: *}}:值类型的订单号，是必传属性
- * @type {{onButton: *}}:待支付按钮点击事件，是必传的函数属性
+ * @type {{orderNum: *}}:数值类型的待支付订单数，是必传属性
+ * @type {{onButton: *}}:待支付按钮点击事件（事件处理内容：页面跳转到订单界面），是必传的函数属性
  */
 GoodsField.propTypes = {
     orderNum: React.PropTypes.number.isRequired,
