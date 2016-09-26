@@ -5,7 +5,7 @@
  * Why & What is modified  添加文件描述
  * Modified By：liRenhao
  * Why & What is modified 把订单信息中的isPayAuth属性去掉
- * order的reducer:
+ * 处理订单信息的reducer:
  * addOrder——将商品信息按照orderId存入state.order
  * remove——将orderId对应的订单信息从state.order中移除
  */

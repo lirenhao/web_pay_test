@@ -5,7 +5,7 @@
  * Why & What is modified  添加文件描述,添加orderIds数组的排序
  * Modified By：liRenhao
  * Why & What is modified 去掉orderIds数组的排序
- * orderIds的reducer：
+ * 处理订单列表的reducer：
  * addOrder——将订单id数组存入state.orderIds
  * remove——将对应的orderId从state.orderIds中移除
  */
