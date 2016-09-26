@@ -12,7 +12,7 @@ import React from 'react'
 import AmtDisplay from './AmtDisplay'
 
 /**
- * 商品信息组件：包括商品名称、单价、数量，它是
+ * 单个商品信息组件：包括商品名称、单价、数量
  * @param name 商品名称
  * @param price 单价
  * @param quantity 数量
