@@ -1,8 +1,9 @@
+/**
+CSS样式的全局变量
+*/
 :global {
+  //底部导航上面组件容器的下边距
   .marginBottomNav {
     margin-bottom: 60px;
-  },
-  . global-class-name {
-     color: red;
-}
+  }
 }
