@@ -10,7 +10,7 @@ import {expect} from 'chai'
 import {mount} from 'enzyme';
 import {createStore} from 'redux'
 import {Provider} from "react-redux"
-import {MockServer, MockRouter} from "../mock"
+import { MockRouter} from "../mock"
 import Payment from "../../src/Payment"
 import {msgHandler} from "../../src/handler"
 import reducer from "../../src/reducers"
@@ -23,12 +23,10 @@ import OrderInfo from "../../src/components/order/OrderInfo"
 import Pay from "../../src/containers/Pay"
 
 describe('支付系统分两块，包括客户端和服务端', ()=> {
-    let server = null
     let store = null
     let router = null
     let subject = null
     beforeEach(() => {
-        server = new MockServer()
         store = createStore(reducer, DevTools.instrument())
         router = new MockRouter()
         Payment.setMsgHandler(msgHandler(store, router))
@@ -56,9 +54,6 @@ describe('支付系统分两块，包括客户端和服务端', ()=> {
             it('测试商户端登陆失败', ()=> {
                 expect(subject.find("button").first().props().disabled).to.equal(true)
             });
-            afterEach(()=> {
-                server.close()
-            })
         });
         describe('测试商户创建订单', ()=> {
             beforeEach(()=> {
@@ -79,7 +74,6 @@ describe('支付系统分两块，包括客户端和服务端', ()=> {
                     button.simulate("click")
                     //点击按钮后页面元素class为form-control个数
                     expect(subject.find('.form-control')).to.have.length(12)
-                    //console.log(subject.find('.form-control').at(11).html());
                     //点击按钮后新增页面元素
                     expect(subject.find('.form-control').at(9).html()).to.equal('<input type="text" name="goods[3].name" value="" placeholder="name" id="goods[3].name" class="form-control">')
                     expect(subject.find('.form-control').at(10).html()).to.equal('<input type="number" name="goods[3].price" value="" placeholder="price" id="goods[3].price" class="form-control">')
@@ -103,7 +97,7 @@ describe('支付系统分两块，包括客户端和服务端', ()=> {
                     const submit = subject.find("button").at(5)
                     submit.simulate("submit")
                     //没有产生订单，证明没有提交成功
-                    expect(store.getState().orderIds.length).to.equal(0)
+                    expect(router.route).to.equal(undefined)
                 });
                 it('当录入完整的商品信息，点击“提交”按钮时，会成功提交订单，结果页面跳转进入“订单页面”', ()=> {
                     //点击提交订单按钮
@@ -158,9 +152,6 @@ describe('支付系统分两块，包括客户端和服务端', ()=> {
                     });
                 });
             });
-            afterEach(()=> {
-                server.close()
-            })
         });
         describe('测试商户查看订单', ()=> {
             describe('测试点击“支付”按钮操作', ()=> {
@@ -185,9 +176,6 @@ describe('支付系统分两块，包括客户端和服务端', ()=> {
                     it('当用户未匹配该订单时，商户无法看到优惠信息和结算信息，无法点击“支付”按钮', ()=> {
                         expect(subject.find("button").first().props().disabled).to.equal(true)
                     });
-                    afterEach(()=> {
-                        server.close()
-                    })
                 })
                 describe('可以点击“支付”按钮', ()=> {
                     const state = {
@@ -209,7 +197,6 @@ describe('支付系统分两块，包括客户端和服务端', ()=> {
                         })
                     })
                     it('当用户已匹配该订单时，商户可以点击“支付”按钮，页面跳转进入“订单支付”页面', ()=> {
-                        //console.log(subject.find("button").at(0).html());
                         //获得支付按钮
                         const button = subject.find("button").first()
                         //是否可以点击支付按钮
@@ -220,9 +207,6 @@ describe('支付系统分两块，包括客户端和服务端', ()=> {
                         server.send({eventType: "PAY_AUTH", orderId: "1"})
                         //查看路由跳转地址是否是订单界面
                         expect(router.route).to.equal("/pay/0")
-                    })
-                    afterEach(()=> {
-                        server.close()
                     })
                 })
             });
@@ -250,7 +234,6 @@ describe('支付系统分两块，包括客户端和服务端', ()=> {
                         })
                     })
                     it('商户取消订单，订单切换为上一个订单信息', ()=> {
-                        // //console.log(subject.find("button").last().html());
                         // //获得支付按钮
                         const button = subject.find("button").last()
                         // //点击按钮
@@ -272,9 +255,6 @@ describe('支付系统分两块，包括客户端和服务端', ()=> {
                         //界面td元素个数：一组商品抬头（3个td）加上一组商品信息（3个td）
                         expect(subject.find(OrderInfo).render().find("td")).to.have.length(6)
                     });
-                    afterEach(()=> {
-                        server.close()
-                    })
                 });
                 describe('当商户只有一个订单时', ()=> {
                     const state = {
@@ -296,9 +276,6 @@ describe('支付系统分两块，包括客户端和服务端', ()=> {
                                 router: React.PropTypes.object
                             }
                         })
-                    })
-                    afterEach(()=> {
-                        server.close()
                     })
                     it('商户取消订单，页面跳转到“创建订单”页面，并且商户不会收到取消订单的通知', ()=> {
                         const button = subject.find("button").last()
@@ -340,9 +317,6 @@ describe('支付系统分两块，包括客户端和服务端', ()=> {
                             router: React.PropTypes.object
                         }
                     })
-                })
-                afterEach(()=> {
-                    server.close()
                 })
                 describe('选择支付结果下拉菜单，点击“确定”按钮.', ()=> {
                     it('选择支付结果-成功,点击“确定”按钮.结果：页面跳转进"创建订单页面"，商户收到支付结果通知：支付完成，支付成功', ()=> {
@@ -397,9 +371,6 @@ describe('支付系统分两块，包括客户端和服务端', ()=> {
                             }
                         })
                     })
-                    afterEach(()=> {
-                        server.close()
-                    })
                     describe('只有商户操作该订单', ()=> {
                         it('商户点击“取消支付”按钮结果：页面跳转到“创建订单”页面', ()=> {
                             const button = subject.find("button").last()
@@ -434,9 +405,6 @@ describe('支付系统分两块，包括客户端和服务端', ()=> {
                             }
                         })
                     })
-                    afterEach(()=> {
-                        server.close()
-                    })
                     it('无论商户端在哪个页面，用户支付成功订单，商户会收到支付成功通知。', ()=> {
                         server.send({
                             eventType: "PAY_COMPLETED",
@@ -444,9 +412,9 @@ describe('支付系统分两块，包括客户端和服务端', ()=> {
                             channel: "测试渠道", msg: "成功"
                         })
 
-                        // expect(store.getState().dialog[0].show).to.equal(true)
-                        // expect(store.getState().dialog[0].header).to.equal("支付通知")
-                        // expect(store.getState().dialog[0].body).to.equal("订单【1】支付成功")
+                        expect(store.getState().dialog[0].show).to.equal(true)
+                        expect(store.getState().dialog[0].header).to.equal("支付通知")
+                        expect(store.getState().dialog[0].body).to.equal("订单【1】支付成功")
                     })
                     it('无论商户端在哪个页面，用户支付失败订单，商户会收到支付失败通知。', ()=> {
                         server.send({
@@ -454,15 +422,12 @@ describe('支付系统分两块，包括客户端和服务端', ()=> {
                             orderId: "1", result: false,
                             channel: "测试渠道", msg: "失败"
                         })
-                        // expect(store.getState().dialog[0].show).to.equal(true)
-                        // expect(store.getState().dialog[0].header).to.equal("支付通知")
-                        // expect(store.getState().dialog[0].body).to.equal("订单【1】支付失败")
+                        expect(store.getState().dialog[0].show).to.equal(true)
+                        expect(store.getState().dialog[0].header).to.equal("支付通知")
+                        expect(store.getState().dialog[0].body).to.equal("订单【1】支付失败")
                     })
                 })
              });
-        })
-        afterEach(()=> {
-            server.close()
         })
     })
 })
