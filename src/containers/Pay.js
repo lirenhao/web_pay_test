@@ -82,7 +82,7 @@ const Pay = (props, context)=> {
 }
 
 /**
- * 定义支付容器必传的属性
+ * 支付容器必传的属性
  * @type {{setTitle: *}} 页面的标题
  * @type {{router: *}}  路由
  */

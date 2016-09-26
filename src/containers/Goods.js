@@ -8,6 +8,8 @@
  * Modified By：Yky
  * Why & What is modified  添加提交按钮、N个待支付按钮完整功能
  * 录入商品信息的容器，暂时用做测试后续再修改
+ * Modified By：kongli
+ * Why & What is modified 添加注释
  */
 import React from "react"
 import {connect} from "react-redux"
@@ -35,6 +37,11 @@ const items = [
 	}
 ]
 
+/**
+ * 创建订单容器
+ * @param props 传递过来的组件属性
+ * @param context 上下文属性
+ */
 const Goods = (props, context) => {
 	context.setTitle("创建订单")
 	const ToOrder = (value)=> {
@@ -53,6 +60,11 @@ const Goods = (props, context) => {
 	)
 }
 
+/**
+ *创建订单容器必传的属性
+ * @type {{setTitle: *}} 设置标题
+ * @type {{router: *}}   路由
+ */
 Goods.contextTypes = {
 	setTitle: React.PropTypes.func.isRequired,
 	router: React.PropTypes.object.isRequired
@@ -63,4 +75,7 @@ const mapPropsFromState = (state)=>({
 	orderIds: state.orderIds
 })
 
+/**
+ *  输出react-redux关联之后的创建订单容器组件
+ */
 export default connect(mapPropsFromState)(Goods)
