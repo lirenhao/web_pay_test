@@ -17,7 +17,7 @@ import style from './Goods.scss'
 
 /**
  * 商品信息表单验证，验证输入的值是否符合标准
- * @param values 输入框的值
+ * @param values 验证的商品信息字段值组成的对象数组，以对象形式存储（{goods:[{name:"ONLY修身撞色拼接女针织裙",price:34950,quantity:2}]}）
  */
 const validate = (values) => {
     const errors = {}
@@ -74,8 +74,8 @@ const GoodsForm = (props) => {
 /**
  * 商品信息表单组件
  * @type {{onSubmit: *}} 提交表单后的处理事件
- * @type {{orderNum: *}} 商户已有的订单数量
- * @type {{onButton: *}} 待支付订单事件
+ * @type {{orderNum: *}} 商户待支付订单数量
+ * @type {{onButton: *}} 待支付按钮点击事件（事件处理内容：页面跳转到订单界面）
  */
 GoodsForm.propTypes = {
     onSubmit: React.PropTypes.func.isRequired,
