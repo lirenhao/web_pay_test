@@ -66,4 +66,23 @@ const Billing = ({items, marketing}) => {
     )
 }
 
+Billing.propTypes = {
+    items: React.PropTypes.arrayOf(
+        React.PropTypes.shape(
+            {
+                name: React.PropTypes.string,
+                price: React.PropTypes.number,
+                quantity: React.PropTypes.number
+            }
+        )
+    ),
+    marketing: React.PropTypes.shape(
+        {
+            orderId: React.PropTypes.string,
+            amt: React.PropTypes.number,
+            msg: React.PropTypes.string
+        }
+    )
+}
+
 export default Billing;

@@ -15,22 +15,31 @@ import {Panel} from 'react-bootstrap'
 /**
  * 订单商品信息组件：对GoodsItems组件的封装，是订单信息组件(Order)的子组件，同时也为支付界面提供子组件支持
  */
-class OrderInfo extends React.Component {
 
-    render() {
-        if (this.props.items) {
-            return (
-                <div>
-                    <Panel header="订单信息">
-                        <GoodsItems  items={this.props.items || []}/>
-                    </Panel>
-                </div>
-            )
-        }
-        else
-            return (<div role="alert">正在加载订单信息...</div>);
+const OrderInfo = ({items})=> {
+    if (this.props.items) {
+        return (
+            <div>
+                <Panel header="订单信息">
+                    <GoodsItems items={this.props.items || []}/>
+                </Panel>
+            </div>
+        )
     }
+    else
+        return (<div role="alert">正在加载订单信息...</div>);
 }
 
+OrderInfo.propTypes = {
+    items: React.PropTypes.arrayOf(
+        React.PropTypes.shape(
+            {
+                name: React.PropTypes.string,
+                price: React.PropTypes.number,
+                quantity: React.PropTypes.number
+            }
+        )
+    )
+}
 
 export default OrderInfo;

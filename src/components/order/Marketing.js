@@ -56,4 +56,14 @@ const Marketing = ({marketing}) => {
     )
 }
 
+Marketing.propTypes = {
+    marketing: React.PropTypes.shape(
+        {
+            orderId: React.PropTypes.string,
+            amt: React.PropTypes.number,
+            msg: React.PropTypes.string
+        }
+    )
+}
+
 export default Marketing;
