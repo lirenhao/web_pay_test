@@ -72,8 +72,9 @@ const GoodsField = ({fields, orderNum, onButton}) => (
 
 /**
  * 商品信息组件的属性
- * @type {{orderNum: number}}:数值类型的待支付订单数，是必传属性
- * @type {{onButton: func}}:待支付按钮点击事件（事件处理内容：页面跳转到订单界面），是必传的函数属性
+ * orderNum: 数值类型的待支付订单数，是必传属性
+ * onButton: 待支付按钮点击事件（事件处理内容：页面跳转到订单界面），是必传的函数属性
+ * @type {{orderNum: number, onButton: func}}
  */
 GoodsField.propTypes = {
     orderNum: React.PropTypes.number.isRequired,
