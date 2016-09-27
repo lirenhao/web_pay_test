@@ -29,9 +29,6 @@ const validate = values  => {
 
 /**
  * 自定义订单号匹配表单验证组件：包括订单号输入框、加入按钮
- * @param input input属性
- * @param touched
- * @param error
  */
 const OrderIdField = ({input, meta:{touched, error}}) => (
 	<FormGroup controlId="orderId">

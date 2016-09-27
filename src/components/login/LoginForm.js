@@ -29,7 +29,7 @@ const userIdField = ({input, label, type, meta: {touched, error}}) => (
 
 /**
  * 用户类型自定义组件
- * @param input：包含一些事件以及name，value的属性对象
+ * input：包含一些事件以及name，value的属性对象
  */
 const userTypeField = ({input}) => (
 	<div className="btn-group btn-group-justified" data-toggle="buttons">

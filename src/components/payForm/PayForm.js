@@ -22,7 +22,7 @@ import style from './PayForm.scss'
 
 /**
  * 自定义支付结果下拉菜单表单验证组件
- * @param input 属性对象
+ * input 属性对象
  */
 const PayField = ({input}) => (
     <FormControl {...input} componentClass="select">

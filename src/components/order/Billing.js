@@ -16,8 +16,8 @@ import AmtDisplay from './AmtDisplay'
 
 /**
  * 结算信息组件：是订单信息组件(Order)的子组件
- * @param items  订单商品信息
- * @param marketing 优惠信息
+ * items  订单商品信息
+ * marketing 优惠信息
  */
 const Billing = ({items, marketing}) => {
     //定义结算信息面板的标题:为一个字体图标

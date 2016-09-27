@@ -10,8 +10,8 @@
 import React from 'react'
 
 /**
- *商品单价组件，是商品列表（GoodsItem）的子组件
- * @param amt 商品单价(单位为分)
+ * 商品单价组件，是商品列表（GoodsItem）的子组件
+ * amt 商品单价(单位为分)
  */
 const AmtDisplay =({amt})=>{
     return(

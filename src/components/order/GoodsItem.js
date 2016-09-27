@@ -13,9 +13,9 @@ import AmtDisplay from './AmtDisplay'
 
 /**
  * 单个商品信息组件：包括商品名称、单价、数量
- * @param name 商品名称
- * @param price 单价
- * @param quantity 数量
+ * name 商品名称
+ * price 单价
+ * quantity 数量
  */
 const goodsItem = ({name,price,quantity})=>(
         <tr>
