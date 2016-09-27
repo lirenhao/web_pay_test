@@ -69,11 +69,11 @@ class PayButton extends React.Component {
 
 /**
  * 支付、取消按钮组件的必传属性
- * @type {{canPay: *}}  是否能支付
- * @type {{canCancel: *}} 是否有取消按钮
- * @type {{onReqPay: *}}  支付请求事件（事件内容：向订单服务发送授权请求）
- * @type {{onCancel: *}}  取消订单事件（事件内容：向订单服务发送取消订单请求）
- * @type {{orderId: *}}   订单ID
+ * @type {{canPay: bool}}  是否能支付
+ * @type {{canCancel: bool}} 是否有取消按钮
+ * @type {{onReqPay: func}}  支付请求事件（事件内容：向订单服务发送授权请求）
+ * @type {{onCancel: func}}  取消订单事件（事件内容：向订单服务发送取消订单请求）
+ * @type {{orderId: string}}   订单ID
  */
 PayButton.propTypes = {
     canPay: React.PropTypes.bool.isRequired,

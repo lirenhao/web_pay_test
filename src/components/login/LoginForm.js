@@ -61,7 +61,7 @@ const LoginForm = (props) => {
 
 /**
  *登陆组件必须要传递的数据
- * @type {{onLogin: *}}:登录事件（事件内容：向服务发送登录请求事件；根据用户类型判断路由跳转到创建订单界面或匹配订单界面）
+ * @type {{onLogin: func}}:登录事件（事件内容：向服务发送登录请求事件；根据用户类型判断路由跳转到创建订单界面或匹配订单界面）
  */
 LoginForm.propTypes = {
 	onLogin: React.PropTypes.func.isRequired

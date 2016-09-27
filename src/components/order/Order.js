@@ -80,12 +80,12 @@ class Order extends React.Component {
 
 /**
  * 使用订单信息组件时，必传的属性
- * @type {{orderIds: *}} 订单号数组
- * @type {{order: *}}    订单信息对象
- * @type {{marketing: *}} 优惠信息对象
- * @type {{onReqPay: *}} 支付请求事件（事件内容：向订单服务发送授权请求）
- * @type {{onCancel: *}} 取消订单事件（事件内容：向订单服务发送取消订单请求）
- * @type {{canCancel: *}} 是否有取消按钮
+ * @type {{orderIds: array}} 订单号数组
+ * @type {{order: object}}    订单信息对象
+ * @type {{marketing: object}} 优惠信息对象
+ * @type {{onReqPay: func}} 支付请求事件（事件内容：向订单服务发送授权请求）
+ * @type {{onCancel: func}} 取消订单事件（事件内容：向订单服务发送取消订单请求）
+ * @type {{canCancel: bool}} 是否有取消按钮
  */
 Order.propTypes = {
     orderIds: React.PropTypes.array.isRequired,

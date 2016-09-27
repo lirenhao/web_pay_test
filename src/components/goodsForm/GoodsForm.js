@@ -73,9 +73,9 @@ const GoodsForm = (props) => {
 
 /**
  * 商品信息表单组件
- * @type {{onSubmit: *}} 提交表单后的处理事件
- * @type {{orderNum: *}} 商户待支付订单数量
- * @type {{onButton: *}} 待支付按钮点击事件（事件处理内容：页面跳转到订单界面）
+ * @type {{onSubmit: func}} 提交表单后的处理事件
+ * @type {{orderNum: number}} 商户待支付订单数量
+ * @type {{onButton: func}} 待支付按钮点击事件（事件处理内容：页面跳转到订单界面）
  */
 GoodsForm.propTypes = {
     onSubmit: React.PropTypes.func.isRequired,
