@@ -17,11 +17,11 @@ import {Panel} from 'react-bootstrap'
  */
 
 const OrderInfo = ({items})=> {
-    if (this.props.items) {
+    if (items) {
         return (
             <div>
                 <Panel header="订单信息">
-                    <GoodsItems items={this.props.items || []}/>
+                    <GoodsItems items={items || []}/>
                 </Panel>
             </div>
         )
