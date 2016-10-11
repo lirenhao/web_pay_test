@@ -13,7 +13,7 @@ import React from 'react'
 import {render} from 'react-dom'
 import {Provider} from "react-redux"
 import {createStore} from "redux"
-import {browserHistory} from "react-router"
+import {hashHistory} from "react-router"
 import {AppContainer} from "react-hot-loader"
 import DevTools from "./containers/DevTools"
 import Payment from "./Payment"
@@ -51,5 +51,5 @@ if (module.hot) {
 }
 
 window.addEventListener("load", () => {
-    Payment.setMsgHandler(msgHandler(store, browserHistory))
+    Payment.setMsgHandler(msgHandler(store, hashHistory))
 })

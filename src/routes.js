@@ -8,7 +8,7 @@
  * 路由文件
  */
 import React from 'react'
-import {Router, IndexRoute, Route, browserHistory} from 'react-router'
+import {Router, IndexRoute, Route, hashHistory} from 'react-router'
 import App from './containers/App'
 import Login from './containers/Login'
 import Goods from './containers/Goods'
@@ -17,7 +17,7 @@ import Order from './containers/Order'
 import Pay from './containers/Pay'
 
 export default (
-    <Router history={browserHistory}>
+    <Router history={hashHistory}>
         <Route path="/" component={App}>
             <IndexRoute component={Login}/>
             <Route path="/login" component={Login}/>

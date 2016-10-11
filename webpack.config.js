@@ -60,7 +60,7 @@ module.exports = {
 	plugins: [
 		// Define free variables
 		new webpack.DefinePlugin({
-			"process.env.wsUrl": "'ws://localhost:9000/ws'",
+			"process.env.wsUrl": "'ws://60.205.93.81:9000/ws'",
 		}),
 		new HtmlWebpackPlugin({
 			title: "测试页",
