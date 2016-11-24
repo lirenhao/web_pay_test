@@ -12,7 +12,8 @@ import order from "./orderReducer"
 import orderIds from "./orderIdsReducer"
 import marketing from "./marketingReducer"
 import dialog from "./dialogReducer"
+import {routerReducer} from "react-router-redux"
 
 export default combineReducers({
-    form, user, orderIds, order, marketing, dialog
+    form, user, orderIds, order, marketing, dialog, routing: routerReducer
 })

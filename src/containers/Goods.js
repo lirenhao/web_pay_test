@@ -12,7 +12,6 @@
  * 录入商品信息的容器，暂时用做测试后续再修改
  */
 import React from "react"
-import {connect} from "react-redux"
 import GoodsForm from "../components/goodsForm/GoodsForm"
 import Payment from '../Payment'
 
@@ -40,16 +39,15 @@ const items = [
 /**
  * 创建订单容器
  * @param props 组件属性
- * @param context 上下文属性
  */
-const Goods = (props, context) => {
-	context.setTitle("创建订单")
+const Goods = (props) => {
+    props.setTitle("创建订单")
 	const ToOrder = (value)=> {
 		Payment.createOrder(props.user, value.goods)
-		context.router.push("/order")
+        props.push("/order")
 	}
 	const waitPay = ()=> {
-		context.router.push("/order")
+        props.push("/order")
 	}
 	return (
 		<GoodsForm onSubmit={ToOrder}
@@ -60,22 +58,4 @@ const Goods = (props, context) => {
 	)
 }
 
-/**
- * 创建订单容器必传的属性
- * @type {{setTitle: *}} 设置标题
- * @type {{router: *}}   路由
- */
-Goods.contextTypes = {
-	setTitle: React.PropTypes.func.isRequired,
-	router: React.PropTypes.object.isRequired
-}
-
-const mapPropsFromState = (state)=>({
-	user: state.user,
-	orderIds: state.orderIds
-})
-
-/**
- *  输出react-redux关联之后的创建订单容器组件
- */
-export default connect(mapPropsFromState)(Goods)
+export default Goods

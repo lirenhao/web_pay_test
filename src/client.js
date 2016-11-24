@@ -10,27 +10,30 @@
  * 一个测试组件，用来测试搭建的环境都正确，可以正确渲染出页面
  */
 import React from 'react'
-import {render} from 'react-dom'
+import ReactDOM from 'react-dom'
 import {Provider} from "react-redux"
-import {createStore} from "redux"
+import {createStore, applyMiddleware} from "redux"
 import {hashHistory} from "react-router"
 import {AppContainer} from "react-hot-loader"
 import DevTools from "./containers/DevTools"
 import Payment from "./Payment"
 import reducer from "./reducers"
-import routes from "./routes"
+import Routes from "./containers/Routes"
 import {msgHandler} from "./handler"
 
-export const store = createStore(reducer, DevTools.instrument())
+import {routerMiddleware, syncHistoryWithStore} from "react-router-redux"
+
+export const store = createStore(reducer, DevTools.instrument(), applyMiddleware(routerMiddleware(hashHistory)))
+const history = syncHistoryWithStore(hashHistory, store)
 
 const container = document.createElement("div")
 container.setAttribute("class", "container")
 document.body.appendChild(container)
 
-render(
+ReactDOM.render(
     <AppContainer>
         <Provider store={store}>
-            {routes}
+            <Routes history={history}/>
         </Provider>
     </AppContainer>,
     container
@@ -38,11 +41,11 @@ render(
 
 if (module.hot) {
     module.hot.accept('./containers/App', () => {
-        const nextRoutes = require('./routes').default
-        render(
+        const NextRoutes = require('./containers/Routes').default
+        ReactDOM.render(
             <AppContainer>
                 <Provider store={store}>
-                    {nextRoutes}
+                    <NextRoutes history={history}/>
                 </Provider>
             </AppContainer>,
             container
@@ -51,5 +54,5 @@ if (module.hot) {
 }
 
 window.addEventListener("load", () => {
-    Payment.setMsgHandler(msgHandler(store, hashHistory))
+    Payment.setMsgHandler(msgHandler(store))
 })

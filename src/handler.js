@@ -7,14 +7,14 @@
  */
 import Const from '../src/constants'
 import {addUser, addOrder, addMarketing, remove, showDialog} from "../src/actions"
+import {push} from "react-router-redux"
 
 /**
  * 客户端接收到服务端数据后的处理
  * @param store redux的store
- * @param browserHistory 客户端要跳转的路由
  * @returns {Function} 返回一个接收消息后的处理函数
  */
-export function msgHandler(store, browserHistory) {
+export function msgHandler(store) {
 
     const ServerCmd = Const.ServerCmd
     const ClientCmd = Const.ClientCmd
@@ -33,7 +33,7 @@ export function msgHandler(store, browserHistory) {
                 break
             case ClientCmd.PAY_AUTH:
                 // 获取支付权限跳转到pay
-                browserHistory.push("/pay/" + store.getState().orderIds.indexOf(msg.orderId))
+                store.dispatch(push("/pay/" + store.getState().orderIds.indexOf(msg.orderId)))
                 break
             case ClientCmd.PAY_COMPLETED:
                 store.dispatch(remove(msg.orderId))
@@ -52,9 +52,9 @@ export function msgHandler(store, browserHistory) {
                 // 当用户没有订单时，商户跳转到录入商品界面、客户跳转到输入订单界面
                 if (store.getState().orderIds.length < 1) {
                     if (store.getState().user.userType == Const.TerminalType.MERCHANT)
-                        browserHistory.push("/goods")
+                        store.dispatch(push("/goods"))
                     else
-                        browserHistory.push("/orderId")
+                        store.dispatch(push("/orderId"))
                 }
                 break
             case ClientCmd.FAIL:
@@ -63,9 +63,9 @@ export function msgHandler(store, browserHistory) {
                 // 当用户没有订单时，商户跳转到录入商品界面、客户跳转到输入订单界面
                 if (store.getState().orderIds.length < 1) {
                     if (store.getState().user.userType == Const.TerminalType.MERCHANT)
-                        browserHistory.push("/goods")
+                        store.dispatch(push("/goods"))
                     else
-                        browserHistory.push("/orderId")
+                        store.dispatch(push("/orderId"))
                 }
                 break
             case ClientCmd.MESSAGE:

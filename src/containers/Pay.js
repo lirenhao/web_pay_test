@@ -16,7 +16,6 @@
  */
 import React from "react"
 import PayForm from '../components/payForm/PayForm'
-import {connect} from "react-redux"
 import Const from "../constants"
 import Payment from "../Payment"
 
@@ -25,10 +24,9 @@ const TerminalType = Const.TerminalType
 /**
  * 定义支付页面的容器：业务逻辑的处理和初始化数据
  * @param props 外组件属性
- * @param context 上下文属性
  */
-const Pay = (props, context)=> {
-	context.setTitle("支付")
+const Pay = (props)=> {
+    props.setTitle("支付")
 	//定义属性传递过来参数
 	const {user, orderIds, order, marketing, params: {index}} = props
 
@@ -41,9 +39,9 @@ const Pay = (props, context)=> {
 		Payment.payResult(user, result)
 		//终端类型为用户的话，则页面跳转到“扫描订单页面”；为商户的话，则跳转到“创建订单页面”
 		if (user.userType == TerminalType.USER)
-			context.router.push("/orderId")
+            props.push("/orderId")
 		else
-			context.router.push("/goods")
+            props.push("/goods")
 	}
 
 	/**
@@ -55,9 +53,9 @@ const Pay = (props, context)=> {
 		Payment.giveUpPay(user, orderId)
 		//终端类型为用户的话，则页面跳转到“扫描订单页面”；为商户的话，则跳转到“创建订单页面”
 		if (user.userType == TerminalType.USER)
-			context.router.push("/orderId")
+            props.push("/orderId")
 		else
-			context.router.push("/goods")
+            props.push("/goods")
 	}
 
 	/**
@@ -66,9 +64,9 @@ const Pay = (props, context)=> {
 	const onLinkHandle = () => {
 		//终端类型为用户的话，则页面跳转到“扫描订单页面”；为商户的话，则跳转到“创建订单页面”
 		if (user.userType == TerminalType.USER)
-			context.router.push("/orderId")
+            props.push("/orderId")
 		else
-			context.router.push("/goods")
+            props.push("/goods")
 	}
 
 	return <PayForm initialValues={{orderId: orderIds[index], state: "0"}}
@@ -82,32 +80,4 @@ const Pay = (props, context)=> {
 	/>
 }
 
-/**
- * 支付容器必传的属性
- * @type {{setTitle: *}} 页面的标题
- * @type {{router: *}}  路由
- */
-Pay.contextTypes = {
-	setTitle: React.PropTypes.func.isRequired,
-	router: React.PropTypes.object.isRequired
-}
-
-/**
- * 该函数作为connect的参数
- * 定义该参数，支付组件将会监听 Redux store 的变化。
- * 该回调函数必须返回一个纯对象，这个对象会与组件的 props 合并。
- * @param state 组件状态
- */
-const mapStateToProps = (state)=> ({
-	user: state.user,
-	orderIds: state.orderIds,
-	order: state.order,
-	marketing: state.marketing
-})
-
-/**
- * 输出react-redux关联之后的支付容器组件
- * 连接支付组件与 Redux store
- * 只要 Redux store 发生改变，mapStateToProps 函数就会被调用。
- */
-export default connect(mapStateToProps)(Pay)
+export default Pay

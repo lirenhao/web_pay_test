@@ -15,10 +15,9 @@ import LoginForm from "../components/login/LoginForm"
 /**
  * 定义登陆页面的容器
  * @param props 组件的属性
- * @param context 上下文属性
  */
-const Login = (props, context) => {
-    context.setTitle("登录")
+const Login = (props) => {
+    props.setTitle("登录")
 
     const TerminalType = Const.TerminalType
 
@@ -30,19 +29,14 @@ const Login = (props, context) => {
         //客户端将登陆信息数据发送给服务端
         Payment.clientSignIn({...values})
         if (values.userType == TerminalType.MERCHANT)
-            context.router.push("/goods")
+            props.push("/goods")
         else
-            context.router.push("/orderId")
+            props.push("/orderId")
     }
 
     return (
         <LoginForm onLogin={onLogin} initialValues={{userType: TerminalType.MERCHANT}}/>
     )
-}
-
-Login.contextTypes = {
-    setTitle: React.PropTypes.func.isRequired,
-    router: React.PropTypes.object.isRequired
 }
 
 export default Login
