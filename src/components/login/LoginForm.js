@@ -52,7 +52,7 @@ const LoginForm = (props) => {
 		<div className={style.login}>
 			<Form onSubmit={handleSubmit(onLogin)} className={style.form}>
 				<Field name="userId" component={userIdField}/>
-				<Field name="userType" component={userTypeField}/>
+				{/*<Field name="userType" component={userTypeField}/>*/}
 				<Button className={style.logBtn} bsStyle="info" block type="submit" disabled={pristine || submitting}>登陆</Button>
 			</Form>
 		</div>

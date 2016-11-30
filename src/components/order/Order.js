@@ -9,6 +9,7 @@
  */
 
 import React from 'react'
+import UserIdForm from './UserIdForm'
 import OrderInfo from './OrderInfo'
 import Marketing from './Marketing'
 import Billing from './Billing'
@@ -50,11 +51,13 @@ class Order extends React.Component {
     }
 
     render() {
-        const {orderIds, order, marketing, onReqPay, canCancel} = this.props
+        const {userIdSubmit, orderIds, order, marketing, onReqPay, canCancel} = this.props
         const tabItems = orderIds.map(
             (orderId, index) => (
                 <Tab eventKey={index} title={orderId} key={index}>
                     <div className={style.marginBottom}>
+                        <UserIdForm onSubmit={userIdSubmit} orderId={orderId}/>
+                        <br/>
                         <OrderInfo items={order[orderId].items}/>
                         <Marketing marketing={marketing[orderId]}/>
                         <Billing items={order[orderId].items} marketing={marketing[orderId]}/>
@@ -72,6 +75,7 @@ class Order extends React.Component {
             <Tabs id="OrderSelect"
                   activeKey={orderIds[this.state.key] ? this.state.key : orderIds.length - 1}
                   onSelect={(key) => this.handleSelect(key)}>
+
                 {tabItems}
             </Tabs>
         )

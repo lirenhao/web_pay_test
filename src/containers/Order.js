@@ -13,35 +13,41 @@ import React from "react"
 import Payment from "../Payment"
 import Const from "../constants"
 import OrderShow from "../components/order/Order"
-
+const TerminalType = Const.TerminalType
 /**
  * 定义订单信息页面容器
  * @param props 组件属性
  */
 const Order = (props) => {
     props.setTitle("订单");
-	//定义组件的属性
-	const {user, orderIds, order, marketing} = props;
-	/**
-	 * 定义取消订单事件
-	 * @param orderId 订单号
+    //定义组件的属性
+    const {user, orderIds, order, marketing} = props;
+    /**
+     * 定义取消订单事件
+     * @param orderId 订单号
      */
-	const onCancel = (orderId) => {
-		Payment.cancelOrder(user, orderId)
-	};
-	/**
-	 * 支付请求事件
-	 * @param orderId  订单号
+    const onCancel = (orderId) => {
+        Payment.cancelOrder(user, orderId)
+    };
+    /**
+     * 支付请求事件
+     * @param orderId  订单号
      */
-	const onReqPay = (orderId) => {
-		Payment.reqPayAuth(user, orderId)
-	};
-	return <OrderShow orderIds={orderIds}
-	                  order={order}
-	                  marketing={marketing}
-	                  onReqPay={onReqPay}
-	                  onCancel={onCancel}
-	                  canCancel={user.userType == Const.TerminalType.MERCHANT}/>
+    const onReqPay = (orderId) => {
+        Payment.reqPayAuth(user, orderId)
+    };
+    const userIdSubmit = (orderId) => {
+        return (value) => {
+            Payment.joinOrder({userId: value.userId, userType: TerminalType.USER}, orderId)
+        }
+    }
+    return <OrderShow userIdSubmit={userIdSubmit}
+                      orderIds={orderIds}
+                      order={order}
+                      marketing={marketing}
+                      onReqPay={onReqPay}
+                      onCancel={onCancel}
+                      canCancel={user.userType == Const.TerminalType.MERCHANT}/>
 };
 
 /**
